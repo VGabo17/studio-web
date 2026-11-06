@@ -1,0 +1,25 @@
+.neon-glow-text {
+  text-shadow: 0 0 16px var(--neon-purple-glow), 0 0 35px rgba(168, 85, 247, 0.25);
+}
+
+.lilac-glow-text {
+  text-shadow: 0 0 12px rgba(216, 180, 254, 0.4);
+}
+
+.neon-card-glow {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.neon-card-glow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px -10px var(--neon-purple-glow);
+}
+
+@keyframes pulseBorder {
+  0%, 100% { border-color: rgba(168, 85, 247, 0.3); }
+  50% { border-color: rgba(216, 180, 254, 0.7); }
+}
+
+.pulse-border-neon {
+  animation: pulseBorder 3s infinite ease-in-out;
+}
