@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Synthetix Studio | Plugins & Redes de Minecraft</title>
+  <title>Synthetix Studio | Desarrollo, Redes & Plugins Minecraft</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -13,10 +13,11 @@
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between overflow-x-hidden">
 
-  <!-- NAVBAR LIMPIO -->
+  <!-- NAVBAR -->
   <nav class="sticky top-0 z-40 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
+      <!-- LOGO CON PASTILLA -->
       <a href="/" class="flex items-center space-x-2.5 transition">
         <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -31,18 +32,21 @@
         </div>
       </a>
 
+      <!-- ENLACES ESCRITORIO -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="/" class="text-white font-bold">Inicio</a>
+        <a href="#benchmarks" class="hover:text-purple-300 transition">Specs</a>
         <a href="#pricing" class="hover:text-purple-300 transition">Tarifas</a>
-        <a href="/services" class="hover:text-purple-300 transition">Servicios</a>
-        <a href="/vault" class="hover:text-purple-300 transition">Resource Vault</a>
+        <a href="#comparison" class="hover:text-purple-300 transition">Garantía</a>
+        <a href="/vault" class="hover:text-purple-300 transition">Vault</a>
       </div>
 
+      <!-- BOTONES -->
       <div class="flex items-center space-x-3">
         <a href="/dashboard" id="desktopPortalBtn" class="hidden sm:inline-block px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
           Portal Clientes
         </a>
-        <button id="openSidebarBtn" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white transition focus:outline-none">
+        <button id="openSidebarBtn" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white transition">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
@@ -61,73 +65,123 @@
           <span class="font-black text-white text-base tracking-wider">SYNTHETIX</span>
           <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300">STUDIO</span>
         </div>
-        <button id="closeSidebarBtn" class="p-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white border border-purple-800/60">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+        <button id="closeSidebarBtn" class="p-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
       <div class="py-6 space-y-2">
-        <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs">
-          <i data-lucide="home" class="w-4 h-4 text-purple-400"></i><span>Inicio</span>
-        </a>
-        <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition">
-          <i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas Oficiales</span>
-        </a>
-        <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition">
-          <i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i><span>Todos los Servicios</span>
-        </a>
-        <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition">
-          <div class="flex items-center space-x-3">
-            <i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span>
-          </div>
-          <span class="text-[9px] font-mono bg-purple-950 text-fuchsia-300 border border-fuchsia-500/40 px-1.5 py-0.5 rounded">PLUGINS</span>
-        </a>
-        <a href="/terms" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition">
-          <i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i><span>Términos del Servicio</span>
-        </a>
+        <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs"><i data-lucide="home" class="w-4 h-4 text-purple-400"></i><span>Inicio</span></a>
+        <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas Oficiales</span></a>
+        <a href="#comparison" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i><span>Garantía Técnica</span></a>
+        <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i><span>Servicios</span></a>
+        <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><div class="flex items-center space-x-3"><i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span></div><span class="text-[9px] font-mono bg-purple-950 text-fuchsia-300 border border-fuchsia-500/40 px-1.5 py-0.5 rounded">CATÁLOGO</span></a>
+        <a href="/terms" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i><span>Términos del Servicio</span></a>
       </div>
     </div>
 
     <div id="sidebarUserSlot" class="pt-4 border-t border-purple-950/60">
-      <a href="/login" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg shadow-purple-600/30 transition">
-        <i data-lucide="log-in" class="w-4 h-4"></i>
-        <span>Iniciar Sesión / Registro</span>
+      <a href="/login" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg transition">
+        <i data-lucide="log-in" class="w-4 h-4"></i><span>Iniciar Sesión / Registro</span>
       </a>
     </div>
   </aside>
 
   <!-- HERO -->
-  <header class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
+  <header class="max-w-5xl mx-auto px-6 pt-20 pb-12 text-center">
     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-      <span>DESARROLLO DE SOFTWARE & CONFIGURACIONES</span>
+      <span>ESTUDIO Y MARKETPLACE PROFESIONAL • MINECRAFT & DISCORD</span>
     </div>
     
-    <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6">
-      Plugins, Bots & Redes <br>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Gestionados en la Web</span>
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6">
+      Infraestructuras de Élite <br>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Sin Caídas ni Lag</span>
     </h1>
 
     <p class="text-purple-200/70 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-      Elige tu plan, abre tu sala de proyecto privada, chatea con el desarrollador y descarga tus archivos directamente en tu cuenta.
+      Setups de servidores completos, plugins Java de alto rendimiento, redes masivas con Velocity y Resource Vault comunitario. Todo gestionado directamente en la web.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
       <a href="#pricing" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
-        Ver Tarifas Accesibles
+        Ver Tarifas ($5 - $35)
       </a>
       <a href="/vault" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
-        Descargas del Vault
+        Explorar Vault de Recursos
       </a>
     </div>
   </header>
 
-  <!-- TARIFAS -->
+  <!-- BARRA DE TELEMETRÍA Y BENCHMARKS -->
+  <section id="benchmarks" class="max-w-6xl mx-auto px-6 py-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-3xl card-glass border border-purple-500/30">
+      <div class="text-center p-3 border-r border-purple-950/60 last:border-0">
+        <p class="text-2xl sm:text-3xl font-black text-emerald-400">20.0 TPS</p>
+        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Rendimiento Constante</span>
+      </div>
+      <div class="text-center p-3 border-r border-purple-950/60 last:border-0">
+        <p class="text-2xl sm:text-3xl font-black text-white">Java 21</p>
+        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Folia & Purpur Ready</span>
+      </div>
+      <div class="text-center p-3 border-r border-purple-950/60 last:border-0">
+        <p class="text-2xl sm:text-3xl font-black text-fuchsia-400">0% Leaks</p>
+        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Memoria Optimizada</span>
+      </div>
+      <div class="text-center p-3">
+        <p class="text-2xl sm:text-3xl font-black text-white">99.99%</p>
+        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Uptime en Proxies</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLA COMPARATIVA: SYNTHETIX VS AFICIONADOS -->
+  <section id="comparison" class="max-w-5xl mx-auto px-6 py-16">
+    <div class="text-center mb-10">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Garantía de Calidad</span>
+      <h2 class="text-3xl font-black text-white mt-1">¿Por qué Synthetix Studio?</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Diferencia entre un servidor aficionado y una red optimizada profesionalmente.</p>
+    </div>
+
+    <div class="overflow-x-auto rounded-3xl card-glass border border-purple-900/60">
+      <table class="w-full text-left text-xs sm:text-sm">
+        <thead class="bg-black/60 font-mono uppercase text-purple-400 border-b border-purple-950">
+          <tr>
+            <th class="p-4 sm:p-5">Aspecto Técnico</th>
+            <th class="p-4 sm:p-5 text-fuchsia-300">Synthetix Studio</th>
+            <th class="p-4 sm:p-5 text-purple-400/50">Desarrollo Típico / Aficionado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-purple-950/50 text-purple-200/80">
+          <tr>
+            <td class="p-4 font-semibold text-white">Manejo de Hilos (Threading)</td>
+            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>Asíncrono (Cero congelamientos de TPS)</span></td>
+            <td class="p-4 text-rose-400/80 font-light">Síncrono en hilo principal (Tirones de lag)</td>
+          </tr>
+          <tr>
+            <td class="p-4 font-semibold text-white">Mitigación Anti-Bot</td>
+            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>Filtros Velocity en Capa de Red</span></td>
+            <td class="p-4 text-rose-400/80 font-light">Plugins básicos Spigot que crashean la RAM</td>
+          </tr>
+          <tr>
+            <td class="p-4 font-semibold text-white">Gestión y Entregas</td>
+            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>Portal Web con Descargas y Tickets</span></td>
+            <td class="p-4 text-rose-400/80 font-light">Mensajes directos de Discord sin garantías</td>
+          </tr>
+          <tr>
+            <td class="p-4 font-semibold text-white">Garantía de Soporte</td>
+            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>14 Días de Corrección de Bugs Gratis</span></td>
+            <td class="p-4 text-rose-400/80 font-light">Cobro extra por cada ajuste menor</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TARIFAS CLARAS -->
   <section id="pricing" class="max-w-6xl mx-auto px-6 py-16">
-    <div class="text-center mb-14">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Precios Para Todos</span>
+    <div class="text-center mb-12">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Precios Transparentes</span>
       <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Tarifas del Estudio</h2>
-      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Planes pensados para pequeños y grandes servidores de Minecraft.</p>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Planes accesibles para proyectos de cualquier escala.</p>
     </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -143,12 +197,10 @@
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Java 17/21 optimizado</li>
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Spigot / Paper / Purpur</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Entrega de software directa</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Entrega directa en la web</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Plugin Básico Java', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
-          Ordenar ($5)
-        </button>
+        <button onclick="orderPlan('Plugin Básico Java', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($5)</button>
       </div>
 
       <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
@@ -163,18 +215,14 @@
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sistema de tickets y logs</li>
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Vinculación MC-Discord</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Código limpio en Node.js</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Base de datos MySQL / SQLite</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Bot de Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
-          Ordenar ($10)
-        </button>
+        <button onclick="orderPlan('Bot de Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($10)</button>
       </div>
 
       <div class="p-6 rounded-3xl card-glass border-2 border-fuchsia-500/60 flex flex-col justify-between relative shadow-xl shadow-purple-900/40">
-        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-[9px] font-bold uppercase tracking-wider text-white px-3 py-0.5 rounded-full">
-          Más Vendido
-        </span>
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-[9px] font-bold uppercase tracking-wider text-white px-3 py-0.5 rounded-full">Más Vendido</span>
         <div>
           <span class="text-[10px] font-mono text-fuchsia-400 uppercase tracking-wider block mb-2">Setup Completo</span>
           <h3 class="text-xl font-bold text-white mb-1">Modalidad MC</h3>
@@ -186,12 +234,10 @@
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Economía, rangos y menús</li>
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Configuración DeluxeMenus</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Optimización a 20 TPS</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Optimización extrema a 20 TPS</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Modalidad Completa MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">
-          Ordenar ($20)
-        </button>
+        <button onclick="orderPlan('Modalidad Completa MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">Ordenar ($20)</button>
       </div>
 
       <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
@@ -206,12 +252,27 @@
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Proxy Velocity + Balanceo</li>
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sincronización Redis global</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Filtro y mitigación Anti-Bot</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Mitigación Anti-Bot probada</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Network Velocity Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
-          Ordenar ($35)
-        </button>
+        <button onclick="orderPlan('Network Velocity Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($35)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESPECIFICACIONES DE HARDWARE & FLAGS RECOMENDADAS -->
+  <section class="max-w-5xl mx-auto px-6 py-12">
+    <div class="p-8 rounded-3xl card-glass border border-purple-900/60 grid md:grid-cols-2 gap-6 items-center">
+      <div class="space-y-3">
+        <span class="text-xs font-mono uppercase text-purple-400">Recomendaciones de Arquitectura</span>
+        <h3 class="text-2xl font-bold text-white">Especificaciones Óptimas</h3>
+        <p class="text-xs text-purple-300/70 leading-relaxed">
+          Para que nuestras configuraciones y redes alcancen 20.0 TPS estables con más de 100 jugadores, recomendamos procesadores con alto rendimiento mono-núcleo (Ryzen 9 7950X o Intel i9-14900K) y la ejecución con Aikar's Flags optimizadas en memoria ZGC / G1GC.
+        </p>
+      </div>
+      <div class="bg-black/60 rounded-2xl p-4 border border-purple-950 font-mono text-[11px] text-purple-300 overflow-x-auto">
+        <p class="text-purple-400 mb-1"># Flags recomendadas para servidores Paper:</p>
+        <p class="text-slate-300">java -Xms4G -Xmx4G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+AlwaysPreTouch -jar server.jar --nogui</p>
       </div>
     </div>
   </section>
@@ -234,18 +295,8 @@
 
     const overlay = document.getElementById('drawerOverlay');
     const drawer = document.getElementById('sidebarDrawer');
-
-    function openSidebar() {
-      overlay.classList.remove('hidden');
-      setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-      drawer.classList.remove('translate-x-full');
-    }
-
-    function closeSidebar() {
-      overlay.classList.add('opacity-0');
-      drawer.classList.add('translate-x-full');
-      setTimeout(() => overlay.classList.add('hidden'), 300);
-    }
+    function openSidebar() { overlay.classList.remove('hidden'); setTimeout(() => overlay.classList.remove('opacity-0'), 10); drawer.classList.remove('translate-x-full'); }
+    function closeSidebar() { overlay.classList.add('opacity-0'); drawer.classList.add('translate-x-full'); setTimeout(() => overlay.classList.add('hidden'), 300); }
 
     document.getElementById('openSidebarBtn').addEventListener('click', openSidebar);
     document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
