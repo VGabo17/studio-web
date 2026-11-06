@@ -15,37 +15,49 @@
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-16">
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR PREMIUM -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <a href="/" class="flex items-center space-x-2.5">
-          <div class="w-9 h-9 rounded-xl bg-purple-950 border border-purple-500/50 flex items-center justify-center">
-            <i data-lucide="terminal" class="text-purple-300 w-5 h-5"></i>
+      
+      <!-- LOGO NEXUS BRANDING -->
+      <a href="/" class="group flex items-center space-x-2.5 transition">
+        <div class="relative flex items-center justify-center">
+          <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-xl blur-sm opacity-50"></div>
+          <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
+            <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
           </div>
-          <span class="font-bold text-lg text-white tracking-wider">SYNTHETIX<span class="text-purple-400">.DASH</span></span>
-        </a>
-      </div>
+        </div>
+        <div class="flex items-center space-x-1.5">
+          <span class="font-black text-base sm:text-lg tracking-wider text-white">SYNTHETIX</span>
+          <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300">DASH</span>
+        </div>
+      </a>
 
+      <!-- ROL Y SALIR -->
       <div class="flex items-center space-x-3">
-        <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-fuchsia-500/60 text-fuchsia-300">
+        <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-fuchsia-500/60 text-fuchsia-300 shadow-sm shadow-purple-900/30">
           <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
           <span id="roleText">...</span>
         </div>
         <button onclick="logout()" class="p-2 rounded-xl bg-purple-950/50 hover:bg-rose-950/60 border border-purple-900/60 text-purple-300 hover:text-rose-300 transition" title="Cerrar Sesión">
-          <i data-lucide="log-out" class="w-5 h-5"></i>
+          <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
+
     </div>
   </nav>
 
   <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 space-y-6">
     
-    <!-- HEADER COMPACTO -->
+    <!-- HEADER WORKSPACE -->
     <div class="p-5 sm:p-7 rounded-3xl card-glass border border-purple-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div>
         <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
-          <span>ESPACIO DE TRABAJO</span>
+          <span>CENTRO DE GESTIÓN</span>
           <span>•</span>
           <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
         </div>
@@ -55,15 +67,15 @@
         <p id="roleDescription" class="text-purple-300/60 text-xs mt-1">Cargando permisos...</p>
       </div>
 
-      <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
+      <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
         <i data-lucide="plus-circle" class="w-4 h-4"></i>
         <span>Nuevo Ticket</span>
       </button>
     </div>
 
-    <!-- NAVEGACIÓN HORIZONTAL TÁCTIL (SIN ROMPERSE EN MÓVIL) -->
-    <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-2 border-b border-purple-900/40">
-      <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5">
+    <!-- NAVEGACIÓN POR PESTAÑAS (SCROLL HORIZONTAL FLUIDO) -->
+    <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1 border-b border-purple-900/40">
+      <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5 shadow-md shadow-purple-600/30">
         <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
         <span>Tickets & Soporte</span>
       </button>
@@ -85,35 +97,46 @@
       </button>
     </div>
 
-    <!-- VISTA 1: TICKETS -->
+    <!-- VISTA 1: TICKETS CON FILTROS Y CHAT SEGURO -->
     <div id="viewTickets" class="grid lg:grid-cols-3 gap-5">
+      
+      <!-- Columna Izquierda: Filtros y Lista -->
       <div class="lg:col-span-1 p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
+        
         <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
           <h3 class="font-bold text-white text-xs uppercase font-mono tracking-wider">Historial</h3>
           <button onclick="loadTickets()" class="text-xs text-purple-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
         </div>
-        <div id="ticketsContainer" class="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+
+        <!-- Buscador de tickets -->
+        <input type="text" id="ticketSearchInput" oninput="filterTickets()" placeholder="Buscar por ID o título..." class="w-full bg-black/60 border border-purple-950 rounded-xl px-3 py-1.5 text-xs text-white placeholder-purple-400/40 focus:outline-none focus:border-purple-400">
+
+        <!-- Filtros rápidos -->
+        <div class="flex space-x-1 text-[10px] font-mono">
+          <button onclick="setTicketFilter('all')" id="fltAll" class="flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold">Todos</button>
+          <button onclick="setTicketFilter('Abierto')" id="fltOpen" class="flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white">Abiertos</button>
+          <button onclick="setTicketFilter('Cerrado')" id="fltClosed" class="flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white">Cerrados</button>
+        </div>
+
+        <!-- Lista -->
+        <div id="ticketsContainer" class="space-y-2 max-h-[400px] overflow-y-auto pr-1">
           <p class="text-xs text-purple-400 text-center py-4">Cargando...</p>
         </div>
       </div>
 
-      <div class="lg:col-span-2 p-5 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between min-h-[450px]">
+      <!-- Columna Derecha: Conversación y Bloqueo -->
+      <div class="lg:col-span-2 p-5 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between min-h-[460px]">
         <div id="ticketDetailContent" class="space-y-3">
-          <div class="text-center py-20 text-purple-400/60">
+          <div class="text-center py-24 text-purple-400/60">
             <i data-lucide="message-square" class="w-10 h-10 mx-auto mb-2 opacity-50"></i>
-            <p class="text-xs font-semibold">Toca un ticket de la lista para leer o responder</p>
+            <p class="text-xs font-semibold">Toca un ticket de la lista para ver la conversación</p>
           </div>
         </div>
-        <div id="replyArea" class="hidden pt-3 border-t border-purple-950 mt-3">
-          <form id="replyForm" class="flex gap-2">
-            <input type="text" id="replyText" required placeholder="Escribe tu mensaje..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-purple-400">
-            <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1">
-              <span>Enviar</span>
-              <i data-lucide="send" class="w-3 h-3"></i>
-            </button>
-          </form>
-        </div>
+
+        <!-- Zona de Respuesta Dinámica -->
+        <div id="replyArea" class="hidden pt-3 border-t border-purple-950 mt-3"></div>
       </div>
+
     </div>
 
     <!-- VISTA 2: RESOURCE VAULT -->
@@ -124,9 +147,7 @@
             <h2 class="text-base font-bold text-white">Synthetix Resource Vault</h2>
             <p class="text-[11px] text-purple-300/60">Plugins verificados listos para descargar</p>
           </div>
-          <button onclick="loadVault()" class="text-xs text-purple-400 hover:text-white flex items-center space-x-1">
-            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-          </button>
+          <button onclick="loadVault()" class="text-xs text-purple-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
         </div>
         <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <p class="text-xs text-purple-400 py-6">Cargando catálogo...</p>
@@ -155,31 +176,14 @@
           <h3 class="font-bold text-white text-sm">Dev Studio: Publicar Plugin</h3>
         </div>
         <form id="vaultUploadForm" class="space-y-3">
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre del Plugin</label>
-            <input type="text" id="vName" required placeholder="Ej: SynthetixCore" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
+          <input type="text" id="vName" required placeholder="Nombre del Plugin (Ej: SynthetixCore)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Versión</label>
-              <input type="text" id="vVersion" placeholder="1.0.0" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-            </div>
-            <div>
-              <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Versión MC</label>
-              <input type="text" id="vMC" placeholder="1.16 - 1.21" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-            </div>
+            <input type="text" id="vVersion" placeholder="Versión (1.0.0)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+            <input type="text" id="vMC" placeholder="Compatibilidad (1.16 - 1.21)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           </div>
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Enlace de Descarga Directa (.JAR)</label>
-            <input type="url" id="vUrl" required placeholder="https://..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Descripción / Changelog</label>
-            <textarea id="vDesc" rows="2" placeholder="Qué incluye este plugin..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-          </div>
-          <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-2.5 rounded-xl transition">
-            Publicar en el Vault
-          </button>
+          <input type="url" id="vUrl" required placeholder="Enlace de Descarga Directa (.JAR)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <textarea id="vDesc" rows="2" placeholder="Notas de la versión..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+          <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-2.5 rounded-xl transition">Publicar en el Vault</button>
         </form>
       </div>
     </div>
@@ -194,10 +198,6 @@
         <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
           <i data-lucide="folder-plus" class="w-4 h-4"></i>
           <span>Crear Proyecto</span>
-        </button>
-        <button onclick="setFounderSubTab('announcement')" id="fTabAnnounce" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
-          <i data-lucide="megaphone" class="w-4 h-4"></i>
-          <span>Anuncio Global</span>
         </button>
         <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
           <i data-lucide="users" class="w-4 h-4"></i>
@@ -218,18 +218,6 @@
           <input type="number" id="pProgress" min="0" max="100" value="25" placeholder="Progreso %" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga .jar (opcional)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-2.5 rounded-xl">Guardar Proyecto</button>
-        </form>
-      </div>
-
-      <div id="fSecAnnounce" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-3">
-        <h3 class="font-bold text-white text-sm">Banner de Anuncio en la Web</h3>
-        <form id="announcementForm" class="space-y-3">
-          <input type="text" id="announcementText" placeholder="Texto del anuncio..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <label class="flex items-center space-x-2 text-xs text-purple-200">
-            <input type="checkbox" id="announcementActive" class="w-4 h-4 accent-purple-500">
-            <span>Mostrar Banner en Portada</span>
-          </label>
-          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-2.5 rounded-xl">Actualizar</button>
         </form>
       </div>
 
@@ -279,6 +267,8 @@
 
     const token = localStorage.getItem('synthetix_token');
     let currentUser = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
+    let allLoadedTickets = [];
+    let currentFilter = 'all';
     let activeTicketId = null;
 
     if (!token) {
@@ -344,7 +334,209 @@
       lucide.createIcons();
     }
 
-    // --- RESOURCE VAULT ---
+    // --- TICKETS, FILTROS Y ELIMINACIÓN ---
+    async function loadTickets() {
+      const container = document.getElementById('ticketsContainer');
+      try {
+        const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        allLoadedTickets = data.tickets || [];
+        renderTicketsList();
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>';
+      }
+    }
+
+    function setTicketFilter(filter) {
+      currentFilter = filter;
+      document.getElementById('fltAll').className = filter === 'all' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      document.getElementById('fltOpen').className = filter === 'Abierto' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      document.getElementById('fltClosed').className = filter === 'Cerrado' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      renderTicketsList();
+    }
+
+    function filterTickets() {
+      renderTicketsList();
+    }
+
+    function renderTicketsList() {
+      const container = document.getElementById('ticketsContainer');
+      const search = (document.getElementById('ticketSearchInput').value || "").toLowerCase();
+
+      let filtered = allLoadedTickets;
+      if (currentFilter !== 'all') {
+        filtered = filtered.filter(t => t.status === currentFilter);
+      }
+      if (search) {
+        filtered = filtered.filter(t => t.id.toLowerCase().includes(search) || t.title.toLowerCase().includes(search));
+      }
+
+      if (filtered.length > 0) {
+        const isFounder = (currentUser.role === 'Founder' || currentUser.role === 'Admin');
+        container.innerHTML = filtered.map(t => `
+          <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left relative group">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
+              <div class="flex items-center space-x-1.5">
+                <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
+                ${isFounder ? `
+                  <button onclick="event.stopPropagation(); deleteTicket('${t.id}')" title="Eliminar ticket" class="text-rose-400 hover:text-rose-300 opacity-0 group-hover:opacity-100 transition p-1">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+            <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
+            <p class="text-[10px] text-purple-400/60 mt-0.5">${t.author} • ${t.createdAt}</p>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay tickets coincidentes.</p>';
+      }
+      lucide.createIcons();
+    }
+
+    async function selectTicket(id) {
+      activeTicketId = id;
+      const detail = document.getElementById('ticketDetailContent');
+      const replyArea = document.getElementById('replyArea');
+      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando conversación...</p>';
+
+      try {
+        const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        const t = data.ticket;
+        const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin' || currentUser.role === 'Soporte');
+
+        detail.innerHTML = `
+          <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">${t.category}</span>
+              </div>
+              <h3 class="text-sm font-bold text-white mt-1">${t.title}</h3>
+              <p class="text-[10px] text-purple-400/60">Por: ${t.author}</p>
+            </div>
+            <div>
+              ${isStaff ? `
+                <select onchange="changeTicketStatus('${t.id}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg text-xs text-purple-200 px-2 py-1">
+                  <option value="Abierto" ${t.status === 'Abierto' ? 'selected' : ''}>Abierto</option>
+                  <option value="En Proceso" ${t.status === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
+                  <option value="Cerrado" ${t.status === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
+                </select>
+              ` : `<span class="text-xs px-2.5 py-0.5 rounded-full ${t.status === 'Cerrado' ? 'bg-purple-950 text-purple-400' : 'bg-emerald-950 text-emerald-400'} font-bold">${t.status}</span>`}
+            </div>
+          </div>
+
+          <div class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
+            ${t.messages.map(m => `
+              <div class="p-3 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-4' : 'bg-black/50 border border-purple-950 mr-4'}">
+                <div class="flex items-center justify-between text-[10px] mb-1">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="font-bold text-white">${m.sender}</span>
+                    <span class="text-[9px] font-mono px-1 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
+                  </div>
+                  <span class="text-[9px] text-purple-400/50">${m.time}</span>
+                </div>
+                <p class="text-xs text-purple-100/90 leading-relaxed">${m.text}</p>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        // SI EL TICKET ESTÁ CERRADO: BLOQUEO ESTRICTO DEL FORMULARIO
+        if (t.status === 'Cerrado') {
+          replyArea.innerHTML = `
+            <div class="p-3 rounded-2xl bg-black/60 border border-purple-950 text-center text-xs text-purple-300 flex items-center justify-center space-x-2">
+              <i data-lucide="lock" class="w-4 h-4 text-rose-400"></i>
+              <span>Este ticket ha sido <b>cerrado</b>. La conversación está en modo lectura.</span>
+              ${isStaff ? `<button onclick="changeTicketStatus('${t.id}', 'Abierto')" class="text-fuchsia-400 underline font-bold ml-2">Reabrir</button>` : ''}
+            </div>
+          `;
+        } else {
+          replyArea.innerHTML = `
+            <form id="replyForm" onsubmit="sendReply(event)" class="flex gap-2">
+              <input type="text" id="replyText" required placeholder="Escribe tu mensaje..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-purple-400">
+              <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1">
+                <span>Enviar</span>
+                <i data-lucide="send" class="w-3 h-3"></i>
+              </button>
+            </form>
+          `;
+        }
+        replyArea.classList.remove('hidden');
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    async function sendReply(e) {
+      e.preventDefault();
+      const input = document.getElementById('replyText');
+      const text = input.value.trim();
+      if (!text || !activeTicketId) return;
+
+      input.value = "";
+      const res = await fetch('/api/tickets/reply', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId: activeTicketId, text })
+      });
+      const data = await res.json();
+      if (data.error) {
+        alert(data.error);
+      }
+      selectTicket(activeTicketId);
+    }
+
+    async function changeTicketStatus(ticketId, newStatus) {
+      await fetch('/api/tickets/status', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId, newStatus })
+      });
+      loadTickets();
+      selectTicket(ticketId);
+    }
+
+    async function deleteTicket(ticketId) {
+      if (!confirm(`¿Eliminar definitivamente el ticket ${ticketId}?`)) return;
+      const res = await fetch('/api/tickets/delete', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        loadTickets();
+        if (activeTicketId === ticketId) {
+          document.getElementById('ticketDetailContent').innerHTML = '<div class="text-center py-24 text-purple-400/60"><p class="text-xs font-semibold">Ticket eliminado</p></div>';
+          document.getElementById('replyArea').classList.add('hidden');
+        }
+      }
+    }
+
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: document.getElementById('tTitle').value,
+          category: document.getElementById('tCategory').value,
+          message: document.getElementById('tMessage').value
+        })
+      });
+      const d = await res.json();
+      if (d.success) {
+        closeTicketModal();
+        document.getElementById('ticketForm').reset();
+        loadTickets();
+        selectTicket(d.ticket.id);
+      }
+    });
+
+    // --- VAULT, PROJECTS Y FOUNDER ---
     async function loadVault() {
       const container = document.getElementById('vaultContainer');
       try {
@@ -377,34 +569,6 @@
       } catch (e) {}
     }
 
-    // Subir al Vault (Dev / Founder)
-    document.getElementById('vaultUploadForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        const res = await fetch('/api/vault', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: document.getElementById('vName').value,
-            version: document.getElementById('vVersion').value,
-            mcVersions: document.getElementById('vMC').value,
-            downloadUrl: document.getElementById('vUrl').value,
-            description: document.getElementById('vDesc').value
-          })
-        });
-        const d = await res.json();
-        if (d.success) {
-          alert("¡Plugin publicado en el Resource Vault!");
-          document.getElementById('vaultUploadForm').reset();
-          loadVault();
-          setMainTab('vault');
-        } else {
-          alert(d.error);
-        }
-      } catch (err) { alert("Error"); }
-    });
-
-    // --- PROYECTOS ---
     async function loadProjects() {
       const container = document.getElementById('projectsContainer');
       try {
@@ -431,11 +595,10 @@
       } catch (e) {}
     }
 
-    // --- FOUNDER CRM ---
     function setFounderSubTab(sub) {
-      const subs = ['quotes', 'assignProject', 'announcement', 'users'];
-      const map = { quotes: 'fSecQuotes', assignProject: 'fSecAssign', announcement: 'fSecAnnounce', users: 'fSecUsers' };
-      const btnMap = { quotes: 'fTabQuotes', assignProject: 'fTabAssign', announcement: 'fTabAnnounce', users: 'fTabUsers' };
+      const subs = ['quotes', 'assignProject', 'users'];
+      const map = { quotes: 'fSecQuotes', assignProject: 'fSecAssign', users: 'fSecUsers' };
+      const btnMap = { quotes: 'fTabQuotes', assignProject: 'fTabAssign', users: 'fTabUsers' };
 
       subs.forEach(s => {
         const sec = document.getElementById(map[s]);
@@ -527,126 +690,6 @@
       });
       loadFounderUsers();
     }
-
-    // --- TICKETS ---
-    async function loadTickets() {
-      const container = document.getElementById('ticketsContainer');
-      try {
-        const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-        if (data.tickets && data.tickets.length > 0) {
-          container.innerHTML = data.tickets.map(t => `
-            <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left">
-              <div class="flex items-center justify-between mb-1">
-                <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
-                <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
-              </div>
-              <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
-              <p class="text-[10px] text-purple-400/60 mt-0.5">${t.author} • ${t.createdAt}</p>
-            </div>
-          `).join('');
-        } else {
-          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay tickets activos.</p>';
-        }
-      } catch (e) {}
-    }
-
-    async function selectTicket(id) {
-      activeTicketId = id;
-      const detail = document.getElementById('ticketDetailContent');
-      const replyArea = document.getElementById('replyArea');
-      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando conversación...</p>';
-
-      try {
-        const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-        const t = data.ticket;
-        const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin' || currentUser.role === 'Soporte');
-
-        detail.innerHTML = `
-          <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
-            <div>
-              <div class="flex items-center space-x-2">
-                <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">${t.category}</span>
-              </div>
-              <h3 class="text-sm font-bold text-white mt-1">${t.title}</h3>
-              <p class="text-[10px] text-purple-400/60">Por: ${t.author}</p>
-            </div>
-            <div>
-              ${isStaff ? `
-                <select onchange="changeTicketStatus('${t.id}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg text-xs text-purple-200 px-2 py-1">
-                  <option value="Abierto" ${t.status === 'Abierto' ? 'selected' : ''}>Abierto</option>
-                  <option value="En Proceso" ${t.status === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
-                  <option value="Cerrado" ${t.status === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
-                </select>
-              ` : `<span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-400 font-bold">${t.status}</span>`}
-            </div>
-          </div>
-          <div class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
-            ${t.messages.map(m => `
-              <div class="p-3 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-4' : 'bg-black/50 border border-purple-950 mr-4'}">
-                <div class="flex items-center justify-between text-[10px] mb-1">
-                  <div class="flex items-center space-x-1.5">
-                    <span class="font-bold text-white">${m.sender}</span>
-                    <span class="text-[9px] font-mono px-1 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
-                  </div>
-                  <span class="text-[9px] text-purple-400/50">${m.time}</span>
-                </div>
-                <p class="text-xs text-purple-100/90 leading-relaxed">${m.text}</p>
-              </div>
-            `).join('')}
-          </div>
-        `;
-        replyArea.classList.remove('hidden');
-        lucide.createIcons();
-      } catch (e) {}
-    }
-
-    document.getElementById('replyForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const input = document.getElementById('replyText');
-      const text = input.value.trim();
-      if (!text || !activeTicketId) return;
-
-      input.value = "";
-      await fetch('/api/tickets/reply', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticketId: activeTicketId, text })
-      });
-      selectTicket(activeTicketId);
-    });
-
-    async function changeTicketStatus(ticketId, newStatus) {
-      await fetch('/api/tickets/status', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticketId, newStatus })
-      });
-      loadTickets();
-      selectTicket(ticketId);
-    }
-
-    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const res = await fetch('/api/tickets', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: document.getElementById('tTitle').value,
-          category: document.getElementById('tCategory').value,
-          message: document.getElementById('tMessage').value
-        })
-      });
-      const d = await res.json();
-      if (d.success) {
-        closeTicketModal();
-        document.getElementById('ticketForm').reset();
-        loadTickets();
-        selectTicket(d.ticket.id);
-      }
-    });
 
     function openTicketModal() { document.getElementById('ticketModal').classList.remove('hidden'); }
     function closeTicketModal() { document.getElementById('ticketModal').classList.add('hidden'); }
