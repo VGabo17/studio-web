@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Synthetix Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+</head>
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100">
+
+  <!-- NAVBAR DEL DASHBOARD -->
+  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Logo y Sección -->
+      <div class="flex items-center space-x-3">
+        <a href="/" class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-xl bg-purple-950 border border-purple-500/50 flex items-center justify-center shadow-lg shadow-purple-900/40">
+            <i data-lucide="terminal" class="text-purple-300 w-5 h-5"></i>
+          </div>
+          <span class="font-bold text-lg text-white tracking-wider">SYNTHETIX<span class="text-purple-400">.DASH</span></span>
+        </a>
+      </div>
+
+      <!-- Perfil y Salir -->
+      <div class="flex items-center space-x-4">
+        <!-- Badge de Rol Dinámico -->
+        <div id="roleBadge" class="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950/80 border border-purple-500/40 text-purple-300 shadow-sm shadow-purple-900/30">
+          <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+          <span id="roleText">Cargando...</span>
+        </div>
+
+        <button onclick="logout()" class="p-2 rounded-xl bg-purple-950/50 hover:bg-rose-950/60 border border-purple-900/60 hover:border-rose-500/50 text-purple-300 hover:text-rose-300 transition" title="Cerrar Sesión">
+          <i data-lucide="log-out" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-8">
+    
+    <!-- BIENVENIDA -->
+    <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-500/30 relative overflow-hidden">
+      <div class="absolute -top-16 -right-16 w-52 h-52 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
+            <span>SISTEMA DE GESTIÓN CENTRALIZADO</span>
+            <span>•</span>
+            <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-black text-white">
+            Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-100">Usuario</span> ⚡
+          </h1>
+          <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Gestiona tus proyectos de Minecraft, bots de Discord y tickets de soporte técnico.</p>
+        </div>
+
+        <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm transition shadow-lg shadow-purple-600/30">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Nuevo Ticket de Soporte</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TARJETAS DE MÉTRICAS -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      
+      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono uppercase text-purple-400">Tickets Activos</span>
+          <i data-lucide="ticket" class="w-4 h-4 text-purple-400"></i>
+        </div>
+        <p class="text-2xl font-black text-white">0</p>
+        <span class="text-[10px] text-purple-400/60">En cola de atención</span>
+      </div>
+
+      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono uppercase text-purple-400">Servicios</span>
+          <i data-lucide="box" class="w-4 h-4 text-purple-400"></i>
+        </div>
+        <p class="text-2xl font-black text-white">0</p>
+        <span class="text-[10px] text-purple-400/60">Plugins o bots activos</span>
+      </div>
+
+      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono uppercase text-purple-400">Nivel de Rango</span>
+          <i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i>
+        </div>
+        <p id="cardRoleText" class="text-xl sm:text-2xl font-black text-fuchsia-400">User</p>
+        <span class="text-[10px] text-purple-400/60">Permisos del sistema</span>
+      </div>
+
+      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono uppercase text-purple-400">Infraestructura</span>
+          <i data-lucide="server" class="w-4 h-4 text-emerald-400"></i>
+        </div>
+        <p class="text-2xl font-black text-emerald-400">20.0 TPS</p>
+        <span class="text-[10px] text-emerald-400/70">● Red Operacional</span>
+      </div>
+
+    </div>
+
+    <!-- SECCIÓN DE TICKETS -->
+    <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-purple-950/60 pb-4">
+        <div>
+          <h2 class="text-lg font-bold text-white">Tickets de Soporte y Desarrollo</h2>
+          <p class="text-xs text-purple-300/60">Historial de consultas, bugs y solicitudes técnicas</p>
+        </div>
+      </div>
+
+      <!-- Lista de Tickets (Placeholder Vacío) -->
+      <div id="ticketsList" class="p-8 rounded-2xl bg-black/40 border border-purple-950/60 text-center space-y-3">
+        <div class="w-12 h-12 rounded-full bg-purple-950/60 border border-purple-500/30 flex items-center justify-center mx-auto text-purple-400">
+          <i data-lucide="inbox" class="w-6 h-6"></i>
+        </div>
+        <p class="text-sm font-semibold text-white">No tienes tickets abiertos actualmente</p>
+        <p class="text-xs text-purple-400/60 max-w-sm mx-auto">
+          ¿Necesitas un plugin personalizado, ayuda con tu red de Velocity o configuración de un bot? Abre un ticket ahora.
+        </p>
+        <button onclick="openTicketModal()" class="mt-2 text-xs font-bold text-purple-300 hover:text-white underline underline-offset-4">
+          + Abrir mi primer ticket
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL: CREAR TICKET -->
+  <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full card-glass rounded-3xl p-6 sm:p-8 border border-purple-500/40 shadow-2xl relative">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-white">Nuevo Ticket de Soporte</h3>
+        <button onclick="closeTicketModal()" class="text-purple-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="newTicketForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Título del Requerimiento</label>
+          <input type="text" id="ticketTitle" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Ej: Bug en Plugin de Economía">
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Categoría</label>
+          <select id="ticketCategory" class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400">
+            <option value="Plugins Paper/Spigot">Desarrollo de Plugin</option>
+            <option value="Bot de Discord">Bot de Discord</option>
+            <option value="Network & Proxy">Network & Velocity Setup</option>
+            <option value="Optimización TPS">Optimización y Auditoría</option>
+            <option value="Facturación">Facturación / Pagos</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Detalles / Explicación</label>
+          <textarea id="ticketMessage" rows="3" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Describe a fondo qué necesitas..."></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-purple-600/30">
+          Enviar Ticket
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT DEL DASHBOARD -->
+  <script>
+    lucide.createIcons();
+
+    // 1. Verificación de Autenticación (Auth Guard)
+    const token = localStorage.getItem('synthetix_token');
+    const localUser = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
+
+    if (!token) {
+      window.location.href = '/login';
+    } else {
+      initDashboard();
+    }
+
+    async function initDashboard() {
+      try {
+        // Consultar /api/auth/me para verificar si la sesión sigue viva y su rol real
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+          throw new Error();
+        }
+
+        const data = await res.json();
+        const user = data.user;
+
+        // Renderizar datos en pantalla
+        document.getElementById('usernameDisplay').innerText = user.username;
+        document.getElementById('roleText').innerText = user.role.toUpperCase();
+        document.getElementById('welcomeRole').innerText = user.role.toUpperCase();
+        document.getElementById('cardRoleText').innerText = user.role;
+
+        // Estilo especial si eres Founder
+        if (user.role === 'Founder') {
+          const badge = document.getElementById('roleBadge');
+          badge.className = "hidden sm:inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-gradient-to-r from-purple-950 to-fuchsia-950 border border-fuchsia-500/60 text-fuchsia-300 shadow-lg shadow-fuchsia-900/40";
+        }
+
+      } catch (err) {
+        // Si el token expiró, cerrar sesión
+        logout();
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('synthetix_token');
+      localStorage.removeItem('synthetix_user');
+      window.location.href = '/login';
+    }
+
+    function openTicketModal() {
+      document.getElementById('ticketModal').classList.remove('hidden');
+    }
+
+    function closeTicketModal() {
+      document.getElementById('ticketModal').classList.add('hidden');
+    }
+
+    document.getElementById('newTicketForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("¡Ticket recibido! Pronto conectaremos el listado en vivo de KV.");
+      closeTicketModal();
+    });
+  </script>
+</body>
+</html>
