@@ -1,5 +1,55 @@
-import { hashPassword, verifyPassword } from './crypto.js';
+// ----------------------------------------------------------------------------
+// CRIPTOGRAFÍA NATIVA WEB CRYPTO (Sin dependencias externas)
+// ----------------------------------------------------------------------------
+async function hashPassword(password) {
+  const enc = new TextEncoder();
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(password),
+    { name: "PBKDF2" },
+    false,
+    ["deriveBits"]
+  );
 
+  const hashBuffer = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+    keyMaterial,
+    256
+  );
+
+  const saltHex = Array.from(salt).map(b => b.toString(16).padStart(2, '0')).join('');
+  const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  return `${saltHex}:${hashHex}`;
+}
+
+async function verifyPassword(password, storedHash) {
+  const [saltHex, originalHashHex] = storedHash.split(':');
+  if (!saltHex || !originalHashHex) return false;
+
+  const salt = new Uint8Array(saltHex.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+  const enc = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(password),
+    { name: "PBKDF2" },
+    false,
+    ["deriveBits"]
+  );
+
+  const hashBuffer = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+    keyMaterial,
+    256
+  );
+
+  const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex === originalHashHex;
+}
+
+// ----------------------------------------------------------------------------
+// WORKER ROUTER & API
+// ----------------------------------------------------------------------------
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -10,17 +60,13 @@ export default {
       headers: { "Content-Type": "application/json" }
     });
 
-    // ------------------------------------------------------------------------
-    // ENRUTADOR DE URLS LIMPIAS (Sin .html)
-    // ------------------------------------------------------------------------
+    // Enrutador de URLs Limpias (Sin .html)
     const cleanRoutes = ['/login', '/dashboard', '/admin'];
     if (cleanRoutes.includes(url.pathname)) {
       return env.ASSETS.fetch(new Request(new URL(`${url.pathname}.html`, request.url), request));
     }
 
-    // ------------------------------------------------------------------------
-    // API: REGISTRO (/api/auth/register)
-    // ------------------------------------------------------------------------
+    // REGISTRO (/api/auth/register)
     if (url.pathname === '/api/auth/register' && request.method === 'POST') {
       try {
         const { username, email, password, discord } = await request.json();
@@ -34,14 +80,15 @@ export default {
 
         const existingUser = await KV.get(`user:${normalizedEmail}`);
         if (existingUser) {
-          return json({ error: "Este correo electrónico ya está registrado" }, 400);
+          return json({ error: "Este correo ya está registrado" }, 400);
         }
 
         const existingUsername = await KV.get(`username:${normalizedUsername}`);
         if (existingUsername) {
-          return json({ error: "Este nombre de usuario ya está en uso" }, 400);
+          return json({ error: "Este usuario ya está en uso" }, 400);
         }
 
+        // Si es el primer usuario en KV, se convierte en Founder
         const userCount = await KV.get("stats:user_count");
         const role = userCount === null ? "Founder" : "User";
 
@@ -68,16 +115,14 @@ export default {
           success: true,
           token: sessionToken,
           user: userData,
-          message: role === "Founder" ? "¡Cuenta Founder creada!" : "Cuenta creada con éxito"
+          message: role === "Founder" ? "¡Cuenta de Fundador creada con éxito!" : "Cuenta creada con éxito"
         });
       } catch (err) {
         return json({ error: err.message }, 500);
       }
     }
 
-    // ------------------------------------------------------------------------
-    // API: LOGIN (/api/auth/login)
-    // ------------------------------------------------------------------------
+    // LOGIN (/api/auth/login)
     if (url.pathname === '/api/auth/login' && request.method === 'POST') {
       try {
         const { email, password } = await request.json();
@@ -110,9 +155,7 @@ export default {
       }
     }
 
-    // ------------------------------------------------------------------------
-    // API: USUARIO ACTUAL (/api/auth/me)
-    // ------------------------------------------------------------------------
+    // OBTENER SESIÓN ACTUAL (/api/auth/me)
     if (url.pathname === '/api/auth/me' && request.method === 'GET') {
       const authHeader = request.headers.get("Authorization");
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -123,15 +166,13 @@ export default {
       const sessionData = await KV.get(`session:${token}`);
 
       if (!sessionData) {
-        return json({ error: "Sesión expirada o inválida" }, 401);
+        return json({ error: "Sesión inválida o expirada" }, 401);
       }
 
       return json({ success: true, user: JSON.parse(sessionData) });
     }
 
-    // ------------------------------------------------------------------------
-    // API: COTIZACIONES (/api/quote)
-    // ------------------------------------------------------------------------
+    // COTIZACIÓN POR WEBHOOK (/api/quote)
     if (url.pathname === '/api/quote' && request.method === 'POST') {
       try {
         const data = await request.json();
@@ -163,6 +204,7 @@ export default {
       }
     }
 
+    // Servir archivos estáticos del frontend
     return env.ASSETS.fetch(request);
   }
 };
