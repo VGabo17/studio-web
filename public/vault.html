@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Vault | Synthetix Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+</head>
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between">
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center">
+          <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <span class="font-black text-lg tracking-wider text-white">SYNTHETIX<span class="text-purple-400">.VAULT</span></span>
+      </a>
+
+      <div class="flex items-center space-x-6 text-xs font-bold">
+        <a href="/" class="text-purple-300 hover:text-white">Inicio</a>
+        <a href="/services" class="text-purple-300 hover:text-white">Tarifas</a>
+        <a href="/dashboard" class="px-4 py-2 rounded-xl bg-purple-950 border border-purple-500/40 text-white">Mi Dashboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <main class="max-w-6xl mx-auto px-6 py-12 flex-1 w-full space-y-8">
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Repositorio Oficial</span>
+      <h1 class="text-3xl sm:text-5xl font-black text-white mt-1">Resource & Plugin Vault</h1>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">
+        Descarga directa de software y plugins optimizados sin acortadores ni links externos.
+      </p>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="max-w-md mx-auto">
+      <input type="text" id="vaultSearch" oninput="filterVault()" placeholder="Buscar plugin por nombre o versión..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400">
+    </div>
+
+    <!-- CATÁLOGO -->
+    <div id="vaultList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <p class="text-xs text-purple-400 text-center py-12 col-span-3">Cargando catálogo oficial...</p>
+    </div>
+  </main>
+
+  <footer class="border-t border-purple-950/60 py-6 text-center text-xs text-purple-400/50">
+    <p>© Synthetix Studio. Todos los archivos están alojados y protegidos por Cloudflare Edge.</p>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    let allVaultItems = [];
+
+    async function loadVault() {
+      const container = document.getElementById('vaultList');
+      try {
+        const res = await fetch('/api/vault');
+        const data = await res.json();
+        allVaultItems = data.resources || [];
+        renderVault();
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-rose-400 text-center py-6 col-span-3">Error al conectar con el Vault.</p>';
+      }
+    }
+
+    function filterVault() {
+      renderVault();
+    }
+
+    function renderVault() {
+      const container = document.getElementById('vaultList');
+      const search = (document.getElementById('vaultSearch').value || "").toLowerCase();
+      const filtered = allVaultItems.filter(r => r.name.toLowerCase().includes(search) || r.mcVersions.toLowerCase().includes(search));
+
+      if (filtered.length > 0) {
+        container.innerHTML = filtered.map(r => `
+          <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/50 transition">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-white text-base">${r.name}</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">v${r.version}</span>
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-fuchsia-400 font-mono mb-2">
+                <span>MC: ${r.mcVersions}</span>
+                <span class="text-purple-400">${r.fileSize || 'Descarga .jar'}</span>
+              </div>
+              <p class="text-xs text-purple-300/70 mb-4">${r.description || 'Plugin desarrollado por Synthetix Studio.'}</p>
+            </div>
+            <a href="/api/vault/download?id=${r.id}" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow-lg shadow-purple-600/30">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>Descargar .JAR Directo</span>
+            </a>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-12 col-span-3">No hay plugins que coincidan con la búsqueda.</p>';
+      }
+      lucide.createIcons();
+    }
+
+    loadVault();
+  </script>
+</body>
+</html>

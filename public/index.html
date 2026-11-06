@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Synthetix Studio | Minecraft Networks & Discord Engineering</title>
+  <title>Synthetix Studio | Desarrollo y Redes de Minecraft</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -11,316 +11,241 @@
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
-<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100">
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between">
 
-  <!-- NAVBAR -->
-  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-6 py-3.5">
+  <!-- NAVBAR MULTIPÁGINA -->
+  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
-      <!-- LOGO -->
-      <a href="/" class="group flex items-center space-x-3 transition">
-        <div class="relative flex items-center justify-center">
-          <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-xl blur-sm opacity-50"></div>
-          <div class="relative w-10 h-10 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center">
-            <i data-lucide="terminal" class="w-5 h-5 text-purple-300"></i>
-          </div>
-          <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-400"></span>
-          </span>
+      <a href="/" class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
+          <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
         </div>
-
-        <div class="flex flex-col text-left">
-          <div class="flex items-center space-x-1.5">
-            <span class="font-black text-lg sm:text-xl tracking-wider text-white">SYNTHETIX</span>
-            <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300">STUDIO</span>
-          </div>
-          <span class="text-[9px] font-mono tracking-widest text-purple-400/60 uppercase">DEV & INFRASTRUCTURE</span>
-        </div>
+        <span class="font-black text-lg tracking-wider text-white">SYNTHETIX<span class="text-purple-400">.STUDIO</span></span>
       </a>
 
-      <!-- ENLACES ESCRITORIO -->
+      <!-- ENLACES REALES MULTIPÁGINA -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
-        <a href="#services" class="hover:text-purple-300 transition">Servicios</a>
-        <a href="#resources" class="hover:text-purple-300 transition">Plugins & Vault</a>
-        <a href="#network" class="hover:text-purple-300 transition">Network Tester</a>
-        <a href="#quote" class="hover:text-purple-300 transition">Cotizador</a>
+        <a href="/" class="text-white font-bold">Inicio</a>
+        <a href="#pricing" class="hover:text-purple-300 transition">Tarifas</a>
+        <a href="/services" class="hover:text-purple-300 transition">Servicios</a>
+        <a href="/vault" class="hover:text-purple-300 transition">Resource Vault</a>
       </div>
 
-      <div class="hidden md:flex items-center space-x-3" id="desktopAuthSlot">
-        <a href="/login" class="px-4 py-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-xs font-bold text-purple-200 hover:text-white transition">
+      <div class="flex items-center space-x-3">
+        <a href="/dashboard" id="portalNavBtn" class="px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
           Portal Clientes
         </a>
-      </div>
-
-      <!-- BOTONES MÓVIL -->
-      <div class="flex md:hidden items-center space-x-2">
-        <a href="/login" id="mobileUserBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-300">
-          <i data-lucide="user" class="w-5 h-5"></i>
-        </a>
-        <button id="hamburgerBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/40 flex items-center justify-center text-purple-300">
-          <i data-lucide="menu" id="hamburgerIcon" class="w-5 h-5"></i>
-        </button>
+        <button id="mobileNavToggle" class="md:hidden p-2 text-purple-300"><i data-lucide="menu" class="w-5 h-5"></i></button>
       </div>
 
     </div>
 
-    <!-- MENÚ HAMBURGUESA MÓVIL -->
-    <div id="mobileMenu" class="hidden md:hidden pt-4 pb-6 px-4 mt-3 border-t border-purple-900/40 bg-[#090414]/95 backdrop-blur-2xl rounded-2xl shadow-2xl space-y-4">
-      <a href="#services" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
-        <i data-lucide="cpu" class="w-5 h-5 text-purple-400"></i>
-        <span class="font-medium text-sm">Servicios Especializados</span>
-      </a>
-      <a href="#resources" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
-        <i data-lucide="package" class="w-5 h-5 text-purple-400"></i>
-        <span class="font-medium text-sm">Catálogo de Plugins</span>
-      </a>
-      <a href="#network" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
-        <i data-lucide="activity" class="w-5 h-5 text-purple-400"></i>
-        <span class="font-medium text-sm">Network Ping Tester</span>
-      </a>
-      <a href="#quote" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
-        <i data-lucide="calculator" class="w-5 h-5 text-purple-400"></i>
-        <span class="font-medium text-sm">Cotizador Modular</span>
-      </a>
-      <div id="mobileAuthSlot">
-        <a href="/login" class="flex items-center justify-between text-white font-bold py-2.5 px-3 rounded-xl bg-purple-900/40 border border-purple-500/40">
-          <div class="flex items-center space-x-3">
-            <i data-lucide="log-in" class="w-5 h-5 text-purple-300"></i>
-            <span class="text-sm">Acceder al Portal</span>
-          </div>
-          <span class="text-[10px] font-mono text-purple-300 bg-purple-950 px-2 py-0.5 rounded">Dashboard</span>
-        </a>
-      </div>
+    <!-- MENÚ MÓVIL -->
+    <div id="mobileMenu" class="hidden md:hidden pt-4 pb-4 px-4 border-t border-purple-900/40 bg-[#090414] rounded-2xl mt-3 space-y-3">
+      <a href="/" class="block text-sm font-bold text-white py-1">Inicio</a>
+      <a href="#pricing" class="block text-sm text-purple-300 py-1">Tarifas Oficiales</a>
+      <a href="/services" class="block text-sm text-purple-300 py-1">Todos los Servicios</a>
+      <a href="/vault" class="block text-sm text-purple-300 py-1">Resource Vault (.JARs)</a>
+      <a href="/dashboard" class="block text-sm text-fuchsia-300 font-bold py-1">Mi Dashboard / Pedidos</a>
     </div>
   </nav>
 
-  <!-- HERO PROFESIONAL -->
-  <header class="max-w-5xl mx-auto px-6 pt-24 pb-20 text-center">
+  <!-- HERO -->
+  <header class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
-      <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
-      <span>ESTUDIO PROFESIONAL • MINECRAFT & DISCORD</span>
+      <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+      <span>PLATAFORMA Y ESTUDIO 100% GESTIONADO EN LA WEB</span>
     </div>
     
-    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6">
-      Ingeniería Avanzada para <br>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-indigo-200">Servidores & Comunidades</span>
+    <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6">
+      Ingeniería de Servidores & Plugins <br>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Directo en la Web</span>
     </h1>
 
-    <p class="text-purple-200/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-      Desarrollo de plugins Paper/Spigot sin fugas de memoria, setups integrales con Velocity y bots de Discord conectados a bases de datos en tiempo real.
+    <p class="text-purple-200/70 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+      Sin depender de Discord. Elige tu plan, abre tu sala de proyecto privada en el portal, habla con el desarrollador y descarga tus archivos directamente.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
-      <a href="#quote" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
-        Cotizar Proyecto
+      <a href="#pricing" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
+        Ver Tarifas y Planes
       </a>
-      <a href="#resources" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
-        Ver Plugins del Vault
+      <a href="/vault" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
+        Explorar Resource Vault
       </a>
     </div>
   </header>
 
-  <!-- SERVICIOS -->
-  <section id="services" class="max-w-6xl mx-auto px-6 py-20">
-    <div class="mb-12">
-      <p class="text-xs uppercase font-mono tracking-widest text-purple-400 mb-2">Especialidades</p>
-      <h2 class="text-3xl font-extrabold text-white">Ingeniería a Medida</h2>
+  <!-- SECCIÓN DE TARIFAS (PRICING GRID) -->
+  <section id="pricing" class="max-w-6xl mx-auto px-6 py-16">
+    <div class="text-center mb-14">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Precios Transparentes</span>
+      <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Tarifas de Servicios</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Paga únicamente por lo que tu servidor necesita. Todos los proyectos incluyen soporte y código optimizado.</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="p-8 rounded-3xl card-glass neon-card-glow flex flex-col justify-between">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- PLAN 1: PLUGIN SPIGOT / PAPER -->
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
-          <div class="w-14 h-14 rounded-2xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center text-purple-300 mb-6">
-            <i data-lucide="cpu" class="w-7 h-7"></i>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Desarrollo Java</span>
+          <h3 class="text-xl font-bold text-white mb-2">Plugin a Medida</h3>
+          <div class="flex items-baseline space-x-1 mb-4">
+            <span class="text-xs text-purple-400">Desde</span>
+            <span class="text-3xl font-black text-white">$20</span>
+            <span class="text-[10px] text-purple-400">/ build</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2">Plugins Spigot / Paper</h3>
-          <p class="text-purple-200/60 text-sm leading-relaxed mb-6">
-            Desarrollo en Java 17/21. Lógica asíncrona, minijuegos, integración de NMS y economías multi-servidor sin fugas de memoria.
-          </p>
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Java 17 / 21 nativo</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Lógica asíncrona sin lag</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Compatibilidad Paper / Purpur</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Entrega .JAR directa en web</li>
+          </ul>
         </div>
-        <span class="text-xs font-mono text-purple-300">● PaperMC • Purpur • Folia</span>
-      </div>
-
-      <div class="p-8 rounded-3xl card-glass neon-card-glow flex flex-col justify-between">
-        <div>
-          <div class="w-14 h-14 rounded-2xl bg-fuchsia-950/80 border border-fuchsia-500/40 flex items-center justify-center text-fuchsia-300 mb-6">
-            <i data-lucide="bot" class="w-7 h-7"></i>
-          </div>
-          <h3 class="text-xl font-bold text-white mb-2">Bots de Discord</h3>
-          <p class="text-purple-200/60 text-sm leading-relaxed mb-6">
-            Sistemas de tickets con transcripción HTML, vinculación Minecraft-Discord, verificación y bases de datos MySQL/MongoDB.
-          </p>
-        </div>
-        <span class="text-xs font-mono text-fuchsia-300">● 99.99% Uptime Ready</span>
-      </div>
-
-      <div class="p-8 rounded-3xl card-glass neon-card-glow flex flex-col justify-between">
-        <div>
-          <div class="w-14 h-14 rounded-2xl bg-indigo-950/80 border border-indigo-500/40 flex items-center justify-center text-indigo-300 mb-6">
-            <i data-lucide="network" class="w-7 h-7"></i>
-          </div>
-          <h3 class="text-xl font-bold text-white mb-2">Networks & Velocity</h3>
-          <p class="text-purple-200/60 text-sm leading-relaxed mb-6">
-            Configuración integral de proxys Velocity, sincronización global con RedisBungee, balanceo de carga y mitigación de ataques bot.
-          </p>
-        </div>
-        <span class="text-xs font-mono text-indigo-300">● Anti-Bot & Multi-Lobby</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- CATÁLOGO DE RECURSOS PÚBLICO -->
-  <section id="resources" class="max-w-6xl mx-auto px-6 py-20">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
-      <div>
-        <p class="text-xs uppercase font-mono tracking-widest text-purple-400 mb-2">Descargas Verificadas</p>
-        <h2 class="text-3xl font-extrabold text-white">Synthetix Resource Vault</h2>
-      </div>
-      <a href="/login" class="text-xs font-bold text-fuchsia-400 hover:text-white mt-2 sm:mt-0 flex items-center space-x-1">
-        <span>Ingresar al Vault Completo</span>
-        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-      </a>
-    </div>
-
-    <div id="publicVaultList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 text-center py-12 col-span-3">
-        <p class="text-xs text-purple-400">Cargando plugins disponibles...</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTER DE MINECRAFT -->
-  <section id="network" class="max-w-4xl mx-auto px-6 py-16">
-    <div class="p-8 rounded-3xl card-glass pulse-border-neon shadow-2xl">
-      <div class="flex items-center space-x-3 mb-6">
-        <i data-lucide="activity" class="text-purple-400 w-6 h-6 animate-pulse"></i>
-        <h3 class="text-xl font-bold text-white">Live Network Checker</h3>
-      </div>
-      <p class="text-purple-200/70 text-sm mb-6">
-        Verifica en tiempo real el estado, ping y cantidad de jugadores de cualquier IP o servidor configurado por Synthetix.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-3 mb-6">
-        <input type="text" id="mcServerInput" value="mc.hypixel.net" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-purple-400 transition" placeholder="Introduce una IP (Ej: tu-servidor.net)">
-        <button id="pingBtn" class="bg-purple-700 hover:bg-purple-600 text-white font-semibold px-6 py-3 rounded-xl text-sm transition">
-          Comprobar Estado
+        <button onclick="orderPlan('Plugin Spigot/Paper', '$20 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
+          Ordenar en la Web
         </button>
       </div>
 
-      <div id="mcResult" class="p-4 rounded-xl bg-black/40 border border-purple-950 text-xs font-mono space-y-2">
-        <p class="text-purple-400">⚡ Escribe una IP arriba y haz clic en Comprobar.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- COTIZADOR MODULAR -->
-  <section id="quote" class="max-w-3xl mx-auto px-6 py-20">
-    <div class="p-8 md:p-12 rounded-3xl card-glass shadow-2xl">
-      <div class="text-center mb-10">
-        <span class="text-xs font-mono uppercase tracking-widest text-purple-400">Configurador Automatizado</span>
-        <h2 class="text-3xl font-black text-white mt-1">Arma tu Proyecto</h2>
-        <p class="text-purple-200/60 text-sm mt-2">Selecciona los módulos requeridos y enviaremos la solicitud directo al equipo.</p>
-      </div>
-
-      <div class="space-y-3 mb-8">
-        <label class="flex items-center justify-between p-4 rounded-xl bg-purple-950/20 border border-purple-900/40 cursor-pointer hover:border-purple-500/50 transition">
-          <div class="flex items-center space-x-3">
-            <input type="checkbox" value="Plugin Spigot/Paper" class="service-check w-4 h-4 accent-purple-500 rounded">
-            <div>
-              <p class="text-sm font-semibold text-white">Plugin Spigot / Paper Personalizado</p>
-              <p class="text-xs text-purple-300/60">Mecánicas únicas, minijuego o economía</p>
-            </div>
-          </div>
-          <span class="text-xs font-mono text-purple-400 bg-purple-900/30 px-2.5 py-1 rounded-md">Java</span>
-        </label>
-
-        <label class="flex items-center justify-between p-4 rounded-xl bg-purple-950/20 border border-purple-900/40 cursor-pointer hover:border-purple-500/50 transition">
-          <div class="flex items-center space-x-3">
-            <input type="checkbox" value="Bot de Discord con DB" class="service-check w-4 h-4 accent-purple-500 rounded">
-            <div>
-              <p class="text-sm font-semibold text-white">Bot de Discord con Base de Datos</p>
-              <p class="text-xs text-purple-300/60">Tickets, vinculación MC-Discord, webhooks</p>
-            </div>
-          </div>
-          <span class="text-xs font-mono text-purple-400 bg-purple-900/30 px-2.5 py-1 rounded-md">Discord.js</span>
-        </label>
-
-        <label class="flex items-center justify-between p-4 rounded-xl bg-purple-950/20 border border-purple-900/40 cursor-pointer hover:border-purple-500/50 transition">
-          <div class="flex items-center space-x-3">
-            <input type="checkbox" value="Infraestructura Network (Velocity)" class="service-check w-4 h-4 accent-purple-500 rounded">
-            <div>
-              <p class="text-sm font-semibold text-white">Setup Network & Proxy Velocity</p>
-              <p class="text-xs text-purple-300/60">Balanceo de carga, multi-lobby y anti-bot</p>
-            </div>
-          </div>
-          <span class="text-xs font-mono text-purple-400 bg-purple-900/30 px-2.5 py-1 rounded-md">Velocity</span>
-        </label>
-      </div>
-
-      <form id="quoteForm" class="space-y-4">
-        <div class="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-mono uppercase text-purple-300 mb-1.5">Tu Nombre / Tag</label>
-            <input type="text" id="name" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-purple-400 transition" placeholder="Gabo">
-          </div>
-          <div>
-            <label class="block text-xs font-mono uppercase text-purple-300 mb-1.5">Usuario de Discord</label>
-            <input type="text" id="discord" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-purple-400 transition" placeholder="vgabo17">
-          </div>
-        </div>
-
+      <!-- PLAN 2: BOT DE DISCORD -->
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
-          <label class="block text-xs font-mono uppercase text-purple-300 mb-1.5">Detalles del Requerimiento</label>
-          <textarea id="details" rows="3" class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-purple-400 transition" placeholder="Versión de Minecraft, comandos o requerimientos específicos..."></textarea>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Automatización</span>
+          <h3 class="text-xl font-bold text-white mb-2">Bot de Discord</h3>
+          <div class="flex items-baseline space-x-1 mb-4">
+            <span class="text-xs text-purple-400">Desde</span>
+            <span class="text-3xl font-black text-white">$35</span>
+            <span class="text-[10px] text-purple-400">/ proyecto</span>
+          </div>
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Vinculación MC-Discord</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sistema de tickets con logs</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Base de datos MySQL / SQLite</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Botones y menús modernos</li>
+          </ul>
         </div>
-
-        <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-lg shadow-purple-600/30">
-          Enviar Orden a Synthetix
+        <button onclick="orderPlan('Bot de Discord Avanzado', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
+          Ordenar en la Web
         </button>
-        <p id="formStatus" class="text-center text-xs font-medium hidden mt-2"></p>
-      </form>
+      </div>
+
+      <!-- PLAN 3: MODALIDAD COMPLETA (DESTACADO) -->
+      <div class="p-6 rounded-3xl card-glass border-2 border-fuchsia-500/60 flex flex-col justify-between relative shadow-xl shadow-purple-900/40">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-[9px] font-bold uppercase tracking-wider text-white px-3 py-0.5 rounded-full">
+          Más Popular
+        </span>
+        <div>
+          <span class="text-[10px] font-mono text-fuchsia-400 uppercase tracking-wider block mb-2">Configuración Integral</span>
+          <h3 class="text-xl font-bold text-white mb-2">Modalidad Minecraft</h3>
+          <div class="flex items-baseline space-x-1 mb-4">
+            <span class="text-xs text-purple-400">Desde</span>
+            <span class="text-3xl font-black text-fuchsia-400">$60</span>
+            <span class="text-[10px] text-purple-400">/ setup</span>
+          </div>
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Survival, BoxPvP, Skyblock</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Economía equilibrada y rangos</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Menús DeluxeMenus custom</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Optimización extrema a 20 TPS</li>
+          </ul>
+        </div>
+        <button onclick="orderPlan('Modalidad Completa MC', '$60 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">
+          Ordenar en la Web
+        </button>
+      </div>
+
+      <!-- PLAN 4: NETWORK VELOCITY ENTERPRISE -->
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
+        <div>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Infraestructura Masiva</span>
+          <h3 class="text-xl font-bold text-white mb-2">Network Velocity</h3>
+          <div class="flex items-baseline space-x-1 mb-4">
+            <span class="text-xs text-purple-400">Desde</span>
+            <span class="text-3xl font-black text-white">$120</span>
+            <span class="text-[10px] text-purple-400">/ red</span>
+          </div>
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Proxy Velocity + Balanceo</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sincronización Redis global</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Filtros y protección Anti-Bot</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Soporte técnico prioritario</li>
+          </ul>
+        </div>
+        <button onclick="orderPlan('Network Velocity Enterprise', '$120 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
+          Ordenar en la Web
+        </button>
+      </div>
+
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="border-t border-purple-950/60 py-10 text-center text-xs text-purple-300/40">
-    <p>© Synthetix Studio. Todos los derechos reservados.</p>
+  <footer class="border-t border-purple-950/60 py-8 text-center text-xs text-purple-300/40">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-6 gap-4">
+      <p>© Synthetix Studio. Todos los derechos reservados.</p>
+      <div class="flex space-x-6">
+        <a href="/services" class="hover:text-purple-300">Servicios</a>
+        <a href="/vault" class="hover:text-purple-300">Vault</a>
+        <a href="/dashboard" class="hover:text-purple-300">Portal</a>
+      </div>
+    </div>
   </footer>
 
   <script>
-    // Cargar plugins públicos en la portada
-    async function loadPublicVault() {
-      const container = document.getElementById('publicVaultList');
-      try {
-        const res = await fetch('/api/vault');
-        const data = await res.json();
-        if (data.resources && data.resources.length > 0) {
-          container.innerHTML = data.resources.slice(0, 3).map(r => `
-            <div class="p-6 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-2">
-                  <span class="font-bold text-white text-base">${r.name}</span>
-                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">v${r.version}</span>
-                </div>
-                <span class="text-[10px] text-fuchsia-400 font-mono block mb-2">MC: ${r.mcVersions}</span>
-                <p class="text-xs text-purple-300/70 mb-4">${r.description || 'Plugin optimizado por Synthetix Studio.'}</p>
-              </div>
-              <a href="/login" class="w-full py-2 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-bold flex items-center justify-center space-x-1 border border-purple-800">
-                <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                <span>Descargar en el Portal</span>
-              </a>
-            </div>
-          `).join('');
-          lucide.createIcons();
-        } else {
-          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-3">Próximamente publicaremos plugins en el Vault.</p>';
-        }
-      } catch (e) {}
-    }
-    loadPublicVault();
-  </script>
+    lucide.createIcons();
 
-  <script type="module" src="/assets/js/main.js"></script>
+    // Menú móvil toggle
+    document.getElementById('mobileNavToggle').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    // Detectar si está logueado para cambiar botón del navbar
+    const token = localStorage.getItem('synthetix_token');
+    const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
+    if (token && user.username) {
+      const btn = document.getElementById('portalNavBtn');
+      btn.innerText = `${user.username} (${user.role})`;
+      btn.className = "px-3.5 py-1.5 rounded-xl bg-purple-900/60 border border-fuchsia-500/50 text-xs font-bold text-fuchsia-300";
+    }
+
+    // Función para ordenar directamente en la web
+    async function orderPlan(planTitle, price) {
+      if (!token) {
+        alert("Para ordenar debes iniciar sesión o crear tu cuenta en 10 segundos.");
+        window.location.href = '/login';
+        return;
+      }
+
+      const notes = prompt(`¿Qué detalles específicos necesitas para ${planTitle}? (Versión MC, qué comandos o funciones quieres):`);
+      if (notes === null) return;
+
+      try {
+        const res = await fetch('/api/orders/create', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ planTitle, price, details: notes })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          alert(`¡Pedido ${data.orderId} creado en la web con éxito! Te llevamos a tu sala de proyecto.`);
+          window.location.href = '/dashboard';
+        } else {
+          alert(data.error);
+        }
+      } catch (e) {
+        alert("Error de conexión");
+      }
+    }
+  </script>
 </body>
 </html>

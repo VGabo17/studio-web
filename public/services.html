@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servicios y Tarifas | Synthetix Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+</head>
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between">
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center">
+          <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <span class="font-black text-lg tracking-wider text-white">SYNTHETIX<span class="text-purple-400">.SERVICIOS</span></span>
+      </a>
+
+      <div class="flex items-center space-x-6 text-xs font-bold">
+        <a href="/" class="text-purple-300 hover:text-white">Inicio</a>
+        <a href="/vault" class="text-purple-300 hover:text-white">Vault</a>
+        <a href="/dashboard" class="px-4 py-2 rounded-xl bg-purple-950 border border-purple-500/40 text-white">Mi Dashboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto px-6 py-14 flex-1 space-y-12">
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Gama de Desarrollo</span>
+      <h1 class="text-3xl sm:text-5xl font-black text-white mt-1">Servicios & Tarifas</h1>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">
+        Todos los pedidos se gestionan dentro de la plataforma con chat privado y entrega de archivos garantizada.
+      </p>
+    </div>
+
+    <!-- TARJETAS DETALLADAS -->
+    <div class="space-y-6">
+      
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <span class="text-xs font-mono text-fuchsia-400 font-bold">DESDE $20 USD</span>
+          <h2 class="text-2xl font-bold text-white">Plugins Spigot / Paper en Java Puro</h2>
+          <p class="text-xs text-purple-300/70 max-w-xl">
+            Desarrollo de mecánicas personalizadas, minijuegos, sistemas de clanes, economías complejas y paquetes NMS sin fugas de memoria (Memory Leaks).
+          </p>
+        </div>
+        <button onclick="orderFromServices('Plugin Java Spigot/Paper', '$20 USD')" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold whitespace-nowrap shadow-lg">
+          Ordenar en la Web
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <span class="text-xs font-mono text-fuchsia-400 font-bold">DESDE $35 USD</span>
+          <h2 class="text-2xl font-bold text-white">Bots de Discord Avanzados</h2>
+          <p class="text-xs text-purple-300/70 max-w-xl">
+            Sistemas de tickets, verificación por vinculación de cuentas Minecraft, paneles interactivos con menús y conexión a bases de datos SQL.
+          </p>
+        </div>
+        <button onclick="orderFromServices('Bot de Discord Avanzado', '$35 USD')" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold whitespace-nowrap shadow-lg">
+          Ordenar en la Web
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <span class="text-xs font-mono text-fuchsia-400 font-bold">DESDE $60 USD</span>
+          <h2 class="text-2xl font-bold text-white">Setup de Modalidad Completa</h2>
+          <p class="text-xs text-purple-300/70 max-w-xl">
+            Configuración lista para abrir: Survival Custom, BoxPvP, Skyblock o Factions. Permisos, rangos, menús, tiendas balanceadas y optimización a 20 TPS.
+          </p>
+        </div>
+        <button onclick="orderFromServices('Modalidad Completa MC', '$60 USD')" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold whitespace-nowrap shadow-lg">
+          Ordenar en la Web
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <span class="text-xs font-mono text-fuchsia-400 font-bold">DESDE $120 USD</span>
+          <h2 class="text-2xl font-bold text-white">Arquitectura Network Velocity Enterprise</h2>
+          <p class="text-xs text-purple-300/70 max-w-xl">
+            Red corporativa escalable: proxy moderno Velocity, sincronización global de chats y rangos vía RedisBungee, balanceo multi-lobby y mitigación anti-bot.
+          </p>
+        </div>
+        <button onclick="orderFromServices('Network Velocity Enterprise', '$120 USD')" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold whitespace-nowrap shadow-lg">
+          Ordenar en la Web
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="border-t border-purple-950/60 py-6 text-center text-xs text-purple-400/50">
+    <p>© Synthetix Studio. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    async function orderFromServices(planTitle, price) {
+      const token = localStorage.getItem('synthetix_token');
+      if (!token) {
+        alert("Inicia sesión para ordenar directamente desde la web.");
+        window.location.href = '/login';
+        return;
+      }
+
+      const notes = prompt(`Detalles para ${planTitle}:`);
+      if (notes === null) return;
+
+      const res = await fetch('/api/orders/create', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planTitle, price, details: notes })
+      });
+
+      const d = await res.json();
+      if (d.success) {
+        alert("¡Pedido creado! Abriendo tu sala de proyecto.");
+        window.location.href = '/dashboard';
+      }
+    }
+  </script>
+</body>
+</html>
