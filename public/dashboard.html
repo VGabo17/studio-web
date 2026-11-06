@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
-<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100">
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-16">
 
   <!-- NAVBAR -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
@@ -42,14 +42,14 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
-            <span>PANEL DE CONTROL</span>
+            <span>PORTAL DE INGENIERÍA</span>
             <span>•</span>
             <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
           </div>
           <h1 class="text-2xl sm:text-4xl font-black text-white">
             Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">...</span> ⚡
           </h1>
-          <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Soporte técnico, tickets en tiempo real y administración del estudio.</p>
+          <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Gestión de proyectos en curso, tickets de soporte y control del estudio.</p>
         </div>
 
         <button onclick="openTicketModal()" class="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-purple-600/30">
@@ -59,21 +59,20 @@
       </div>
     </div>
 
-    <!-- PESTAÑAS (FOUNDER) -->
-    <div id="founderTabs" class="hidden flex space-x-2 border-b border-purple-900/50 pb-2">
-      <button onclick="switchTab('tickets')" id="tabBtnTickets" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition">Tickets & Soporte</button>
-      <button onclick="switchTab('founder')" id="tabBtnFounder" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/40 hover:text-white transition flex items-center space-x-2">
+    <!-- PESTAÑAS PRINCIPALES -->
+    <div class="flex flex-wrap gap-2 border-b border-purple-900/50 pb-2">
+      <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition">Tickets & Soporte</button>
+      <button onclick="setMainTab('projects')" id="tabBtnProjects" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition">Mis Proyectos & Builds</button>
+      <button onclick="setMainTab('founder')" id="tabBtnFounder" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-fuchsia-300 border border-fuchsia-500/40 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-400"></i>
-        <span>Founder Nexus (Usuarios)</span>
+        <span>Founder Nexus (Centro de Mando)</span>
       </button>
     </div>
 
-    <!-- VISTA TICKETS -->
+    <!-- VISTA 1: TICKETS DE SOPORTE CON CHAT -->
     <div id="viewTickets" class="grid lg:grid-cols-3 gap-6">
-      
-      <!-- LISTA DE TICKETS (Columna Izquierda) -->
       <div class="lg:col-span-1 p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <div class="flex items-center justify-between border-b border-purple-950/60 pb-3">
+        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
           <h3 class="font-bold text-white text-sm">Tickets</h3>
           <button onclick="loadTickets()" class="text-xs text-purple-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
         </div>
@@ -82,7 +81,6 @@
         </div>
       </div>
 
-      <!-- CHAT / DETALLE DEL TICKET (Columna Derecha) -->
       <div class="lg:col-span-2 p-6 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between min-h-[500px]">
         <div id="ticketDetailContent" class="space-y-4">
           <div class="text-center py-20 text-purple-400/60">
@@ -91,8 +89,7 @@
           </div>
         </div>
 
-        <!-- FORMULARIO DE RESPUESTA -->
-        <div id="replyArea" class="hidden pt-4 border-t border-purple-950/60 mt-4">
+        <div id="replyArea" class="hidden pt-4 border-t border-purple-950 mt-4">
           <form id="replyForm" class="flex gap-2">
             <input type="text" id="replyText" required placeholder="Escribe una respuesta técnica..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400">
             <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition flex items-center space-x-1">
@@ -102,39 +99,117 @@
           </form>
         </div>
       </div>
-
     </div>
 
-    <!-- VISTA FOUNDER NEXUS -->
-    <div id="viewFounder" class="hidden space-y-6">
-      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-fuchsia-500/40 space-y-6">
-        <div class="flex items-center space-x-3 border-b border-purple-950/60 pb-4">
-          <i data-lucide="shield-alert" class="w-6 h-6 text-fuchsia-400"></i>
-          <div>
-            <h2 class="text-xl font-bold text-white">Founder Nexus: Gestión de Rangos</h2>
-            <p class="text-xs text-purple-300/60">Promover usuarios a Client, Dev o Admin</p>
-          </div>
+    <!-- VISTA 2: PROYECTOS & BUILDS (CLIENTE Y FOUNDER) -->
+    <div id="viewProjects" class="hidden space-y-6">
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
+        <div class="border-b border-purple-950 pb-4">
+          <h2 class="text-lg font-bold text-white">Software Vault & Estado de Desarrollo</h2>
+          <p class="text-xs text-purple-300/60">Monitorea el avance de tus plugins, bots y arquitecturas contratadas</p>
         </div>
 
+        <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
+          <p class="text-xs text-purple-400 py-6">Cargando proyectos...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA 3: FOUNDER NEXUS (CENTRO DE CONTROL) -->
+    <div id="viewFounder" class="hidden space-y-8">
+      
+      <!-- SUB-PESTAÑAS DEL FOUNDER -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <button onclick="setFounderSubTab('quotes')" id="fTabQuotes" class="p-4 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="inbox" class="w-5 h-5"></i>
+          <span>Cotizaciones (CRM)</span>
+        </button>
+        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="folder-plus" class="w-5 h-5"></i>
+          <span>Crear Proyecto</span>
+        </button>
+        <button onclick="setFounderSubTab('announcement')" id="fTabAnnounce" class="p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="megaphone" class="w-5 h-5"></i>
+          <span>Anuncio Global</span>
+        </button>
+        <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="users" class="w-5 h-5"></i>
+          <span>Usuarios & Roles</span>
+        </button>
+      </div>
+
+      <!-- SECCIÓN A: COTIZACIONES CRM -->
+      <div id="fSecQuotes" class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
+        <h3 class="font-bold text-white text-base">Bandeja de Cotizaciones Recibidas</h3>
+        <div id="quotesList" class="space-y-3">Cargando solicitudes...</div>
+      </div>
+
+      <!-- SECCIÓN B: ASIGNAR PROYECTO -->
+      <div id="fSecAssign" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-4">
+        <h3 class="font-bold text-white text-base">Asignar Proyecto a Cliente</h3>
+        <form id="createProjectForm" class="space-y-3">
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre del Proyecto</label>
+            <input type="text" id="pTitle" required placeholder="Ej: Plugin Spigot Clanes v1.0" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Correo del Cliente</label>
+            <input type="email" id="pClientEmail" required placeholder="cliente@correo.com" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Progreso Actual (%)</label>
+            <input type="number" id="pProgress" min="0" max="100" value="25" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Enlace de Descarga o Repositorio (Opcional)</label>
+            <input type="url" id="pDownloadUrl" placeholder="https://..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Notas de Versión / Changelog</label>
+            <textarea id="pNotes" rows="2" placeholder="Notas para el cliente..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-3 rounded-xl transition">Guardar y Publicar Proyecto</button>
+        </form>
+      </div>
+
+      <!-- SECCIÓN C: ANUNCIO GLOBAL -->
+      <div id="fSecAnnounce" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-4">
+        <h3 class="font-bold text-white text-base">Barra de Alerta / Anuncio en la Web</h3>
+        <p class="text-xs text-purple-300/60">Aparecerá fijada en la parte superior de toda la web pública.</p>
+        <form id="announcementForm" class="space-y-4">
+          <input type="text" id="announcementText" placeholder="Ej: ⚡ Descuento del 20% en Redes de Minecraft este mes" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          <label class="flex items-center space-x-2 text-xs text-purple-200 cursor-pointer">
+            <input type="checkbox" id="announcementActive" class="w-4 h-4 accent-purple-500">
+            <span>Mostrar Banner Activo en la Portada</span>
+          </label>
+          <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 font-bold text-xs text-white py-2.5 rounded-xl">Actualizar Banner Global</button>
+        </form>
+      </div>
+
+      <!-- SECCIÓN D: USUARIOS -->
+      <div id="fSecUsers" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
+        <h3 class="font-bold text-white text-base">Usuarios Registrados & Asignación de Roles</h3>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead class="text-purple-400 font-mono uppercase bg-black/40 border-b border-purple-950">
               <tr>
                 <th class="p-3">Usuario</th>
                 <th class="p-3">Correo</th>
-                <th class="p-3">Rol Actual</th>
-                <th class="p-3">Cambiar Rango</th>
+                <th class="p-3">Discord</th>
+                <th class="p-3">Rol</th>
+                <th class="p-3">Acción</th>
               </tr>
             </thead>
-            <tbody id="usersTableBody" class="divide-y divide-purple-950/40"></tbody>
+            <tbody id="usersTableBody" class="divide-y divide-purple-950"></tbody>
           </table>
         </div>
       </div>
+
     </div>
 
   </main>
 
-  <!-- MODAL NUEVO TICKET -->
+  <!-- MODAL TICKET -->
   <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full card-glass rounded-3xl p-6 sm:p-8 border border-purple-500/40 shadow-2xl">
       <div class="flex items-center justify-between mb-4">
@@ -144,11 +219,11 @@
       <form id="ticketForm" class="space-y-4">
         <div>
           <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Título del Requerimiento</label>
-          <input type="text" id="tTitle" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Ej: Bug en plugin Paper">
+          <input type="text" id="tTitle" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Ej: Error al conectar Redis">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Categoría</label>
-          <select id="tCategory" class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400">
+          <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400">
             <option value="Plugins Paper/Spigot">Plugins Paper/Spigot</option>
             <option value="Bot de Discord">Bot de Discord</option>
             <option value="Network Velocity">Network Velocity</option>
@@ -157,7 +232,7 @@
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Descripción</label>
-          <textarea id="tMessage" rows="3" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Describe qué necesitas..."></textarea>
+          <textarea id="tMessage" rows="3" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Describe qué necesitas..."></textarea>
         </div>
         <button type="submit" id="tSubmitBtn" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-3 rounded-xl text-sm shadow-lg">Crear Ticket</button>
       </form>
@@ -177,6 +252,7 @@
       renderUser(currentUser);
       validateSession();
       loadTickets();
+      loadProjects();
     }
 
     function renderUser(user) {
@@ -186,7 +262,7 @@
       document.getElementById('welcomeRole').innerText = user.role.toUpperCase();
 
       if (user.role === 'Founder' || user.role === 'Admin') {
-        document.getElementById('founderTabs').classList.remove('hidden');
+        document.getElementById('tabBtnFounder').classList.remove('hidden');
         document.getElementById('roleBadge').className = "inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-fuchsia-500/60 text-fuchsia-300";
       }
     }
@@ -204,12 +280,198 @@
       } catch (e) {}
     }
 
+    // Pestañas Principales
+    function setMainTab(tab) {
+      const tabs = ['tickets', 'projects', 'founder'];
+      tabs.forEach(t => {
+        const view = document.getElementById(`view${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        if (t === tab) {
+          view.classList.remove('hidden');
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition";
+        } else {
+          view.classList.add('hidden');
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition";
+        }
+      });
+
+      if (tab === 'founder') loadFounderQuotes();
+      lucide.createIcons();
+    }
+
+    // Sub-pestañas Founder
+    function setFounderSubTab(sub) {
+      const subs = ['quotes', 'assignProject', 'announcement', 'users'];
+      const map = { quotes: 'fSecQuotes', assignProject: 'fSecAssign', announcement: 'fSecAnnounce', users: 'fSecUsers' };
+      const btnMap = { quotes: 'fTabQuotes', assignProject: 'fTabAssign', announcement: 'fTabAnnounce', users: 'fTabUsers' };
+
+      subs.forEach(s => {
+        const sec = document.getElementById(map[s]);
+        const btn = document.getElementById(btnMap[s]);
+        if (s === sub) {
+          sec.classList.remove('hidden');
+          btn.className = "p-4 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1 shadow-md shadow-purple-600/30";
+        } else {
+          sec.classList.add('hidden');
+          btn.className = "p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
+        }
+      });
+
+      if (sub === 'quotes') loadFounderQuotes();
+      if (sub === 'users') loadFounderUsers();
+      lucide.createIcons();
+    }
+
+    // --- PROYECTOS ---
+    async function loadProjects() {
+      const container = document.getElementById('projectsContainer');
+      try {
+        const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+
+        if (data.projects && data.projects.length > 0) {
+          container.innerHTML = data.projects.map(p => `
+            <div class="p-5 rounded-2xl bg-black/40 border border-purple-900/50 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
+                <span class="text-xs font-bold text-purple-300">${p.progress}% completado</span>
+              </div>
+              <h4 class="text-sm font-bold text-white">${p.title}</h4>
+              <div class="w-full bg-purple-950/60 rounded-full h-2 border border-purple-900">
+                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-2 rounded-full" style="width: ${p.progress}%"></div>
+              </div>
+              <p class="text-xs text-purple-300/60">${p.notes || "En desarrollo"}</p>
+              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-2"><i data-lucide="download" class="w-3.5 h-3.5"></i><span>Descargar Archivos / Repo</span></a>` : ''}
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-2">No tienes proyectos o builds activos por el momento.</p>';
+        }
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    // Crear Proyecto (Founder)
+    document.getElementById('createProjectForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch('/api/founder/project-create', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: document.getElementById('pTitle').value,
+            clientEmail: document.getElementById('pClientEmail').value,
+            progress: document.getElementById('pProgress').value,
+            downloadUrl: document.getElementById('pDownloadUrl').value,
+            notes: document.getElementById('pNotes').value
+          })
+        });
+        alert("¡Proyecto asignado con éxito!");
+        document.getElementById('createProjectForm').reset();
+        loadProjects();
+      } catch (e) { alert("Error al asignar"); }
+    });
+
+    // --- CRM DE COTIZACIONES ---
+    async function loadFounderQuotes() {
+      const list = document.getElementById('quotesList');
+      try {
+        const res = await fetch('/api/founder/quotes', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.quotes && data.quotes.length > 0) {
+          list.innerHTML = data.quotes.map(q => `
+            <div class="p-4 rounded-2xl bg-black/50 border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-mono text-fuchsia-400 font-bold">${q.id}</span>
+                  <span class="text-xs font-bold text-white">${q.name}</span>
+                  <span class="text-[10px] font-mono text-purple-400 bg-purple-950 px-2 py-0.5 rounded">Discord: ${q.discord}</span>
+                </div>
+                <p class="text-xs text-purple-200 mt-1 font-semibold">Servicio: ${q.service}</p>
+                <p class="text-[11px] text-purple-400/70 mt-0.5">${q.details}</p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <select onchange="changeQuoteStatus('${q.id}', this.value)" class="bg-black border border-purple-800 rounded-lg text-xs text-white px-2 py-1">
+                  <option value="Pendiente" ${q.status === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                  <option value="En Negociación" ${q.status === 'En Negociación' ? 'selected' : ''}>En Negociación</option>
+                  <option value="Aceptado" ${q.status === 'Aceptado' ? 'selected' : ''}>Aceptado</option>
+                  <option value="Rechazado" ${q.status === 'Rechazado' ? 'selected' : ''}>Rechazado</option>
+                </select>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          list.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay cotizaciones pendientes en la base de datos.</p>';
+        }
+      } catch (e) {}
+    }
+
+    async function changeQuoteStatus(id, status) {
+      await fetch('/api/founder/quote-status', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status })
+      });
+      loadFounderQuotes();
+    }
+
+    // --- ANUNCIO GLOBAL ---
+    document.getElementById('announcementForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await fetch('/api/founder/set-announcement', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: document.getElementById('announcementText').value,
+          active: document.getElementById('announcementActive').checked
+        })
+      });
+      alert("¡Banner global actualizado!");
+    });
+
+    // --- USUARIOS ---
+    async function loadFounderUsers() {
+      const tbody = document.getElementById('usersTableBody');
+      try {
+        const res = await fetch('/api/founder/users', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        tbody.innerHTML = data.users.map(u => `
+          <tr class="hover:bg-purple-950/20">
+            <td class="p-3 font-semibold text-white">${u.username}</td>
+            <td class="p-3 text-purple-300">${u.email}</td>
+            <td class="p-3 text-purple-400 font-mono">${u.discord || 'N/A'}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900 border border-purple-500/40 text-purple-200">${u.role}</span></td>
+            <td class="p-3">
+              <select onchange="changeRole('${u.email}', this.value)" class="bg-black/60 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
+                <option value="" disabled selected>Cambiar...</option>
+                <option value="Client">Client</option>
+                <option value="Soporte">Soporte</option>
+                <option value="Dev">Dev</option>
+                <option value="Admin">Admin</option>
+                <option value="Founder">Founder</option>
+              </select>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {}
+    }
+
+    async function changeRole(email, newRole) {
+      if (!confirm(`¿Cambiar el rol a ${newRole}?`)) return;
+      await fetch('/api/founder/set-role', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, newRole })
+      });
+      loadFounderUsers();
+    }
+
+    // --- TICKETS ---
     async function loadTickets() {
       const container = document.getElementById('ticketsContainer');
       try {
         const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-
         if (data.tickets && data.tickets.length > 0) {
           container.innerHTML = data.tickets.map(t => `
             <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left">
@@ -224,9 +486,7 @@
         } else {
           container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay tickets activos.</p>';
         }
-      } catch (e) {
-        container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>';
-      }
+      } catch (e) {}
     }
 
     async function selectTicket(id) {
@@ -239,11 +499,10 @@
         const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         const t = data.ticket;
-
         const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin');
 
         detail.innerHTML = `
-          <div class="flex items-center justify-between border-b border-purple-950/60 pb-3">
+          <div class="flex items-center justify-between border-b border-purple-950 pb-3">
             <div>
               <div class="flex items-center space-x-2">
                 <span class="text-sm font-mono text-fuchsia-400 font-bold">${t.id}</span>
@@ -252,24 +511,19 @@
               <h3 class="text-base font-bold text-white mt-1">${t.title}</h3>
               <p class="text-[11px] text-purple-400/60">Iniciado por: ${t.author}</p>
             </div>
-            
-            <div class="flex items-center space-x-2">
+            <div>
               ${isStaff ? `
                 <select onchange="changeTicketStatus('${t.id}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg text-xs text-purple-200 px-2 py-1">
                   <option value="Abierto" ${t.status === 'Abierto' ? 'selected' : ''}>Abierto</option>
                   <option value="En Proceso" ${t.status === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
                   <option value="Cerrado" ${t.status === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
                 </select>
-              ` : `
-                <span class="text-xs px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-400 font-bold">${t.status}</span>
-              `}
+              ` : `<span class="text-xs px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-400 font-bold">${t.status}</span>`}
             </div>
           </div>
-
-          <!-- MENSAJES -->
           <div class="space-y-3 max-h-[360px] overflow-y-auto pr-2">
             ${t.messages.map(m => `
-              <div class="p-3.5 rounded-2xl ${m.role === 'Founder' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-6' : 'bg-black/50 border border-purple-950/60 mr-6'}">
+              <div class="p-3.5 rounded-2xl ${m.role === 'Founder' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-6' : 'bg-black/50 border border-purple-950 mr-6'}">
                 <div class="flex items-center justify-between text-[11px] mb-1">
                   <div class="flex items-center space-x-2">
                     <span class="font-bold text-white">${m.sender}</span>
@@ -282,15 +536,11 @@
             `).join('')}
           </div>
         `;
-
         replyArea.classList.remove('hidden');
         lucide.createIcons();
-      } catch (e) {
-        detail.innerHTML = '<p class="text-xs text-rose-400 text-center py-6">Error al cargar la conversación.</p>';
-      }
+      } catch (e) {}
     }
 
-    // Responder ticket
     document.getElementById('replyForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const input = document.getElementById('replyText');
@@ -298,122 +548,43 @@
       if (!text || !activeTicketId) return;
 
       input.value = "";
-      try {
-        const res = await fetch('/api/tickets/reply', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ticketId: activeTicketId, text })
-        });
-        const data = await res.json();
-        if (data.success) {
-          selectTicket(activeTicketId);
-        }
-      } catch (e) {
-        alert("Error al enviar respuesta");
-      }
+      await fetch('/api/tickets/reply', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId: activeTicketId, text })
+      });
+      selectTicket(activeTicketId);
     });
 
     async function changeTicketStatus(ticketId, newStatus) {
-      try {
-        await fetch('/api/tickets/status', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ticketId, newStatus })
-        });
-        loadTickets();
-        selectTicket(ticketId);
-      } catch (e) {}
-    }
-
-    // Crear nuevo ticket
-    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('tSubmitBtn');
-      btn.disabled = true;
-
-      try {
-        const res = await fetch('/api/tickets', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: document.getElementById('tTitle').value,
-            category: document.getElementById('tCategory').value,
-            message: document.getElementById('tMessage').value
-          })
-        });
-        const d = await res.json();
-        if (d.success) {
-          closeTicketModal();
-          document.getElementById('ticketForm').reset();
-          loadTickets();
-          selectTicket(d.ticket.id);
-        }
-      } catch (e) {
-        alert("Error al crear ticket");
-      } finally {
-        btn.disabled = false;
-      }
-    });
-
-    function switchTab(tab) {
-      const vTickets = document.getElementById('viewTickets');
-      const vFounder = document.getElementById('viewFounder');
-      const btnT = document.getElementById('tabBtnTickets');
-      const btnF = document.getElementById('tabBtnFounder');
-
-      if (tab === 'founder') {
-        vTickets.classList.add('hidden');
-        vFounder.classList.remove('hidden');
-        btnF.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-2";
-        btnT.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/40 hover:text-white transition";
-        loadFounderUsers();
-      } else {
-        vFounder.classList.add('hidden');
-        vTickets.classList.remove('hidden');
-        btnT.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition";
-        btnF.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/40 hover:text-white transition flex items-center space-x-2";
-        loadTickets();
-      }
-      lucide.createIcons();
-    }
-
-    async function loadFounderUsers() {
-      const tbody = document.getElementById('usersTableBody');
-      try {
-        const res = await fetch('/api/founder/users', { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-
-        if (data.users && data.users.length > 0) {
-          tbody.innerHTML = data.users.map(u => `
-            <tr class="hover:bg-purple-950/20">
-              <td class="p-3 font-semibold text-white">${u.username}</td>
-              <td class="p-3 text-purple-300">${u.email}</td>
-              <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900 border border-purple-500/40 text-purple-200">${u.role}</span></td>
-              <td class="p-3">
-                <select onchange="changeRole('${u.email}', this.value)" class="bg-black/60 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
-                  <option value="" disabled selected>Cambiar...</option>
-                  <option value="Client">Client</option>
-                  <option value="Soporte">Soporte</option>
-                  <option value="Dev">Dev</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Founder">Founder</option>
-                </select>
-              </td>
-            </tr>
-          `).join('');
-        }
-      } catch (e) {}
-    }
-
-    async function changeRole(email, newRole) {
-      if (!confirm(`¿Cambiar el rol a ${newRole}?`)) return;
-      await fetch('/api/founder/set-role', {
+      await fetch('/api/tickets/status', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, newRole })
+        body: JSON.stringify({ ticketId, newStatus })
       });
-      loadFounderUsers();
+      loadTickets();
+      selectTicket(ticketId);
     }
+
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: document.getElementById('tTitle').value,
+          category: document.getElementById('tCategory').value,
+          message: document.getElementById('tMessage').value
+        })
+      });
+      const d = await res.json();
+      if (d.success) {
+        closeTicketModal();
+        document.getElementById('ticketForm').reset();
+        loadTickets();
+        selectTicket(d.ticket.id);
+      }
+    });
 
     function openTicketModal() { document.getElementById('ticketModal').classList.remove('hidden'); }
     function closeTicketModal() { document.getElementById('ticketModal').classList.add('hidden'); }

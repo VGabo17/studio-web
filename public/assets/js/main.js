@@ -1,15 +1,26 @@
 import { pingMinecraftServer } from './mc-checker.js';
 import { sendQuote } from './quote.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (window.lucide) window.lucide.createIcons();
 
-  // Detección limpia de sesión en navbar
+  // 1. Cargar Anuncio Global del Founder
+  try {
+    const res = await fetch('/api/announcement');
+    const d = await res.json();
+    if (d.success && d.data && d.data.active && d.data.text) {
+      const banner = document.createElement('div');
+      banner.className = "bg-gradient-to-r from-purple-700 via-fuchsia-600 to-purple-700 text-white text-center py-2 px-4 text-xs font-bold tracking-wide shadow-lg flex items-center justify-center space-x-2";
+      banner.innerHTML = `<span class="animate-pulse">⚡</span><span>${d.data.text}</span>`;
+      document.body.prepend(banner);
+    }
+  } catch (e) {}
+
+  // 2. Detección de sesión limpia en navbar
   const token = localStorage.getItem('synthetix_token');
   const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
 
   if (token && user.username) {
-    // En escritorio: botón limpio con su nombre y rol
     const desktopSlot = document.getElementById('desktopAuthSlot');
     if (desktopSlot) {
       desktopSlot.innerHTML = `
@@ -21,18 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
-    // En móvil: el botón superior sigue siendo un icono compacto de 40px con un punto de luz
     const mobileBtn = document.getElementById('mobileUserBtn');
     if (mobileBtn) {
       mobileBtn.href = '/dashboard';
-      mobileBtn.className = "w-10 h-10 rounded-xl bg-purple-950/80 border border-fuchsia-500/60 flex items-center justify-center text-fuchsia-300 relative shadow-sm";
+      mobileBtn.className = "w-10 h-10 rounded-xl bg-purple-950/80 border border-fuchsia-500/60 flex items-center justify-center text-fuchsia-300 relative";
       mobileBtn.innerHTML = `
         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
         <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-fuchsia-400 animate-ping"></span>
       `;
     }
 
-    // En el menú hamburguesa móvil
     const mobileSlot = document.getElementById('mobileAuthSlot');
     if (mobileSlot) {
       mobileSlot.innerHTML = `
