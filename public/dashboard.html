@@ -49,7 +49,6 @@
     <!-- HEADER -->
     <div class="p-5 sm:p-7 rounded-3xl card-glass border border-purple-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div class="flex items-center space-x-4">
-        <!-- Avatar de Minecraft en 3D -->
         <img id="userMcAvatar" src="https://mc-heads.net/avatar/steve/64" class="w-14 h-14 rounded-2xl border-2 border-purple-500/40 shadow-lg bg-black/60 object-cover">
         <div>
           <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
@@ -98,7 +97,7 @@
       </button>
     </div>
 
-    <!-- VISTA 1: TICKETS Y PEDIDOS -->
+    <!-- VISTA 1: TICKETS CON CHAT Y CAPTURAS -->
     <div id="viewTickets" class="grid lg:grid-cols-3 gap-5">
       <div class="lg:col-span-1 p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
         <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
@@ -116,7 +115,7 @@
         </div>
       </div>
 
-      <div class="lg:col-span-2 p-5 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between min-h-[460px]">
+      <div class="lg:col-span-2 p-5 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between min-h-[480px]">
         <div id="ticketDetailContent" class="space-y-3">
           <div class="text-center py-24 text-purple-400/60">
             <i data-lucide="message-square" class="w-10 h-10 mx-auto mb-2 opacity-50"></i>
@@ -165,16 +164,12 @@
     <!-- VISTA 4: MI PERFIL Y SEGURIDAD -->
     <div id="viewProfile" class="hidden space-y-6">
       <div class="grid md:grid-cols-3 gap-6">
-        
-        <!-- Tarjeta de Identidad y Badges -->
         <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-4 text-center flex flex-col items-center">
           <img id="profilePreviewHead" src="https://mc-heads.net/avatar/steve/100" class="w-24 h-24 rounded-2xl border-2 border-fuchsia-500/50 shadow-xl bg-black/60 object-cover">
           <div>
             <h3 id="profileUsername" class="text-lg font-bold text-white">...</h3>
             <p id="profileEmail" class="text-xs text-purple-400/70 font-mono">...</p>
           </div>
-
-          <!-- Badges Coleccionables -->
           <div class="flex flex-wrap justify-center gap-1.5 pt-2">
             <span id="badgeFounder" class="hidden px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gradient-to-r from-amber-500 to-yellow-500 text-black shadow-md">👑 Founder</span>
             <span id="badgeVip" class="hidden px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-fuchsia-950 border border-fuchsia-500/60 text-fuchsia-300">💎 VIP Supporter</span>
@@ -183,23 +178,19 @@
           </div>
         </div>
 
-        <!-- Ajustes de Cuenta y Minecraft -->
         <div class="md:col-span-2 space-y-6">
-          
-          <!-- Vincular Minecraft Nick -->
           <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
             <h4 class="text-sm font-bold text-white flex items-center space-x-2">
               <i data-lucide="gamepad-2" class="w-4 h-4 text-fuchsia-400"></i>
               <span>Vincular Cuenta de Minecraft</span>
             </h4>
-            <p class="text-xs text-purple-300/60">Introduce tu nick exacto de Minecraft para renderizar tu skin y cabeza en 3D en la plataforma.</p>
+            <p class="text-xs text-purple-300/60">Introduce tu nick para renderizar tu skin y cabeza en 3D en la plataforma.</p>
             <form id="mcNickForm" class="flex gap-2">
               <input type="text" id="mcNickInput" placeholder="Ej: iShadowz" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
               <button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs">Guardar Nick</button>
             </form>
           </div>
 
-          <!-- Cambio de Contraseña -->
           <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
             <h4 class="text-sm font-bold text-white flex items-center space-x-2">
               <i data-lucide="key" class="w-4 h-4 text-purple-400"></i>
@@ -211,9 +202,7 @@
               <button type="submit" id="btnChangePass" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 font-bold text-xs text-white">Actualizar Contraseña</button>
             </form>
           </div>
-
         </div>
-
       </div>
     </div>
 
@@ -224,7 +213,7 @@
           <i data-lucide="cloud-upload" class="text-cyan-400 w-5 h-5"></i>
           <div>
             <h3 class="font-bold text-white text-sm">Publicar en R2 Object Storage</h3>
-            <p class="text-[10px] text-purple-300/60">Soporta archivos de gran tamaño (.zip, .jar, .schem) sin límite de KV</p>
+            <p class="text-[10px] text-purple-300/60">Soporta archivos pesados (.zip, .jar, .schem) sin límite</p>
           </div>
         </div>
 
@@ -335,6 +324,7 @@
     let currentFilter = 'all';
     let currentVaultCat = 'all';
     let activeTicketId = null;
+    let selectedChatFile = null;
 
     if (!token) {
       window.location.href = '/login';
@@ -352,7 +342,6 @@
       document.getElementById('roleText').innerText = user.role.toUpperCase();
       document.getElementById('welcomeRole').innerText = user.role.toUpperCase();
 
-      // Perfil Datos
       document.getElementById('profileUsername').innerText = user.username;
       document.getElementById('profileEmail').innerText = user.email;
       if (user.mcNick) {
@@ -362,7 +351,6 @@
         document.getElementById('profilePreviewHead').src = avatarUrl;
       }
 
-      // Badges
       if (user.role === 'Founder') document.getElementById('badgeFounder').classList.remove('hidden');
       if (user.role === 'VIP' || user.role === 'Client') document.getElementById('badgeVip').classList.remove('hidden');
       if (user.role === 'Dev') document.getElementById('badgeDev').classList.remove('hidden');
@@ -413,8 +401,7 @@
       lucide.createIcons();
     }
 
-    // --- FORMULARIOS DE PERFIL Y CONTRASEÑA ---
-    // Guardar Nick de Minecraft
+    // --- PERFIL Y CONTRASEÑA ---
     document.getElementById('mcNickForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const mcNick = document.getElementById('mcNickInput').value.trim();
@@ -432,12 +419,10 @@
       }
     });
 
-    // Cambiar Contraseña
     document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const currentPassword = document.getElementById('currentPass').value;
       const newPassword = document.getElementById('newPass').value;
-
       const res = await fetch('/api/profile/change-password', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -446,6 +431,268 @@
       const d = await res.json();
       alert(d.message || d.error);
       if (d.success) document.getElementById('changePasswordForm').reset();
+    });
+
+    // --- TICKETS CON CHAT Y CAPTURAS ---
+    async function loadTickets() {
+      const container = document.getElementById('ticketsContainer');
+      try {
+        const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        allLoadedTickets = data.tickets || [];
+        renderTicketsList();
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>';
+      }
+    }
+
+    function setTicketFilter(filter) {
+      currentFilter = filter;
+      document.getElementById('fltAll').className = filter === 'all' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      document.getElementById('fltOpen').className = filter === 'Abierto' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      document.getElementById('fltClosed').className = filter === 'Cerrado' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      renderTicketsList();
+    }
+
+    function filterTickets() { renderTicketsList(); }
+
+    function renderTicketsList() {
+      const container = document.getElementById('ticketsContainer');
+      const search = (document.getElementById('ticketSearchInput').value || "").toLowerCase();
+
+      let filtered = allLoadedTickets;
+      if (currentFilter !== 'all') filtered = filtered.filter(t => t.status === currentFilter);
+      if (search) filtered = filtered.filter(t => t.id.toLowerCase().includes(search) || t.title.toLowerCase().includes(search));
+
+      if (filtered.length > 0) {
+        const isFounder = (currentUser.role === 'Founder' || currentUser.role === 'Admin');
+        container.innerHTML = filtered.map(t => `
+          <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left relative group">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
+              <div class="flex items-center space-x-1.5">
+                <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
+                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" title="Eliminar" class="text-rose-400 hover:text-rose-300 opacity-0 group-hover:opacity-100 transition p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+              </div>
+            </div>
+            <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
+            <p class="text-[10px] text-purple-400/60 mt-0.5">${t.author} • ${t.createdAt}</p>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay tickets coincidentes.</p>';
+      }
+      lucide.createIcons();
+    }
+
+    async function selectTicket(id) {
+      activeTicketId = id;
+      selectedChatFile = null;
+      const detail = document.getElementById('ticketDetailContent');
+      const replyArea = document.getElementById('replyArea');
+      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando conversación...</p>';
+
+      try {
+        const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        const t = data.ticket;
+        const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin' || currentUser.role === 'Soporte');
+
+        detail.innerHTML = `
+          <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">${t.category}</span>
+              </div>
+              <h3 class="text-sm font-bold text-white mt-1">${t.title}</h3>
+              <p class="text-[10px] text-purple-400/60">Por: ${t.author}</p>
+            </div>
+            <div>
+              ${isStaff ? `
+                <select onchange="changeTicketStatus('${t.id}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg text-xs text-purple-200 px-2 py-1">
+                  <option value="Abierto" ${t.status === 'Abierto' ? 'selected' : ''}>Abierto</option>
+                  <option value="En Proceso" ${t.status === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
+                  <option value="Cerrado" ${t.status === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
+                </select>
+              ` : `<span class="text-xs px-2.5 py-0.5 rounded-full ${t.status === 'Cerrado' ? 'bg-purple-950 text-purple-400' : 'bg-emerald-950 text-emerald-400'} font-bold">${t.status}</span>`}
+            </div>
+          </div>
+
+          <!-- MENSAJES Y FOTOS -->
+          <div class="space-y-3 max-h-[340px] overflow-y-auto pr-1">
+            ${t.messages.map(m => `
+              <div class="p-3.5 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-4' : 'bg-black/50 border border-purple-950 mr-4'}">
+                <div class="flex items-center justify-between text-[10px] mb-1">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="font-bold text-white">${m.sender}</span>
+                    <span class="text-[9px] font-mono px-1 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
+                  </div>
+                  <span class="text-[9px] text-purple-400/50">${m.time}</span>
+                </div>
+                ${m.text ? `<p class="text-xs text-purple-100/90 leading-relaxed">${m.text}</p>` : ''}
+                ${m.attachmentUrl ? `
+                  <div class="mt-2.5">
+                    <img src="${m.attachmentUrl}" class="rounded-xl max-h-56 border border-purple-500/30 object-contain cursor-pointer hover:border-purple-400 transition" onclick="window.open('${m.attachmentUrl}', '_blank')" title="Toca para ampliar captura">
+                  </div>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        if (t.status === 'Cerrado') {
+          replyArea.innerHTML = `
+            <div class="p-3 rounded-2xl bg-black/60 border border-purple-950 text-center text-xs text-purple-300 flex items-center justify-center space-x-2">
+              <i data-lucide="lock" class="w-4 h-4 text-rose-400"></i>
+              <span>Este ticket ha sido <b>cerrado</b>. La conversación está en modo lectura.</span>
+              ${isStaff ? `<button onclick="changeTicketStatus('${t.id}', 'Abierto')" class="text-fuchsia-400 underline font-bold ml-2">Reabrir</button>` : ''}
+            </div>
+          `;
+        } else {
+          replyArea.innerHTML = `
+            <form id="replyForm" onsubmit="sendReply(event)" class="space-y-2">
+              <div id="imagePreviewBox" class="hidden p-2 rounded-xl bg-black/50 border border-purple-900 flex items-center justify-between text-xs text-purple-300">
+                <span id="imagePreviewName" class="truncate max-w-[200px]">imagen.png</span>
+                <button type="button" onclick="cancelImageAttachment()" class="text-rose-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+              </div>
+
+              <div class="flex gap-2 items-center">
+                <!-- Botón de Adjuntar Foto / Captura -->
+                <label class="p-2 rounded-xl bg-purple-950/60 hover:bg-purple-900 border border-purple-800 text-purple-300 hover:text-white cursor-pointer transition" title="Adjuntar captura de pantalla">
+                  <i data-lucide="image" class="w-4 h-4"></i>
+                  <input type="file" id="chatFileInput" accept="image/*" class="hidden" onchange="handleChatFileSelect(this)">
+                </label>
+
+                <input type="text" id="replyText" placeholder="Escribe tu mensaje o pega una captura con Ctrl+V..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-purple-400">
+                <button type="submit" id="btnSendReply" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-md shadow-purple-600/30">
+                  <span>Enviar</span>
+                  <i data-lucide="send" class="w-3 h-3"></i>
+                </button>
+              </div>
+            </form>
+          `;
+
+          // Soporte para pegar capturas con Ctrl+V
+          const inputEl = document.getElementById('replyText');
+          if (inputEl) {
+            inputEl.addEventListener('paste', (e) => {
+              const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+              for (const item of items) {
+                if (item.type.indexOf('image') !== -1) {
+                  const blob = item.getAsFile();
+                  selectedChatFile = blob;
+                  showImagePreview(blob.name || "captura_portapapeles.png");
+                }
+              }
+            });
+          }
+        }
+        replyArea.classList.remove('hidden');
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    function handleChatFileSelect(input) {
+      if (input.files && input.files[0]) {
+        selectedChatFile = input.files[0];
+        showImagePreview(selectedChatFile.name);
+      }
+    }
+
+    function showImagePreview(name) {
+      const box = document.getElementById('imagePreviewBox');
+      const label = document.getElementById('imagePreviewName');
+      if (box && label) {
+        label.innerText = `📎 ${name}`;
+        box.classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function cancelImageAttachment() {
+      selectedChatFile = null;
+      const box = document.getElementById('imagePreviewBox');
+      const input = document.getElementById('chatFileInput');
+      if (box) box.classList.add('hidden');
+      if (input) input.value = '';
+    }
+
+    async function sendReply(e) {
+      e.preventDefault();
+      const input = document.getElementById('replyText');
+      const text = input.value.trim();
+      const sendBtn = document.getElementById('btnSendReply');
+
+      if (!text && !selectedChatFile) return;
+
+      sendBtn.disabled = true;
+      sendBtn.innerText = "Subiendo...";
+
+      const formData = new FormData();
+      formData.append("ticketId", activeTicketId);
+      formData.append("text", text);
+      if (selectedChatFile) {
+        formData.append("image", selectedChatFile);
+      }
+
+      try {
+        const res = await fetch('/api/tickets/reply', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        });
+        const data = await res.json();
+        if (data.error) alert(data.error);
+        selectTicket(activeTicketId);
+      } catch (err) {
+        alert("Error al enviar mensaje");
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerText = "Enviar";
+      }
+    }
+
+    async function changeTicketStatus(ticketId, newStatus) {
+      await fetch('/api/tickets/status', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId, newStatus })
+      });
+      loadTickets();
+      selectTicket(ticketId);
+    }
+
+    async function deleteTicket(ticketId) {
+      if (!confirm(`¿Eliminar definitivamente el ticket ${ticketId}?`)) return;
+      await fetch('/api/tickets/delete', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId })
+      });
+      loadTickets();
+      document.getElementById('ticketDetailContent').innerHTML = '<div class="text-center py-24 text-purple-400/60"><p class="text-xs font-semibold">Ticket eliminado</p></div>';
+      document.getElementById('replyArea').classList.add('hidden');
+    }
+
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: document.getElementById('tTitle').value,
+          category: document.getElementById('tCategory').value,
+          message: document.getElementById('tMessage').value
+        })
+      });
+      const d = await res.json();
+      if (d.success) {
+        closeTicketModal();
+        document.getElementById('ticketForm').reset();
+        loadTickets();
+        selectTicket(d.ticket.id);
+      }
     });
 
     // --- RESOURCE VAULT R2 ---
@@ -510,7 +757,6 @@
       lucide.createIcons();
     }
 
-    // Subir archivo a R2
     document.getElementById('vaultUploadForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('vUploadBtn');
@@ -518,7 +764,7 @@
       if (!fileInput.files.length) return alert("Selecciona un archivo");
 
       btn.disabled = true;
-      btn.innerText = "Subiendo archivo a R2 Storage...";
+      btn.innerText = "Subiendo archivo a R2...";
 
       const formData = new FormData();
       formData.append("file", fileInput.files[0]);
@@ -560,187 +806,6 @@
       });
       loadVault();
     }
-
-    // --- TICKETS ---
-    async function loadTickets() {
-      const container = document.getElementById('ticketsContainer');
-      try {
-        const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-        allLoadedTickets = data.tickets || [];
-        renderTicketsList();
-      } catch (e) {
-        container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>';
-      }
-    }
-
-    function setTicketFilter(filter) {
-      currentFilter = filter;
-      document.getElementById('fltAll').className = filter === 'all' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
-      document.getElementById('fltOpen').className = filter === 'Abierto' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
-      document.getElementById('fltClosed').className = filter === 'Cerrado' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
-      renderTicketsList();
-    }
-
-    function filterTickets() { renderTicketsList(); }
-
-    function renderTicketsList() {
-      const container = document.getElementById('ticketsContainer');
-      const search = (document.getElementById('ticketSearchInput').value || "").toLowerCase();
-
-      let filtered = allLoadedTickets;
-      if (currentFilter !== 'all') filtered = filtered.filter(t => t.status === currentFilter);
-      if (search) filtered = filtered.filter(t => t.id.toLowerCase().includes(search) || t.title.toLowerCase().includes(search));
-
-      if (filtered.length > 0) {
-        const isFounder = (currentUser.role === 'Founder' || currentUser.role === 'Admin');
-        container.innerHTML = filtered.map(t => `
-          <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left relative group">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
-              <div class="flex items-center space-x-1.5">
-                <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
-                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" title="Eliminar" class="text-rose-400 hover:text-rose-300 opacity-0 group-hover:opacity-100 transition p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
-              </div>
-            </div>
-            <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
-            <p class="text-[10px] text-purple-400/60 mt-0.5">${t.author} • ${t.createdAt}</p>
-          </div>
-        `).join('');
-      } else {
-        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay tickets coincidentes.</p>';
-      }
-      lucide.createIcons();
-    }
-
-    async function selectTicket(id) {
-      activeTicketId = id;
-      const detail = document.getElementById('ticketDetailContent');
-      const replyArea = document.getElementById('replyArea');
-      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando conversación...</p>';
-
-      try {
-        const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-        const t = data.ticket;
-        const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin' || currentUser.role === 'Soporte');
-
-        detail.innerHTML = `
-          <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
-            <div>
-              <div class="flex items-center space-x-2">
-                <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">${t.category}</span>
-              </div>
-              <h3 class="text-sm font-bold text-white mt-1">${t.title}</h3>
-              <p class="text-[10px] text-purple-400/60">Por: ${t.author}</p>
-            </div>
-            <div>
-              ${isStaff ? `
-                <select onchange="changeTicketStatus('${t.id}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg text-xs text-purple-200 px-2 py-1">
-                  <option value="Abierto" ${t.status === 'Abierto' ? 'selected' : ''}>Abierto</option>
-                  <option value="En Proceso" ${t.status === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
-                  <option value="Cerrado" ${t.status === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
-                </select>
-              ` : `<span class="text-xs px-2.5 py-0.5 rounded-full ${t.status === 'Cerrado' ? 'bg-purple-950 text-purple-400' : 'bg-emerald-950 text-emerald-400'} font-bold">${t.status}</span>`}
-            </div>
-          </div>
-          <div class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
-            ${t.messages.map(m => `
-              <div class="p-3 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-4' : 'bg-black/50 border border-purple-950 mr-4'}">
-                <div class="flex items-center justify-between text-[10px] mb-1">
-                  <div class="flex items-center space-x-1.5">
-                    <span class="font-bold text-white">${m.sender}</span>
-                    <span class="text-[9px] font-mono px-1 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
-                  </div>
-                  <span class="text-[9px] text-purple-400/50">${m.time}</span>
-                </div>
-                <p class="text-xs text-purple-100/90 leading-relaxed">${m.text}</p>
-              </div>
-            `).join('')}
-          </div>
-        `;
-
-        if (t.status === 'Cerrado') {
-          replyArea.innerHTML = `
-            <div class="p-3 rounded-2xl bg-black/60 border border-purple-950 text-center text-xs text-purple-300 flex items-center justify-center space-x-2">
-              <i data-lucide="lock" class="w-4 h-4 text-rose-400"></i>
-              <span>Este ticket ha sido <b>cerrado</b>. La conversación está en modo lectura.</span>
-              ${isStaff ? `<button onclick="changeTicketStatus('${t.id}', 'Abierto')" class="text-fuchsia-400 underline font-bold ml-2">Reabrir</button>` : ''}
-            </div>
-          `;
-        } else {
-          replyArea.innerHTML = `
-            <form id="replyForm" onsubmit="sendReply(event)" class="flex gap-2">
-              <input type="text" id="replyText" required placeholder="Escribe tu mensaje..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-purple-400">
-              <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1">
-                <span>Enviar</span>
-                <i data-lucide="send" class="w-3 h-3"></i>
-              </button>
-            </form>
-          `;
-        }
-        replyArea.classList.remove('hidden');
-        lucide.createIcons();
-      } catch (e) {}
-    }
-
-    async function sendReply(e) {
-      e.preventDefault();
-      const input = document.getElementById('replyText');
-      const text = input.value.trim();
-      if (!text || !activeTicketId) return;
-
-      input.value = "";
-      const res = await fetch('/api/tickets/reply', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticketId: activeTicketId, text })
-      });
-      selectTicket(activeTicketId);
-    }
-
-    async function changeTicketStatus(ticketId, newStatus) {
-      await fetch('/api/tickets/status', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticketId, newStatus })
-      });
-      loadTickets();
-      selectTicket(ticketId);
-    }
-
-    async function deleteTicket(ticketId) {
-      if (!confirm(`¿Eliminar definitivamente el ticket ${ticketId}?`)) return;
-      await fetch('/api/tickets/delete', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticketId })
-      });
-      loadTickets();
-      document.getElementById('ticketDetailContent').innerHTML = '<div class="text-center py-24 text-purple-400/60"><p class="text-xs font-semibold">Ticket eliminado</p></div>';
-      document.getElementById('replyArea').classList.add('hidden');
-    }
-
-    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const res = await fetch('/api/tickets', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: document.getElementById('tTitle').value,
-          category: document.getElementById('tCategory').value,
-          message: document.getElementById('tMessage').value
-        })
-      });
-      const d = await res.json();
-      if (d.success) {
-        closeTicketModal();
-        document.getElementById('ticketForm').reset();
-        loadTickets();
-        selectTicket(d.ticket.id);
-      }
-    });
 
     // --- PROYECTOS & FOUNDER USERS ---
     async function loadProjects() {
@@ -795,7 +860,7 @@
             <td class="p-2.5 font-semibold text-white">${u.username}</td>
             <td class="p-2.5 text-purple-300">${u.email}</td>
             <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-900 text-purple-200">${u.role}</span></td>
-            <td class="p-2.5 flex space-x-1">
+            <td class="p-2.5">
               <select onchange="changeRole('${u.email}', this.value)" class="bg-black/60 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
                 <option value="" disabled selected>Cambiar rol...</option>
                 <option value="VIP">VIP</option>
@@ -804,7 +869,6 @@
                 <option value="Admin">Admin</option>
                 <option value="Founder">Founder</option>
               </select>
-              <button onclick="founderResetPass('${u.email}')" class="px-2 py-1 rounded-lg bg-purple-950 text-[10px] text-fuchsia-300 border border-purple-800" title="Restablecer clave">Reset</button>
             </td>
           </tr>
         `).join('');
@@ -819,19 +883,6 @@
         body: JSON.stringify({ email, newRole })
       });
       loadFounderUsers();
-    }
-
-    async function founderResetPass(email) {
-      const tempPassword = prompt(`Introduce la nueva contraseña temporal para ${email}:`, "Synthetix123!");
-      if (!tempPassword) return;
-
-      const res = await fetch('/api/founder/reset-password', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, tempPassword })
-      });
-      const d = await res.json();
-      alert(d.message || d.error);
     }
 
     function openTicketModal() { document.getElementById('ticketModal').classList.remove('hidden'); }
