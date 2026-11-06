@@ -9,13 +9,12 @@
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
-<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between">
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between overflow-x-hidden">
 
-  <!-- NAVBAR LIMPIO -->
+  <!-- NAVBAR UNIFORME -->
   <nav class="sticky top-0 z-40 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
-      <!-- LOGO CON PASTILLA IDÉNTICO AL DASH -->
       <a href="/" class="flex items-center space-x-2.5 transition">
         <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -30,31 +29,70 @@
         </div>
       </a>
 
-      <div class="flex items-center space-x-3 text-xs font-bold">
-        <a href="/" class="hidden sm:inline-block text-purple-300 hover:text-white transition">Inicio</a>
-        <a href="/services" class="hidden sm:inline-block text-purple-300 hover:text-white transition">Tarifas</a>
-        <a href="/dashboard" class="px-3.5 py-1.5 rounded-xl bg-purple-950 border border-purple-500/40 text-white hover:border-purple-400 transition">Mi Dashboard</a>
+      <div class="flex items-center space-x-3">
+        <a href="/dashboard" class="hidden sm:inline-block px-3.5 py-1.5 rounded-xl bg-purple-950 border border-purple-500/40 text-xs font-bold text-white">Mi Dashboard</a>
+        <button onclick="openSidebar()" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white transition">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
       </div>
 
     </div>
   </nav>
 
+  <!-- SIDEBAR DRAWER UNIFORME -->
+  <div id="drawerOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+  <aside id="sidebarDrawer" class="fixed top-0 right-0 w-[290px] max-w-[85vw] h-full bg-[#080314]/95 border-l border-purple-500/30 z-50 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out shadow-2xl backdrop-blur-2xl">
+    <div>
+      <div class="flex items-center justify-between pb-5 border-b border-purple-950/60">
+        <div class="flex items-center space-x-2">
+          <span class="font-black text-white text-base tracking-wider">SYNTHETIX</span>
+          <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300">STUDIO</span>
+        </div>
+        <button onclick="closeSidebar()" class="p-1.5 rounded-xl bg-purple-950/60 text-purple-300"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="py-6 space-y-2">
+        <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium">
+          <i data-lucide="home" class="w-4 h-4 text-purple-400"></i><span>Inicio</span>
+        </a>
+        <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium">
+          <i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas & Servicios</span>
+        </a>
+        <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs">
+          <div class="flex items-center space-x-3">
+            <i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span>
+          </div>
+          <span class="text-[9px] font-mono bg-purple-950 text-fuchsia-300 border border-fuchsia-500/40 px-1.5 py-0.5 rounded">PLUGINS</span>
+        </a>
+        <a href="/terms" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium">
+          <i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i><span>Términos del Servicio</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-purple-950/60">
+      <a href="/dashboard" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl bg-purple-600 text-white font-bold text-xs shadow-md">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Mi Dashboard</span>
+      </a>
+    </div>
+  </aside>
+
   <!-- CONTENIDO -->
   <main class="max-w-6xl mx-auto px-6 py-12 flex-1 w-full space-y-8">
     <div class="text-center max-w-2xl mx-auto">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Descargas Oficiales</span>
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Software Verificado</span>
       <h1 class="text-3xl sm:text-5xl font-black text-white mt-1">Resource & Plugin Vault</h1>
       <p class="text-purple-300/60 text-xs sm:text-sm mt-2">
-        Plugins alojados y descargados directamente en la plataforma sin links externos.
+        Descarga directa de plugins compilados y optimizados sin publicidad ni acortadores.
       </p>
     </div>
 
     <div class="max-w-md mx-auto">
-      <input type="text" id="vaultSearch" oninput="filterVault()" placeholder="Buscar por nombre o versión..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400">
+      <input type="text" id="vaultSearch" oninput="filterVault()" placeholder="Buscar por nombre o versión de Minecraft..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400">
     </div>
 
     <div id="vaultList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <p class="text-xs text-purple-400 text-center py-12 col-span-3">Cargando catálogo...</p>
+      <p class="text-xs text-purple-400 text-center py-12 col-span-3">Cargando catálogo oficial...</p>
     </div>
   </main>
 
@@ -64,6 +102,21 @@
 
   <script>
     lucide.createIcons();
+
+    const overlay = document.getElementById('drawerOverlay');
+    const drawer = document.getElementById('sidebarDrawer');
+    function openSidebar() {
+      overlay.classList.remove('hidden');
+      setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+      drawer.classList.remove('translate-x-full');
+    }
+    function closeSidebar() {
+      overlay.classList.add('opacity-0');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => overlay.classList.add('hidden'), 300);
+    }
+    overlay.addEventListener('click', closeSidebar);
+
     let allVaultItems = [];
 
     async function loadVault() {
@@ -95,13 +148,13 @@
               </div>
               <div class="flex items-center justify-between text-[10px] text-fuchsia-400 font-mono mb-2">
                 <span>MC: ${r.mcVersions}</span>
-                <span class="text-purple-400">${r.fileSize || 'Descarga .jar'}</span>
+                <span class="text-purple-400">${r.fileSize || 'Descarga'}</span>
               </div>
               <p class="text-xs text-purple-300/70 mb-4">${r.description || 'Plugin desarrollado por Synthetix Studio.'}</p>
             </div>
             <a href="/api/vault/download?id=${r.id}" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition shadow-lg shadow-purple-600/30">
               <i data-lucide="download" class="w-3.5 h-3.5"></i>
-              <span>Descargar .JAR Directo</span>
+              <span>Descargar Plugin</span>
             </a>
           </div>
         `).join('');

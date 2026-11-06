@@ -36,8 +36,8 @@ export default {
       status, headers: { "Content-Type": "application/json" }
     });
 
-    // Enrutador de Páginas Limpias
-    const cleanRoutes = ['/login', '/dashboard', '/services', '/vault'];
+    // Rutas limpias multipágina
+    const cleanRoutes = ['/login', '/dashboard', '/services', '/vault', '/terms'];
     if (cleanRoutes.includes(url.pathname)) {
       return env.ASSETS.fetch(new Request(new URL(`${url.pathname}.html`, request.url), request));
     }
@@ -50,7 +50,7 @@ export default {
       return session ? JSON.parse(session) : null;
     }
 
-    // --- RESOURCE VAULT (.JAR) ---
+    // VAULT
     if (url.pathname === '/api/vault' && request.method === 'GET') {
       const resources = await KV.get("vault:resources") || "[]";
       return json({ success: true, resources: JSON.parse(resources) });
@@ -123,7 +123,7 @@ export default {
       return json({ success: true });
     }
 
-    // --- AUTH ---
+    // AUTH
     if (url.pathname === '/api/auth/register' && request.method === 'POST') {
       try {
         const { username, email, password } = await request.json();
@@ -189,10 +189,10 @@ export default {
       return json({ success: true, user });
     }
 
-    // --- PEDIDOS DIRECTOS DESDE LA WEB ---
+    // PEDIDOS WEB
     if (url.pathname === '/api/orders/create' && request.method === 'POST') {
       const user = await getSessionUser();
-      if (!user) return json({ error: "Debes iniciar sesión para ordenar." }, 401);
+      if (!user) return json({ error: "Inicia sesión para ordenar." }, 401);
 
       const { planTitle, price, details } = await request.json();
       const ticketId = "ORD-" + Math.floor(1000 + Math.random() * 9000);
@@ -209,7 +209,7 @@ export default {
         messages: [{
           sender: "Sistema",
           role: "Synthetix",
-          text: `⚡ Nuevo pedido iniciado para el plan "${planTitle}". Precio base: ${price}. Detalles: ${details || 'Sin notas adicionales'}. El staff te responderá aquí mismo.`,
+          text: `⚡ Pedido iniciado para "${planTitle}" (${price}). Notas: ${details || 'Sin especificaciones'}. Puedes chatear aquí con el dev.`,
           time: now
         }]
       };
@@ -217,45 +217,15 @@ export default {
       await KV.put(`ticket:${ticketId}`, JSON.stringify(orderTicket));
       const index = JSON.parse(await KV.get("tickets:index") || "[]");
       index.unshift({
-        id: ticketId,
-        title: orderTicket.title,
-        category: "Pedido Web",
-        author: user.username,
-        authorEmail: user.email,
-        status: "Abierto",
-        createdAt: now
+        id: ticketId, title: orderTicket.title, category: "Pedido Web",
+        author: user.username, authorEmail: user.email, status: "Abierto", createdAt: now
       });
       await KV.put("tickets:index", JSON.stringify(index));
 
       return json({ success: true, orderId: ticketId });
     }
 
-    // --- PROYECTOS / BUILDS ---
-    if (url.pathname === '/api/projects' && request.method === 'GET') {
-      const user = await getSessionUser();
-      if (!user) return json({ error: "No autorizado" }, 401);
-      const all = JSON.parse(await KV.get("projects:all") || "[]");
-      const isStaff = (user.role === 'Founder' || user.role === 'Dev' || user.role === 'Admin');
-      const filtered = isStaff ? all : all.filter(p => p.clientEmail === user.email);
-      return json({ success: true, projects: filtered });
-    }
-
-    if (url.pathname === '/api/founder/project-create' && request.method === 'POST') {
-      const user = await getSessionUser();
-      if (!user || (user.role !== 'Founder' && user.role !== 'Dev')) return json({ error: "Denegado" }, 403);
-      const { title, clientEmail, progress, downloadUrl } = await request.json();
-      const all = JSON.parse(await KV.get("projects:all") || "[]");
-      const newProj = {
-        id: "PRJ-" + Math.floor(1000 + Math.random() * 9000),
-        title, clientEmail, progress: parseInt(progress) || 0,
-        downloadUrl: downloadUrl || "", author: user.username, updatedAt: new Date().toLocaleDateString()
-      };
-      all.unshift(newProj);
-      await KV.put("projects:all", JSON.stringify(all));
-      return json({ success: true });
-    }
-
-    // --- TICKETS / SALAS DE CONVERSACIÓN ---
+    // TICKETS
     if (url.pathname === '/api/tickets' && request.method === 'GET') {
       const user = await getSessionUser();
       if (!user) return json({ error: "No autorizado" }, 401);
@@ -346,7 +316,32 @@ export default {
       return json({ success: true });
     }
 
-    // --- FOUNDER USERS ---
+    // PROJECTS
+    if (url.pathname === '/api/projects' && request.method === 'GET') {
+      const user = await getSessionUser();
+      if (!user) return json({ error: "No autorizado" }, 401);
+      const all = JSON.parse(await KV.get("projects:all") || "[]");
+      const isStaff = (user.role === 'Founder' || user.role === 'Dev' || user.role === 'Admin');
+      const filtered = isStaff ? all : all.filter(p => p.clientEmail === user.email);
+      return json({ success: true, projects: filtered });
+    }
+
+    if (url.pathname === '/api/founder/project-create' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user || (user.role !== 'Founder' && user.role !== 'Dev')) return json({ error: "Denegado" }, 403);
+      const { title, clientEmail, progress, downloadUrl } = await request.json();
+      const all = JSON.parse(await KV.get("projects:all") || "[]");
+      const newProj = {
+        id: "PRJ-" + Math.floor(1000 + Math.random() * 9000),
+        title, clientEmail, progress: parseInt(progress) || 0,
+        downloadUrl: downloadUrl || "", author: user.username, updatedAt: new Date().toLocaleDateString()
+      };
+      all.unshift(newProj);
+      await KV.put("projects:all", JSON.stringify(all));
+      return json({ success: true });
+    }
+
+    // USERS
     if (url.pathname === '/api/founder/users' && request.method === 'GET') {
       const user = await getSessionUser();
       if (!user || user.role !== 'Founder') return json({ error: "Denegado" }, 403);
