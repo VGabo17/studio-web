@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Resource Vault | Synthetix Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -18,7 +18,8 @@
   <!-- NAVBAR -->
   <nav class="sticky top-0 z-40 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <a href="/" class="flex items-center space-x-2.5">
+      
+      <a href="/" class="flex items-center space-x-2.5 transition">
         <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
@@ -32,14 +33,19 @@
         </div>
       </a>
 
-      <div class="flex items-center space-x-3">
-        <a href="/dashboard" class="hidden sm:inline-block px-3.5 py-1.5 rounded-xl bg-purple-950 border border-purple-500/40 text-xs font-bold text-white">Mi Dashboard</a>
-        <button onclick="openSidebar()" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300"><i data-lucide="menu" class="w-5 h-5"></i></button>
+      <div class="flex items-center space-x-2">
+        <a href="/dashboard" class="px-3.5 py-1.5 rounded-xl bg-purple-950 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition">
+          Dashboard
+        </a>
+        <button onclick="openSidebar()" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white transition">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
       </div>
+
     </div>
   </nav>
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR DRAWER -->
   <div id="drawerOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
   <aside id="sidebarDrawer" class="fixed top-0 right-0 w-[290px] max-w-[85vw] h-full bg-[#080314]/95 border-l border-purple-500/30 z-50 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out shadow-2xl backdrop-blur-2xl">
     <div>
@@ -63,28 +69,33 @@
   </aside>
 
   <!-- CONTENIDO -->
-  <main class="max-w-6xl mx-auto px-6 py-12 flex-1 w-full space-y-8">
-    <div class="text-center max-w-2xl mx-auto">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Marketplace de Recursos</span>
-      <h1 class="text-3xl sm:text-5xl font-black text-white mt-1">Resource & Plugin Vault</h1>
-      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full space-y-6">
+    <div class="text-center max-w-2xl mx-auto px-2">
+      <span class="text-[11px] font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Catálogo Oficial</span>
+      <h1 class="text-2xl sm:text-4xl md:text-5xl font-black text-white mt-1">Resource & Plugin Vault</h1>
+      <p class="text-purple-300/70 text-xs sm:text-sm mt-2 leading-relaxed">
         Plugins (.jar), Setups completos (.zip), Mapas (.schem) y Configuraciones optimizadas.
       </p>
     </div>
 
-    <!-- BUSCADOR Y FILTROS POR CATEGORÍA -->
-    <div class="max-w-xl mx-auto space-y-3">
-      <input type="text" id="vaultSearch" oninput="filterVault()" placeholder="Buscar por nombre, Minecraft o autor..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400">
-      <div class="flex items-center justify-center space-x-2 overflow-x-auto no-scrollbar text-xs font-mono pb-1">
-        <button onclick="setVaultCat('all')" id="vCatAll" class="px-3 py-1.5 rounded-xl bg-purple-600 text-white font-bold">Todos</button>
-        <button onclick="setVaultCat('Plugin')" id="vCatPlugin" class="px-3 py-1.5 rounded-xl bg-purple-950/50 text-purple-300 hover:text-white">Plugins</button>
-        <button onclick="setVaultCat('Setup')" id="vCatSetup" class="px-3 py-1.5 rounded-xl bg-purple-950/50 text-purple-300 hover:text-white">Setups</button>
-        <button onclick="setVaultCat('Config')" id="vCatConfig" class="px-3 py-1.5 rounded-xl bg-purple-950/50 text-purple-300 hover:text-white">Configs</button>
-        <button onclick="setVaultCat('Mapa')" id="vCatMapa" class="px-3 py-1.5 rounded-xl bg-purple-950/50 text-purple-300 hover:text-white">Mapas</button>
+    <!-- BUSCADOR Y FILTROS ADAPTABLES -->
+    <div class="max-w-xl mx-auto space-y-3 px-2">
+      <input type="text" id="vaultSearch" oninput="filterVault()" placeholder="Buscar por nombre, Minecraft o autor..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white placeholder-purple-400/40 focus:outline-none focus:border-purple-400 transition">
+
+      <!-- BARRA DE CATEGORÍAS 100% RESPONSIVE (SIN CORTARSE) -->
+      <div class="w-full overflow-x-auto no-scrollbar py-1">
+        <div class="flex items-center space-x-2 px-1 min-w-max mx-auto sm:justify-center">
+          <button onclick="setVaultCat('all')" id="vCatAll" class="px-3.5 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-xs transition shadow-sm">Todos</button>
+          <button onclick="setVaultCat('Plugin')" id="vCatPlugin" class="px-3.5 py-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white text-xs font-medium border border-purple-900/60 transition">Plugins</button>
+          <button onclick="setVaultCat('Setup')" id="vCatSetup" class="px-3.5 py-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white text-xs font-medium border border-purple-900/60 transition">Setups</button>
+          <button onclick="setVaultCat('Config')" id="vCatConfig" class="px-3.5 py-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white text-xs font-medium border border-purple-900/60 transition">Configs</button>
+          <button onclick="setVaultCat('Mapa')" id="vCatMapa" class="px-3.5 py-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white text-xs font-medium border border-purple-900/60 transition">Mapas</button>
+        </div>
       </div>
     </div>
 
-    <div id="vaultList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- LISTA DE RECURSOS -->
+    <div id="vaultList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-2">
       <p class="text-xs text-purple-400 text-center py-12 col-span-3">Cargando catálogo...</p>
     </div>
   </main>
@@ -124,9 +135,12 @@
       currentCat = cat;
       ['All', 'Plugin', 'Setup', 'Config', 'Mapa'].forEach(c => {
         const btn = document.getElementById(`vCat${c}`);
-        if (btn) btn.className = (c.toLowerCase() === cat.toLowerCase() || (c === 'All' && cat === 'all'))
-          ? "px-3 py-1.5 rounded-xl bg-purple-600 text-white font-bold"
-          : "px-3 py-1.5 rounded-xl bg-purple-950/50 text-purple-300 hover:text-white";
+        if (btn) {
+          const isActive = (c.toLowerCase() === cat.toLowerCase() || (c === 'All' && cat === 'all'));
+          btn.className = isActive
+            ? "px-3.5 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-xs transition shadow-sm"
+            : "px-3.5 py-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white text-xs font-medium border border-purple-900/60 transition";
+        }
       });
       renderVault();
     }
@@ -135,14 +149,14 @@
 
     function renderVault() {
       const container = document.getElementById('vaultList');
-      const search = (document.getElementById('vaultSearch').value || "").toLowerCase();
+      const search = (document.getElementById('vaultSearch').value || "").trim().toLowerCase();
 
       let filtered = allVaultItems;
       if (currentCat !== 'all') {
         filtered = filtered.filter(r => (r.category || 'Plugin').toLowerCase() === currentCat.toLowerCase());
       }
       if (search) {
-        filtered = filtered.filter(r => r.name.toLowerCase().includes(search) || (r.mcVersions || "").toLowerCase().includes(search));
+        filtered = filtered.filter(r => (r.name || '').toLowerCase().includes(search) || (r.mcVersions || '').toLowerCase().includes(search));
       }
 
       if (filtered.length > 0) {
@@ -151,17 +165,17 @@
           const canDownload = !isVipOnly || isVip;
 
           return `
-            <div class="p-6 rounded-3xl card-glass border ${isVipOnly ? 'border-amber-500/40' : 'border-purple-900/60'} flex flex-col justify-between hover:border-purple-500/50 transition">
+            <div class="p-5 sm:p-6 rounded-3xl card-glass border ${isVipOnly ? 'border-amber-500/40' : 'border-purple-900/60'} flex flex-col justify-between hover:border-purple-500/50 transition">
               <div>
                 <div class="flex items-center justify-between mb-2">
-                  <span class="font-bold text-white text-base">${r.name}</span>
-                  <span class="text-[10px] font-mono px-2 py-0.5 rounded ${isVipOnly ? 'bg-amber-950 text-amber-300 border border-amber-800' : 'bg-purple-950 text-purple-300 border border-purple-800'}">${r.category || 'Recurso'}</span>
+                  <span class="font-bold text-white text-base truncate">${r.name}</span>
+                  <span class="text-[9px] font-mono px-2 py-0.5 rounded ${isVipOnly ? 'bg-amber-950 text-amber-300 border border-amber-800' : 'bg-purple-950 text-purple-300 border border-purple-800'}">${r.category || 'Recurso'}</span>
                 </div>
                 <div class="flex items-center justify-between text-[10px] text-fuchsia-400 font-mono mb-2">
                   <span>MC: ${r.mcVersions || 'Universal'}</span>
                   <span class="text-purple-400">${r.fileSize || 'Descarga'}</span>
                 </div>
-                <p class="text-xs text-purple-300/70 mb-4">${r.description || 'Recurso verificado por Synthetix Studio.'}</p>
+                <p class="text-xs text-purple-300/70 mb-4 line-clamp-3">${r.description || 'Recurso verificado por Synthetix Studio.'}</p>
               </div>
 
               ${canDownload ? `
