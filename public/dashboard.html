@@ -11,236 +11,331 @@
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen text-purple-100">
 
-  <!-- NAVBAR DEL DASHBOARD -->
+  <!-- NAVBAR -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      
-      <!-- Logo y Sección -->
       <div class="flex items-center space-x-3">
         <a href="/" class="flex items-center space-x-2.5">
-          <div class="w-9 h-9 rounded-xl bg-purple-950 border border-purple-500/50 flex items-center justify-center shadow-lg shadow-purple-900/40">
+          <div class="w-9 h-9 rounded-xl bg-purple-950 border border-purple-500/50 flex items-center justify-center">
             <i data-lucide="terminal" class="text-purple-300 w-5 h-5"></i>
           </div>
           <span class="font-bold text-lg text-white tracking-wider">SYNTHETIX<span class="text-purple-400">.DASH</span></span>
         </a>
       </div>
 
-      <!-- Perfil y Salir -->
       <div class="flex items-center space-x-4">
-        <!-- Badge de Rol Dinámico -->
-        <div id="roleBadge" class="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950/80 border border-purple-500/40 text-purple-300 shadow-sm shadow-purple-900/30">
+        <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950/80 border border-purple-500/40 text-purple-300">
           <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
           <span id="roleText">Cargando...</span>
         </div>
-
-        <button onclick="logout()" class="p-2 rounded-xl bg-purple-950/50 hover:bg-rose-950/60 border border-purple-900/60 hover:border-rose-500/50 text-purple-300 hover:text-rose-300 transition" title="Cerrar Sesión">
+        <button onclick="logout()" class="p-2 rounded-xl bg-purple-950/50 hover:bg-rose-950/60 border border-purple-900/60 text-purple-300 hover:text-rose-300 transition" title="Cerrar Sesión">
           <i data-lucide="log-out" class="w-5 h-5"></i>
         </button>
       </div>
-
     </div>
   </nav>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-8">
     
     <!-- BIENVENIDA -->
     <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-500/30 relative overflow-hidden">
-      <div class="absolute -top-16 -right-16 w-52 h-52 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
-      
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
-            <span>SISTEMA DE GESTIÓN CENTRALIZADO</span>
+            <span>PLATAFORMA ACTIVA</span>
             <span>•</span>
             <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
           </div>
           <h1 class="text-2xl sm:text-4xl font-black text-white">
-            Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-100">Usuario</span> ⚡
+            Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-100">...</span> ⚡
           </h1>
-          <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Gestiona tus proyectos de Minecraft, bots de Discord y tickets de soporte técnico.</p>
+          <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Control de infraestructura, proyectos y administración de Synthetix.</p>
         </div>
 
-        <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm transition shadow-lg shadow-purple-600/30">
+        <button onclick="openTicketModal()" class="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-purple-600/30">
           <i data-lucide="plus-circle" class="w-4 h-4"></i>
-          <span>Nuevo Ticket de Soporte</span>
+          <span>Nuevo Ticket</span>
         </button>
       </div>
     </div>
 
-    <!-- TARJETAS DE MÉTRICAS -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-      
-      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono uppercase text-purple-400">Tickets Activos</span>
-          <i data-lucide="ticket" class="w-4 h-4 text-purple-400"></i>
-        </div>
-        <p class="text-2xl font-black text-white">0</p>
-        <span class="text-[10px] text-purple-400/60">En cola de atención</span>
-      </div>
-
-      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono uppercase text-purple-400">Servicios</span>
-          <i data-lucide="box" class="w-4 h-4 text-purple-400"></i>
-        </div>
-        <p class="text-2xl font-black text-white">0</p>
-        <span class="text-[10px] text-purple-400/60">Plugins o bots activos</span>
-      </div>
-
-      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono uppercase text-purple-400">Nivel de Rango</span>
-          <i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i>
-        </div>
-        <p id="cardRoleText" class="text-xl sm:text-2xl font-black text-fuchsia-400">User</p>
-        <span class="text-[10px] text-purple-400/60">Permisos del sistema</span>
-      </div>
-
-      <div class="p-5 rounded-2xl card-glass border border-purple-900/40">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono uppercase text-purple-400">Infraestructura</span>
-          <i data-lucide="server" class="w-4 h-4 text-emerald-400"></i>
-        </div>
-        <p class="text-2xl font-black text-emerald-400">20.0 TPS</p>
-        <span class="text-[10px] text-emerald-400/70">● Red Operacional</span>
-      </div>
-
+    <!-- SWITCH DE PESTAÑAS (Solo visible para Founder / Admin) -->
+    <div id="founderTabs" class="hidden flex space-x-2 border-b border-purple-900/50 pb-2">
+      <button onclick="switchTab('tickets')" id="tabBtnTickets" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition">Tickets & Soporte</button>
+      <button onclick="switchTab('founder')" id="tabBtnFounder" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/40 hover:text-white transition flex items-center space-x-2">
+        <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-400"></i>
+        <span>Founder Nexus (Control)</span>
+      </button>
     </div>
 
-    <!-- SECCIÓN DE TICKETS -->
-    <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
-      
-      <div class="flex items-center justify-between border-b border-purple-950/60 pb-4">
-        <div>
-          <h2 class="text-lg font-bold text-white">Tickets de Soporte y Desarrollo</h2>
-          <p class="text-xs text-purple-300/60">Historial de consultas, bugs y solicitudes técnicas</p>
+    <!-- VISTA 1: TICKETS DE SOPORTE -->
+    <div id="viewTickets" class="space-y-6">
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
+        <div class="flex items-center justify-between border-b border-purple-950/60 pb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white">Bandeja de Tickets</h2>
+            <p class="text-xs text-purple-300/60">Tickets activos en la plataforma</p>
+          </div>
+          <button onclick="loadTickets()" class="text-xs font-mono text-purple-400 hover:text-white flex items-center space-x-1">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>Actualizar</span>
+          </button>
+        </div>
+
+        <div id="ticketsContainer" class="space-y-3">
+          <p class="text-xs text-purple-400 text-center py-4">Cargando tickets de la base de datos...</p>
         </div>
       </div>
+    </div>
 
-      <!-- Lista de Tickets (Placeholder Vacío) -->
-      <div id="ticketsList" class="p-8 rounded-2xl bg-black/40 border border-purple-950/60 text-center space-y-3">
-        <div class="w-12 h-12 rounded-full bg-purple-950/60 border border-purple-500/30 flex items-center justify-center mx-auto text-purple-400">
-          <i data-lucide="inbox" class="w-6 h-6"></i>
+    <!-- VISTA 2: PANEL EXCLUSIVO DEL FOUNDER -->
+    <div id="viewFounder" class="hidden space-y-6">
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-fuchsia-500/40 shadow-2xl space-y-6">
+        <div class="flex items-center space-x-3 border-b border-purple-950/60 pb-4">
+          <i data-lucide="shield-alert" class="w-6 h-6 text-fuchsia-400"></i>
+          <div>
+            <h2 class="text-xl font-bold text-white">Founder Nexus: Control de la Plataforma</h2>
+            <p class="text-xs text-purple-300/60">Gestión de usuarios registrados y asignación de rangos</p>
+          </div>
         </div>
-        <p class="text-sm font-semibold text-white">No tienes tickets abiertos actualmente</p>
-        <p class="text-xs text-purple-400/60 max-w-sm mx-auto">
-          ¿Necesitas un plugin personalizado, ayuda con tu red de Velocity o configuración de un bot? Abre un ticket ahora.
-        </p>
-        <button onclick="openTicketModal()" class="mt-2 text-xs font-bold text-purple-300 hover:text-white underline underline-offset-4">
-          + Abrir mi primer ticket
-        </button>
-      </div>
 
+        <!-- Tabla de Usuarios -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="text-purple-400 font-mono uppercase bg-black/40 border-b border-purple-950">
+              <tr>
+                <th class="p-3">Usuario</th>
+                <th class="p-3">Correo</th>
+                <th class="p-3">Rol Actual</th>
+                <th class="p-3">Cambiar Rango</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody" class="divide-y divide-purple-950/40">
+              <tr>
+                <td colspan="4" class="p-4 text-center text-purple-400">Cargando usuarios...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
   </main>
 
-  <!-- MODAL: CREAR TICKET -->
+  <!-- MODAL NUEVO TICKET -->
   <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="max-w-md w-full card-glass rounded-3xl p-6 sm:p-8 border border-purple-500/40 shadow-2xl relative">
+    <div class="max-w-md w-full card-glass rounded-3xl p-6 sm:p-8 border border-purple-500/40 shadow-2xl">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-bold text-white">Nuevo Ticket de Soporte</h3>
-        <button onclick="closeTicketModal()" class="text-purple-400 hover:text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+        <button onclick="closeTicketModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-
-      <form id="newTicketForm" class="space-y-4">
+      <form id="ticketForm" class="space-y-4">
         <div>
           <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Título del Requerimiento</label>
-          <input type="text" id="ticketTitle" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Ej: Bug en Plugin de Economía">
+          <input type="text" id="tTitle" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Ej: Error en plugin Paper">
         </div>
-
         <div>
           <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Categoría</label>
-          <select id="ticketCategory" class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400">
-            <option value="Plugins Paper/Spigot">Desarrollo de Plugin</option>
+          <select id="tCategory" class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400">
+            <option value="Plugins Paper/Spigot">Plugins Paper/Spigot</option>
             <option value="Bot de Discord">Bot de Discord</option>
-            <option value="Network & Proxy">Network & Velocity Setup</option>
-            <option value="Optimización TPS">Optimización y Auditoría</option>
-            <option value="Facturación">Facturación / Pagos</option>
+            <option value="Network Velocity">Network Velocity</option>
+            <option value="Optimización TPS">Optimización TPS</option>
           </select>
         </div>
-
         <div>
-          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Detalles / Explicación</label>
-          <textarea id="ticketMessage" rows="3" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Describe a fondo qué necesitas..."></textarea>
+          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Descripción</label>
+          <textarea id="tMessage" rows="3" required class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Detalles de tu pedido o duda..."></textarea>
         </div>
-
-        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-purple-600/30">
-          Enviar Ticket
-        </button>
+        <button type="submit" id="tSubmitBtn" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-3 rounded-xl text-sm shadow-lg">Crear Ticket</button>
       </form>
     </div>
   </div>
 
-  <!-- SCRIPT DEL DASHBOARD -->
   <script>
     lucide.createIcons();
 
-    // 1. Verificación de Autenticación (Auth Guard)
     const token = localStorage.getItem('synthetix_token');
-    const localUser = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
+    let currentUser = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
 
+    // Validación segura: no cierra la sesión inmediatamente si hay error de red
     if (!token) {
       window.location.href = '/login';
     } else {
-      initDashboard();
+      renderUser(currentUser);
+      validateSession();
+      loadTickets();
     }
 
-    async function initDashboard() {
-      try {
-        // Consultar /api/auth/me para verificar si la sesión sigue viva y su rol real
-        const res = await fetch('/api/auth/me', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+    function renderUser(user) {
+      if (!user.username) return;
+      document.getElementById('usernameDisplay').innerText = user.username;
+      document.getElementById('roleText').innerText = user.role.toUpperCase();
+      document.getElementById('welcomeRole').innerText = user.role.toUpperCase();
 
-        if (!res.ok) {
-          throw new Error();
-        }
-
-        const data = await res.json();
-        const user = data.user;
-
-        // Renderizar datos en pantalla
-        document.getElementById('usernameDisplay').innerText = user.username;
-        document.getElementById('roleText').innerText = user.role.toUpperCase();
-        document.getElementById('welcomeRole').innerText = user.role.toUpperCase();
-        document.getElementById('cardRoleText').innerText = user.role;
-
-        // Estilo especial si eres Founder
-        if (user.role === 'Founder') {
-          const badge = document.getElementById('roleBadge');
-          badge.className = "hidden sm:inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-gradient-to-r from-purple-950 to-fuchsia-950 border border-fuchsia-500/60 text-fuchsia-300 shadow-lg shadow-fuchsia-900/40";
-        }
-
-      } catch (err) {
-        // Si el token expiró, cerrar sesión
-        logout();
+      if (user.role === 'Founder' || user.role === 'Admin') {
+        document.getElementById('founderTabs').classList.remove('hidden');
+        document.getElementById('roleBadge').className = "inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-gradient-to-r from-purple-950 to-fuchsia-950 border border-fuchsia-500/60 text-fuchsia-300 shadow-lg shadow-fuchsia-900/40";
       }
     }
 
+    async function validateSession() {
+      try {
+        const res = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (res.status === 401) {
+          // Solo si el servidor rechaza explícitamente el token se cierra sesión
+          logout();
+          return;
+        }
+        const data = await res.json();
+        if (data.success) {
+          currentUser = data.user;
+          localStorage.setItem('synthetix_user', JSON.stringify(currentUser));
+          renderUser(currentUser);
+        }
+      } catch (e) {
+        // En caso de fallo de red, se mantiene la sesión guardada localmente
+      }
+    }
+
+    function switchTab(tab) {
+      const vTickets = document.getElementById('viewTickets');
+      const vFounder = document.getElementById('viewFounder');
+      const btnT = document.getElementById('tabBtnTickets');
+      const btnF = document.getElementById('tabBtnFounder');
+
+      if (tab === 'founder') {
+        vTickets.classList.add('hidden');
+        vFounder.classList.remove('hidden');
+        btnF.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-2";
+        btnT.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/40 hover:text-white transition";
+        loadFounderUsers();
+      } else {
+        vFounder.classList.add('hidden');
+        vTickets.classList.remove('hidden');
+        btnT.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition";
+        btnF.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/40 hover:text-white transition flex items-center space-x-2";
+        loadTickets();
+      }
+      lucide.createIcons();
+    }
+
+    async function loadTickets() {
+      const container = document.getElementById('ticketsContainer');
+      try {
+        const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+
+        if (data.tickets && data.tickets.length > 0) {
+          container.innerHTML = data.tickets.map(t => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/40 flex items-center justify-between">
+              <div>
+                <div class="flex items-center space-x-2 mb-1">
+                  <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">${t.category}</span>
+                </div>
+                <h4 class="text-sm font-bold text-white">${t.title}</h4>
+                <p class="text-xs text-purple-300/60 mt-1">${t.message}</p>
+                <span class="text-[10px] text-purple-400/50 mt-2 block">Por: ${t.author} • ${t.createdAt}</span>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-950/80 border border-emerald-500/50 text-emerald-400">
+                ${t.status}
+              </span>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay tickets activos en este momento.</p>';
+        }
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>';
+      }
+    }
+
+    async function loadFounderUsers() {
+      const tbody = document.getElementById('usersTableBody');
+      try {
+        const res = await fetch('/api/founder/users', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+
+        if (data.users && data.users.length > 0) {
+          tbody.innerHTML = data.users.map(u => `
+            <tr class="hover:bg-purple-950/20">
+              <td class="p-3 font-semibold text-white">${u.username}</td>
+              <td class="p-3 text-purple-300">${u.email}</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900/50 border border-purple-500/40 text-purple-200">${u.role}</span></td>
+              <td class="p-3">
+                <select onchange="changeRole('${u.email}', this.value)" class="bg-black/60 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
+                  <option value="" disabled selected>Cambiar rol...</option>
+                  <option value="Client">Client</option>
+                  <option value="Soporte">Soporte</option>
+                  <option value="Dev">Dev</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Founder">Founder</option>
+                </select>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-rose-400">Error al cargar lista de usuarios</td></tr>';
+      }
+    }
+
+    async function changeRole(email, newRole) {
+      if (!confirm(`¿Cambiar el rol de ${email} a ${newRole}?`)) return;
+      try {
+        const res = await fetch('/api/founder/set-role', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, newRole })
+        });
+        const d = await res.json();
+        alert(d.message || d.error);
+        loadFounderUsers();
+      } catch (e) {
+        alert("Error al actualizar rol");
+      }
+    }
+
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('tSubmitBtn');
+      btn.disabled = true;
+      btn.innerText = "Guardando en KV...";
+
+      try {
+        const res = await fetch('/api/tickets', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: document.getElementById('tTitle').value,
+            category: document.getElementById('tCategory').value,
+            message: document.getElementById('tMessage').value
+          })
+        });
+        const d = await res.json();
+        if (d.success) {
+          closeTicketModal();
+          document.getElementById('ticketForm').reset();
+          loadTickets();
+        } else {
+          alert(d.error);
+        }
+      } catch (err) {
+        alert("Error de conexión");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Crear Ticket";
+      }
+    });
+
+    function openTicketModal() { document.getElementById('ticketModal').classList.remove('hidden'); }
+    function closeTicketModal() { document.getElementById('ticketModal').classList.add('hidden'); }
     function logout() {
       localStorage.removeItem('synthetix_token');
       localStorage.removeItem('synthetix_user');
       window.location.href = '/login';
     }
-
-    function openTicketModal() {
-      document.getElementById('ticketModal').classList.remove('hidden');
-    }
-
-    function closeTicketModal() {
-      document.getElementById('ticketModal').classList.add('hidden');
-    }
-
-    document.getElementById('newTicketForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert("¡Ticket recibido! Pronto conectaremos el listado en vivo de KV.");
-      closeTicketModal();
-    });
   </script>
 </body>
 </html>
