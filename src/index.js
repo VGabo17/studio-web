@@ -49,7 +49,99 @@ export default {
       return session ? JSON.parse(session) : null;
     }
 
+    // ------------------------------------------------------------------------
+    // RESOURCE VAULT: SUBIDA DIRECTA DE .JAR Y DESCARGA NATIVA
+    // ------------------------------------------------------------------------
+    // 1. Listar recursos
+    if (url.pathname === '/api/vault' && request.method === 'GET') {
+      const resources = await KV.get("vault:resources") || "[]";
+      return json({ success: true, resources: JSON.parse(resources) });
+    }
+
+    // 2. Descargar archivo .jar directo
+    if (url.pathname === '/api/vault/download' && request.method === 'GET') {
+      const id = url.searchParams.get("id");
+      if (!id) return new Response("ID faltante", { status: 400 });
+
+      const fileBuffer = await KV.get(`vault:file:${id}`, { type: "arrayBuffer" });
+      if (!fileBuffer) return new Response("Archivo no encontrado o expirado", { status: 404 });
+
+      const resources = JSON.parse(await KV.get("vault:resources") || "[]");
+      const item = resources.find(r => r.id === id);
+      const filename = item ? `${item.name.replace(/\s+/g, '_')}-v${item.version}.jar` : "plugin.jar";
+
+      return new Response(fileBuffer, {
+        headers: {
+          "Content-Type": "application/java-archive",
+          "Content-Disposition": `attachment; filename="${filename}"`
+        }
+      });
+    }
+
+    // 3. Subir archivo .jar binario (Solo Founder o Dev)
+    if (url.pathname === '/api/vault/upload' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user || (user.role !== 'Founder' && user.role !== 'Dev')) {
+        return json({ error: "Permiso denegado. Solo Staff puede subir plugins." }, 403);
+      }
+
+      try {
+        const formData = await request.formData();
+        const file = formData.get("file");
+        const name = formData.get("name");
+        const version = formData.get("version") || "1.0.0";
+        const mcVersions = formData.get("mcVersions") || "1.16 - 1.21";
+        const description = formData.get("description") || "";
+
+        if (!file || typeof file === 'string' || !name) {
+          return json({ error: "Debes adjuntar un archivo .jar válido y un nombre." }, 400);
+        }
+
+        const resId = "RES-" + Math.floor(1000 + Math.random() * 9000);
+        const arrayBuffer = await file.arrayBuffer();
+
+        // Guardar el archivo binario real en KV
+        await KV.put(`vault:file:${resId}`, arrayBuffer);
+
+        // Guardar metadata en el índice
+        const resources = JSON.parse(await KV.get("vault:resources") || "[]");
+        const newResource = {
+          id: resId,
+          name,
+          version,
+          mcVersions,
+          description,
+          fileSize: `${(file.size / 1024).toFixed(1)} KB`,
+          author: user.username,
+          createdAt: new Date().toLocaleDateString()
+        };
+
+        resources.unshift(newResource);
+        await KV.put("vault:resources", JSON.stringify(resources));
+
+        return json({ success: true, resource: newResource });
+      } catch (err) {
+        return json({ error: "Fallo al procesar el archivo: " + err.message }, 500);
+      }
+    }
+
+    // 4. Eliminar recurso del Vault
+    if (url.pathname === '/api/vault/delete' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user || (user.role !== 'Founder' && user.role !== 'Admin')) {
+        return json({ error: "Sin permiso" }, 403);
+      }
+      const { id } = await request.json();
+      await KV.delete(`vault:file:${id}`);
+      const resources = JSON.parse(await KV.get("vault:resources") || "[]");
+      const updated = resources.filter(r => r.id !== id);
+      await KV.put("vault:resources", JSON.stringify(updated));
+      return json({ success: true });
+    }
+
+    // ------------------------------------------------------------------------
     // DISCORD OAUTH2
+    // ------------------------------------------------------------------------
     const CLIENT_ID = env.DISCORD_CLIENT_ID || "";
     const CLIENT_SECRET = env.DISCORD_CLIENT_SECRET || "";
     const REDIRECT_URI = `${url.origin}/api/auth/discord/callback`;
@@ -186,28 +278,6 @@ export default {
       return json({ success: true, user });
     }
 
-    // VAULT
-    if (url.pathname === '/api/vault' && request.method === 'GET') {
-      const resources = await KV.get("vault:resources") || "[]";
-      return json({ success: true, resources: JSON.parse(resources) });
-    }
-
-    if (url.pathname === '/api/vault' && request.method === 'POST') {
-      const user = await getSessionUser();
-      if (!user || (user.role !== 'Founder' && user.role !== 'Dev')) return json({ error: "Denegado" }, 403);
-
-      const { name, version, mcVersions, description, downloadUrl } = await request.json();
-      const resources = JSON.parse(await KV.get("vault:resources") || "[]");
-      const newRes = {
-        id: "RES-" + Math.floor(1000 + Math.random() * 9000),
-        name, version: version || "1.0.0", mcVersions: mcVersions || "1.16 - 1.21",
-        description, downloadUrl, author: user.username, createdAt: new Date().toLocaleDateString()
-      };
-      resources.unshift(newRes);
-      await KV.put("vault:resources", JSON.stringify(resources));
-      return json({ success: true, resource: newRes });
-    }
-
     // PROJECTS
     if (url.pathname === '/api/projects' && request.method === 'GET') {
       const user = await getSessionUser();
@@ -233,7 +303,7 @@ export default {
       return json({ success: true });
     }
 
-    // FOUNDER: USERS & ROLES
+    // FOUNDER: USERS
     if (url.pathname === '/api/founder/users' && request.method === 'GET') {
       const user = await getSessionUser();
       if (!user || user.role !== 'Founder') return json({ error: "Denegado" }, 403);
@@ -260,7 +330,7 @@ export default {
       return json({ success: true });
     }
 
-    // CRM QUOTES
+    // CRM COTIZACIONES
     if (url.pathname === '/api/quote' && request.method === 'POST') {
       try {
         const data = await request.json();
@@ -299,9 +369,7 @@ export default {
       return json({ success: true });
     }
 
-    // ------------------------------------------------------------------------
-    // TICKETS: CONSULTAR, CREAR, RESPONDER, CAMBIAR ESTADO Y ELIMINAR
-    // ------------------------------------------------------------------------
+    // TICKETS
     if (url.pathname === '/api/tickets' && request.method === 'GET') {
       const user = await getSessionUser();
       if (!user) return json({ error: "No autorizado" }, 401);
@@ -341,7 +409,6 @@ export default {
       return json({ success: true, ticket: ticketObject });
     }
 
-    // RESPONDER AL TICKET (BLOQUEADO SI ESTÁ CERRADO)
     if (url.pathname === '/api/tickets/reply' && request.method === 'POST') {
       const user = await getSessionUser();
       if (!user) return json({ error: "No autorizado" }, 401);
@@ -351,10 +418,8 @@ export default {
       if (!raw) return json({ error: "No existe el ticket" }, 404);
 
       const ticket = JSON.parse(raw);
-
-      // BLOQUEO ESTRICTO: NO SE PERMITE HABLAR SI EL TICKET ESTÁ CERRADO
       if (ticket.status === 'Cerrado') {
-        return json({ error: "Este ticket está cerrado y archivado. No se permiten nuevas respuestas." }, 400);
+        return json({ error: "Este ticket está cerrado y archivado." }, 400);
       }
 
       ticket.messages.push({ sender: user.username, role: user.role, text, time: new Date().toLocaleString() });
@@ -384,7 +449,6 @@ export default {
       return json({ success: true });
     }
 
-    // ELIMINAR TICKET (NUEVA FUNCIÓN PARA EL FOUNDER/ADMIN)
     if (url.pathname === '/api/tickets/delete' && request.method === 'POST') {
       const user = await getSessionUser();
       if (!user || (user.role !== 'Founder' && user.role !== 'Admin')) {
