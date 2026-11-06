@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "studio-web",
+  "compatibility_date": "2024-04-01",
+  "pages_build_output_dir": "public",
+  "kv_namespaces": [
+    {
+      "binding": "SYNTHETIX_KV",
+      "id": "f03b18c3a2cf444f97cac17eeb8ee4d8"
+    }
+  ]
+}
