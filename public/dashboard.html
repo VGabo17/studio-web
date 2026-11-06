@@ -8,6 +8,10 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-16">
 
@@ -35,73 +39,77 @@
     </div>
   </nav>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-8">
+  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 space-y-6">
     
-    <!-- HEADER -->
-    <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-500/30 relative">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
-            <span>ESPACIO DE TRABAJO</span>
-            <span>•</span>
-            <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
-          </div>
-          <h1 class="text-2xl sm:text-4xl font-black text-white">
-            Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">...</span> ⚡
-          </h1>
-          <p id="roleDescription" class="text-purple-300/60 text-xs sm:text-sm mt-1">Cargando permisos...</p>
+    <!-- HEADER COMPACTO -->
+    <div class="p-5 sm:p-7 rounded-3xl card-glass border border-purple-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
+          <span>ESPACIO DE TRABAJO</span>
+          <span>•</span>
+          <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
         </div>
-
-        <button onclick="openTicketModal()" class="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-purple-600/30">
-          <i data-lucide="plus-circle" class="w-4 h-4"></i>
-          <span>Nuevo Ticket</span>
-        </button>
+        <h1 class="text-xl sm:text-3xl font-black text-white">
+          Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">...</span> ⚡
+        </h1>
+        <p id="roleDescription" class="text-purple-300/60 text-xs mt-1">Cargando permisos...</p>
       </div>
+
+      <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
+        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+        <span>Nuevo Ticket</span>
+      </button>
     </div>
 
-    <!-- PESTAÑAS SEGÚN ROL -->
-    <div class="flex flex-wrap gap-2 border-b border-purple-900/50 pb-2">
-      <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition">Tickets & Soporte</button>
-      <button onclick="setMainTab('vault')" id="tabBtnVault" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1">
-        <i data-lucide="package" class="w-3.5 h-3.5"></i>
-        <span>Resource Vault (Plugins)</span>
+    <!-- NAVEGACIÓN HORIZONTAL TÁCTIL (SIN ROMPERSE EN MÓVIL) -->
+    <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-2 border-b border-purple-900/40">
+      <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5">
+        <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+        <span>Tickets & Soporte</span>
       </button>
-      <button onclick="setMainTab('projects')" id="tabBtnProjects" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition">Mis Builds</button>
-      <button onclick="setMainTab('dev')" id="tabBtnDev" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1">
+      <button onclick="setMainTab('vault')" id="tabBtnVault" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
+        <i data-lucide="package" class="w-3.5 h-3.5 text-fuchsia-400"></i>
+        <span>Resource Vault</span>
+      </button>
+      <button onclick="setMainTab('projects')" id="tabBtnProjects" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
+        <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i>
+        <span>Mis Builds</span>
+      </button>
+      <button onclick="setMainTab('dev')" id="tabBtnDev" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="code" class="w-3.5 h-3.5"></i>
         <span>Dev Studio</span>
       </button>
-      <button onclick="setMainTab('founder')" id="tabBtnFounder" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-fuchsia-300 border border-fuchsia-500/40 hover:text-white transition flex items-center space-x-1">
+      <button onclick="setMainTab('founder')" id="tabBtnFounder" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-fuchsia-300 border border-fuchsia-500/40 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-400"></i>
         <span>Founder Nexus</span>
       </button>
     </div>
 
     <!-- VISTA 1: TICKETS -->
-    <div id="viewTickets" class="grid lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-1 p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
-          <h3 class="font-bold text-white text-sm">Tickets</h3>
+    <div id="viewTickets" class="grid lg:grid-cols-3 gap-5">
+      <div class="lg:col-span-1 p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
+        <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
+          <h3 class="font-bold text-white text-xs uppercase font-mono tracking-wider">Historial</h3>
           <button onclick="loadTickets()" class="text-xs text-purple-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
         </div>
-        <div id="ticketsContainer" class="space-y-2 max-h-[500px] overflow-y-auto">
+        <div id="ticketsContainer" class="space-y-2 max-h-[420px] overflow-y-auto pr-1">
           <p class="text-xs text-purple-400 text-center py-4">Cargando...</p>
         </div>
       </div>
 
-      <div class="lg:col-span-2 p-6 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between min-h-[500px]">
-        <div id="ticketDetailContent" class="space-y-4">
+      <div class="lg:col-span-2 p-5 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between min-h-[450px]">
+        <div id="ticketDetailContent" class="space-y-3">
           <div class="text-center py-20 text-purple-400/60">
-            <i data-lucide="message-square" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
-            <p class="text-sm font-semibold">Selecciona un ticket para ver la conversación</p>
+            <i data-lucide="message-square" class="w-10 h-10 mx-auto mb-2 opacity-50"></i>
+            <p class="text-xs font-semibold">Toca un ticket de la lista para leer o responder</p>
           </div>
         </div>
-        <div id="replyArea" class="hidden pt-4 border-t border-purple-950 mt-4">
+        <div id="replyArea" class="hidden pt-3 border-t border-purple-950 mt-3">
           <form id="replyForm" class="flex gap-2">
-            <input type="text" id="replyText" required placeholder="Escribe una respuesta técnica..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400">
-            <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition flex items-center space-x-1">
+            <input type="text" id="replyText" required placeholder="Escribe tu mensaje..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-purple-400">
+            <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1">
               <span>Enviar</span>
-              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <i data-lucide="send" class="w-3 h-3"></i>
             </button>
           </form>
         </div>
@@ -109,16 +117,15 @@
     </div>
 
     <!-- VISTA 2: RESOURCE VAULT -->
-    <div id="viewVault" class="hidden space-y-6">
-      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
-        <div class="flex items-center justify-between border-b border-purple-950 pb-4">
+    <div id="viewVault" class="hidden space-y-4">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
+        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
           <div>
-            <h2 class="text-lg font-bold text-white">Synthetix Resource Vault</h2>
-            <p class="text-xs text-purple-300/60">Descarga directa de plugins verificados y utilidades</p>
+            <h2 class="text-base font-bold text-white">Synthetix Resource Vault</h2>
+            <p class="text-[11px] text-purple-300/60">Plugins verificados listos para descargar</p>
           </div>
           <button onclick="loadVault()" class="text-xs text-purple-400 hover:text-white flex items-center space-x-1">
             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-            <span>Actualizar</span>
           </button>
         </div>
         <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -127,12 +134,12 @@
       </div>
     </div>
 
-    <!-- VISTA 3: MIS BUILDS / PROYECTOS -->
-    <div id="viewProjects" class="hidden space-y-6">
-      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
-        <div class="border-b border-purple-950 pb-4">
-          <h2 class="text-lg font-bold text-white">Mis Proyectos & Builds Activos</h2>
-          <p class="text-xs text-purple-300/60">Avance en vivo y descargas de tus pedidos</p>
+    <!-- VISTA 3: MIS BUILDS -->
+    <div id="viewProjects" class="hidden space-y-4">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
+        <div class="border-b border-purple-950 pb-3">
+          <h2 class="text-base font-bold text-white">Mis Proyectos & Builds Activos</h2>
+          <p class="text-[11px] text-purple-300/60">Avance y descargas de tus pedidos</p>
         </div>
         <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
           <p class="text-xs text-purple-400 py-6">Cargando proyectos...</p>
@@ -140,37 +147,37 @@
       </div>
     </div>
 
-    <!-- VISTA 4: DEV STUDIO (PUBLICAR EN EL VAULT) -->
-    <div id="viewDev" class="hidden space-y-6">
-      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-cyan-500/40 max-w-xl mx-auto space-y-4">
+    <!-- VISTA 4: DEV STUDIO -->
+    <div id="viewDev" class="hidden space-y-4">
+      <div class="p-6 rounded-3xl card-glass border border-cyan-500/40 max-w-xl mx-auto space-y-4">
         <div class="flex items-center space-x-2 border-b border-purple-950 pb-3">
           <i data-lucide="terminal" class="text-cyan-400 w-5 h-5"></i>
-          <h3 class="font-bold text-white text-base">Dev Studio: Publicar Recurso / Plugin</h3>
+          <h3 class="font-bold text-white text-sm">Dev Studio: Publicar Plugin</h3>
         </div>
         <form id="vaultUploadForm" class="space-y-3">
           <div>
             <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre del Plugin</label>
-            <input type="text" id="vName" required placeholder="Ej: SynthetixCore" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+            <input type="text" id="vName" required placeholder="Ej: SynthetixCore" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Versión</label>
-              <input type="text" id="vVersion" placeholder="1.2.0" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+              <input type="text" id="vVersion" placeholder="1.0.0" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
             </div>
             <div>
-              <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Compatibilidad MC</label>
-              <input type="text" id="vMC" placeholder="1.16 - 1.21" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+              <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Versión MC</label>
+              <input type="text" id="vMC" placeholder="1.16 - 1.21" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
             </div>
           </div>
           <div>
             <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Enlace de Descarga Directa (.JAR)</label>
-            <input type="url" id="vUrl" required placeholder="https://..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+            <input type="url" id="vUrl" required placeholder="https://..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           </div>
           <div>
             <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Descripción / Changelog</label>
-            <textarea id="vDesc" rows="3" placeholder="Novedades y comandos..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white"></textarea>
+            <textarea id="vDesc" rows="2" placeholder="Qué incluye este plugin..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
           </div>
-          <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-3 rounded-xl transition shadow-lg shadow-cyan-600/30">
+          <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-2.5 rounded-xl transition">
             Publicar en el Vault
           </button>
         </form>
@@ -178,58 +185,46 @@
     </div>
 
     <!-- VISTA 5: FOUNDER NEXUS -->
-    <div id="viewFounder" class="hidden space-y-8">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <button onclick="setFounderSubTab('quotes')" id="fTabQuotes" class="p-4 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1">
-          <i data-lucide="inbox" class="w-5 h-5"></i>
+    <div id="viewFounder" class="hidden space-y-6">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <button onclick="setFounderSubTab('quotes')" id="fTabQuotes" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="inbox" class="w-4 h-4"></i>
           <span>Cotizaciones (CRM)</span>
         </button>
-        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
-          <i data-lucide="folder-plus" class="w-5 h-5"></i>
+        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="folder-plus" class="w-4 h-4"></i>
           <span>Crear Proyecto</span>
         </button>
-        <button onclick="setFounderSubTab('announcement')" id="fTabAnnounce" class="p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
-          <i data-lucide="megaphone" class="w-5 h-5"></i>
+        <button onclick="setFounderSubTab('announcement')" id="fTabAnnounce" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="megaphone" class="w-4 h-4"></i>
           <span>Anuncio Global</span>
         </button>
-        <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
-          <i data-lucide="users" class="w-5 h-5"></i>
+        <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="users" class="w-4 h-4"></i>
           <span>Usuarios & Roles</span>
         </button>
       </div>
 
-      <div id="fSecQuotes" class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <h3 class="font-bold text-white text-base">Bandeja de Cotizaciones</h3>
-        <div id="quotesList" class="space-y-3">Cargando...</div>
+      <div id="fSecQuotes" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
+        <h3 class="font-bold text-white text-sm">Bandeja de Cotizaciones</h3>
+        <div id="quotesList" class="space-y-2">Cargando...</div>
       </div>
 
-      <div id="fSecAssign" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-4">
-        <h3 class="font-bold text-white text-base">Asignar Proyecto</h3>
+      <div id="fSecAssign" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-3">
+        <h3 class="font-bold text-white text-sm">Asignar Proyecto a Cliente</h3>
         <form id="createProjectForm" class="space-y-3">
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre</label>
-            <input type="text" id="pTitle" required placeholder="Ej: Plugin Spigot Clanes" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-          </div>
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Correo Cliente</label>
-            <input type="email" id="pClientEmail" required placeholder="cliente@correo.com" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-          </div>
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Progreso (%)</label>
-            <input type="number" id="pProgress" min="0" max="100" value="25" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-          </div>
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Enlace de Descarga</label>
-            <input type="url" id="pDownloadUrl" placeholder="https://..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-          </div>
-          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-3 rounded-xl">Guardar</button>
+          <input type="text" id="pTitle" required placeholder="Nombre del proyecto (Ej: Plugin Clanes)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <input type="email" id="pClientEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <input type="number" id="pProgress" min="0" max="100" value="25" placeholder="Progreso %" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga .jar (opcional)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-2.5 rounded-xl">Guardar Proyecto</button>
         </form>
       </div>
 
-      <div id="fSecAnnounce" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-4">
-        <h3 class="font-bold text-white text-base">Anuncio Global</h3>
-        <form id="announcementForm" class="space-y-4">
-          <input type="text" id="announcementText" placeholder="Texto..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+      <div id="fSecAnnounce" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-3">
+        <h3 class="font-bold text-white text-sm">Banner de Anuncio en la Web</h3>
+        <form id="announcementForm" class="space-y-3">
+          <input type="text" id="announcementText" placeholder="Texto del anuncio..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <label class="flex items-center space-x-2 text-xs text-purple-200">
             <input type="checkbox" id="announcementActive" class="w-4 h-4 accent-purple-500">
             <span>Mostrar Banner en Portada</span>
@@ -238,17 +233,16 @@
         </form>
       </div>
 
-      <div id="fSecUsers" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <h3 class="font-bold text-white text-base">Usuarios & Roles</h3>
+      <div id="fSecUsers" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
+        <h3 class="font-bold text-white text-sm">Usuarios & Roles</h3>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead class="text-purple-400 font-mono uppercase bg-black/40 border-b border-purple-950">
               <tr>
-                <th class="p-3">Usuario</th>
-                <th class="p-3">Correo</th>
-                <th class="p-3">Discord</th>
-                <th class="p-3">Rol</th>
-                <th class="p-3">Acción</th>
+                <th class="p-2.5">Usuario</th>
+                <th class="p-2.5">Correo</th>
+                <th class="p-2.5">Rol</th>
+                <th class="p-2.5">Acción</th>
               </tr>
             </thead>
             <tbody id="usersTableBody" class="divide-y divide-purple-950"></tbody>
@@ -261,30 +255,21 @@
 
   <!-- MODAL TICKET -->
   <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-bold text-white">Nuevo Ticket</h3>
+    <div class="max-w-md w-full card-glass rounded-3xl p-5 border border-purple-500/40 shadow-2xl">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-base font-bold text-white">Nuevo Ticket de Soporte</h3>
         <button onclick="closeTicketModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <form id="ticketForm" class="space-y-4">
-        <div>
-          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Título</label>
-          <input type="text" id="tTitle" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-        </div>
-        <div>
-          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Categoría</label>
-          <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-            <option value="Plugins Paper/Spigot">Plugins Paper/Spigot</option>
-            <option value="Bot de Discord">Bot de Discord</option>
-            <option value="Network Velocity">Network Velocity</option>
-            <option value="Optimización TPS">Optimización TPS</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Descripción</label>
-          <textarea id="tMessage" rows="3" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white"></textarea>
-        </div>
-        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl text-xs">Crear Ticket</button>
+      <form id="ticketForm" class="space-y-3">
+        <input type="text" id="tTitle" required placeholder="Título del requerimiento" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <option value="Plugins Paper/Spigot">Plugins Paper/Spigot</option>
+          <option value="Bot de Discord">Bot de Discord</option>
+          <option value="Network Velocity">Network Velocity</option>
+          <option value="Optimización TPS">Optimización TPS</option>
+        </select>
+        <textarea id="tMessage" rows="3" required placeholder="Describe qué necesitas..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl text-xs">Crear Ticket</button>
       </form>
     </div>
   </div>
@@ -348,10 +333,10 @@
         if (view && btn) {
           if (t === tab) {
             view.classList.remove('hidden');
-            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition";
+            btn.className = "whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5 shadow-md shadow-purple-600/30";
           } else {
             view.classList.add('hidden');
-            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition";
+            btn.className = "whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5";
           }
         }
       });
@@ -367,20 +352,20 @@
         const data = await res.json();
         if (data.resources && data.resources.length > 0) {
           container.innerHTML = data.resources.map(r => `
-            <div class="p-5 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col justify-between space-y-3">
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col justify-between space-y-3">
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <span class="text-xs font-bold text-white">${r.name}</span>
-                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">v${r.version}</span>
+                  <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">v${r.version}</span>
                 </div>
-                <span class="text-[10px] text-fuchsia-400 font-mono block mb-2">MC: ${r.mcVersions}</span>
+                <span class="text-[10px] text-fuchsia-400 font-mono block mb-1.5">MC: ${r.mcVersions}</span>
                 <p class="text-xs text-purple-300/70 leading-relaxed">${r.description || 'Sin descripción'}</p>
               </div>
-              <div class="pt-3 border-t border-purple-950 flex items-center justify-between">
-                <span class="text-[10px] text-purple-400/50">Por ${r.author}</span>
-                <a href="${r.downloadUrl}" target="_blank" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center space-x-1">
-                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                  <span>Descargar</span>
+              <div class="pt-2.5 border-t border-purple-950 flex items-center justify-between">
+                <span class="text-[9px] text-purple-400/50">Por ${r.author}</span>
+                <a href="${r.downloadUrl}" target="_blank" class="px-3 py-1 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center space-x-1">
+                  <i data-lucide="download" class="w-3 h-3"></i>
+                  <span>Descargar .JAR</span>
                 </a>
               </div>
             </div>
@@ -416,7 +401,7 @@
         } else {
           alert(d.error);
         }
-      } catch (err) { alert("Error de red"); }
+      } catch (err) { alert("Error"); }
     });
 
     // --- PROYECTOS ---
@@ -427,17 +412,16 @@
         const data = await res.json();
         if (data.projects && data.projects.length > 0) {
           container.innerHTML = data.projects.map(p => `
-            <div class="p-5 rounded-2xl bg-black/40 border border-purple-900/50 space-y-3">
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/50 space-y-2.5">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
                 <span class="text-xs font-bold text-purple-300">${p.progress}%</span>
               </div>
               <h4 class="text-sm font-bold text-white">${p.title}</h4>
-              <div class="w-full bg-purple-950/60 rounded-full h-2 border border-purple-900">
-                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-2 rounded-full" style="width: ${p.progress}%"></div>
+              <div class="w-full bg-purple-950/60 rounded-full h-1.5 border border-purple-900">
+                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-1.5 rounded-full" style="width: ${p.progress}%"></div>
               </div>
-              <p class="text-xs text-purple-300/60">${p.notes || "En desarrollo"}</p>
-              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-2"><i data-lucide="download" class="w-3.5 h-3.5"></i><span>Descargar Build</span></a>` : ''}
+              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-1"><i data-lucide="download" class="w-3 h-3"></i><span>Descargar Archivos</span></a>` : ''}
             </div>
           `).join('');
         } else {
@@ -447,7 +431,7 @@
       } catch (e) {}
     }
 
-    // --- FOUNDER CRM & USERS ---
+    // --- FOUNDER CRM ---
     function setFounderSubTab(sub) {
       const subs = ['quotes', 'assignProject', 'announcement', 'users'];
       const map = { quotes: 'fSecQuotes', assignProject: 'fSecAssign', announcement: 'fSecAnnounce', users: 'fSecUsers' };
@@ -458,10 +442,10 @@
         const btn = document.getElementById(btnMap[s]);
         if (s === sub) {
           sec.classList.remove('hidden');
-          btn.className = "p-4 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1";
+          btn.className = "p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1";
         } else {
           sec.classList.add('hidden');
-          btn.className = "p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
+          btn.className = "p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
         }
       });
       if (sub === 'quotes') loadFounderQuotes();
@@ -476,15 +460,15 @@
         const data = await res.json();
         if (data.quotes && data.quotes.length > 0) {
           list.innerHTML = data.quotes.map(q => `
-            <div class="p-4 rounded-2xl bg-black/50 border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="p-3.5 rounded-2xl bg-black/50 border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
               <div>
                 <div class="flex items-center space-x-2">
                   <span class="text-xs font-mono text-fuchsia-400 font-bold">${q.id}</span>
                   <span class="text-xs font-bold text-white">${q.name}</span>
-                  <span class="text-[10px] font-mono text-purple-400 bg-purple-950 px-2 py-0.5 rounded">Discord: ${q.discord}</span>
+                  <span class="text-[9px] font-mono text-purple-400 bg-purple-950 px-1.5 py-0.5 rounded">Discord: ${q.discord}</span>
                 </div>
                 <p class="text-xs text-purple-200 mt-1 font-semibold">${q.service}</p>
-                <p class="text-[11px] text-purple-400/70">${q.details}</p>
+                <p class="text-[10px] text-purple-400/70">${q.details}</p>
               </div>
               <select onchange="changeQuoteStatus('${q.id}', this.value)" class="bg-black border border-purple-800 rounded-lg text-xs text-white px-2 py-1">
                 <option value="Pendiente" ${q.status === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
@@ -495,7 +479,7 @@
             </div>
           `).join('');
         } else {
-          list.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">Sin cotizaciones pendientes.</p>';
+          list.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">Sin cotizaciones pendientes.</p>';
         }
       } catch (e) {}
     }
@@ -516,11 +500,10 @@
         const data = await res.json();
         tbody.innerHTML = data.users.map(u => `
           <tr class="hover:bg-purple-950/20">
-            <td class="p-3 font-semibold text-white">${u.username}</td>
-            <td class="p-3 text-purple-300">${u.email}</td>
-            <td class="p-3 text-purple-400 font-mono">${u.discord || 'N/A'}</td>
-            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900 border border-purple-500/40 text-purple-200">${u.role}</span></td>
-            <td class="p-3">
+            <td class="p-2.5 font-semibold text-white">${u.username}</td>
+            <td class="p-2.5 text-purple-300">${u.email}</td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-900 text-purple-200">${u.role}</span></td>
+            <td class="p-2.5">
               <select onchange="changeRole('${u.email}', this.value)" class="bg-black/60 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
                 <option value="" disabled selected>Cambiar...</option>
                 <option value="Client">Client</option>
@@ -556,10 +539,10 @@
             <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left">
               <div class="flex items-center justify-between mb-1">
                 <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
-                <span class="text-[10px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
+                <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
               </div>
               <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
-              <p class="text-[10px] text-purple-400/60 mt-1">${t.author} • ${t.createdAt}</p>
+              <p class="text-[10px] text-purple-400/60 mt-0.5">${t.author} • ${t.createdAt}</p>
             </div>
           `).join('');
         } else {
@@ -581,14 +564,14 @@
         const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin' || currentUser.role === 'Soporte');
 
         detail.innerHTML = `
-          <div class="flex items-center justify-between border-b border-purple-950 pb-3">
+          <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
             <div>
               <div class="flex items-center space-x-2">
-                <span class="text-sm font-mono text-fuchsia-400 font-bold">${t.id}</span>
-                <span class="text-xs px-2 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300 font-bold">${t.category}</span>
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">${t.category}</span>
               </div>
-              <h3 class="text-base font-bold text-white mt-1">${t.title}</h3>
-              <p class="text-[11px] text-purple-400/60">Iniciado por: ${t.author}</p>
+              <h3 class="text-sm font-bold text-white mt-1">${t.title}</h3>
+              <p class="text-[10px] text-purple-400/60">Por: ${t.author}</p>
             </div>
             <div>
               ${isStaff ? `
@@ -597,18 +580,18 @@
                   <option value="En Proceso" ${t.status === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
                   <option value="Cerrado" ${t.status === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
                 </select>
-              ` : `<span class="text-xs px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-400 font-bold">${t.status}</span>`}
+              ` : `<span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-400 font-bold">${t.status}</span>`}
             </div>
           </div>
-          <div class="space-y-3 max-h-[360px] overflow-y-auto pr-2">
+          <div class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
             ${t.messages.map(m => `
-              <div class="p-3.5 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-6' : 'bg-black/50 border border-purple-950 mr-6'}">
-                <div class="flex items-center justify-between text-[11px] mb-1">
-                  <div class="flex items-center space-x-2">
+              <div class="p-3 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-4' : 'bg-black/50 border border-purple-950 mr-4'}">
+                <div class="flex items-center justify-between text-[10px] mb-1">
+                  <div class="flex items-center space-x-1.5">
                     <span class="font-bold text-white">${m.sender}</span>
-                    <span class="text-[9px] font-mono px-1.5 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
+                    <span class="text-[9px] font-mono px-1 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
                   </div>
-                  <span class="text-[10px] text-purple-400/50">${m.time}</span>
+                  <span class="text-[9px] text-purple-400/50">${m.time}</span>
                 </div>
                 <p class="text-xs text-purple-100/90 leading-relaxed">${m.text}</p>
               </div>

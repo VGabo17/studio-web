@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
-<body class="bg-mesh-pattern antialiased min-h-screen">
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100">
 
   <!-- NAVBAR -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-6 py-3.5">
@@ -39,10 +39,10 @@
         </div>
       </a>
 
-      <!-- ENLACES -->
+      <!-- ENLACES ESCRITORIO -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="#services" class="hover:text-purple-300 transition">Servicios</a>
-        <a href="#optimizer" class="hover:text-purple-300 transition">Optimizador</a>
+        <a href="#resources" class="hover:text-purple-300 transition">Plugins & Vault</a>
         <a href="#network" class="hover:text-purple-300 transition">Network Tester</a>
         <a href="#quote" class="hover:text-purple-300 transition">Cotizador</a>
       </div>
@@ -53,6 +53,7 @@
         </a>
       </div>
 
+      <!-- BOTONES MÓVIL -->
       <div class="flex md:hidden items-center space-x-2">
         <a href="/login" id="mobileUserBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-300">
           <i data-lucide="user" class="w-5 h-5"></i>
@@ -64,15 +65,15 @@
 
     </div>
 
-    <!-- MENÚ MÓVIL -->
+    <!-- MENÚ HAMBURGUESA MÓVIL -->
     <div id="mobileMenu" class="hidden md:hidden pt-4 pb-6 px-4 mt-3 border-t border-purple-900/40 bg-[#090414]/95 backdrop-blur-2xl rounded-2xl shadow-2xl space-y-4">
       <a href="#services" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
         <i data-lucide="cpu" class="w-5 h-5 text-purple-400"></i>
         <span class="font-medium text-sm">Servicios Especializados</span>
       </a>
-      <a href="#optimizer" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
-        <i data-lucide="sliders" class="w-5 h-5 text-purple-400"></i>
-        <span class="font-medium text-sm">Optimizador Paper & Velocity</span>
+      <a href="#resources" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
+        <i data-lucide="package" class="w-5 h-5 text-purple-400"></i>
+        <span class="font-medium text-sm">Catálogo de Plugins</span>
       </a>
       <a href="#network" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
         <i data-lucide="activity" class="w-5 h-5 text-purple-400"></i>
@@ -94,8 +95,8 @@
     </div>
   </nav>
 
-  <!-- HERO -->
-  <header class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
+  <!-- HERO PROFESIONAL -->
+  <header class="max-w-5xl mx-auto px-6 pt-24 pb-20 text-center">
     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
       <span>ESTUDIO PROFESIONAL • MINECRAFT & DISCORD</span>
@@ -111,72 +112,17 @@
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
-      <a href="#optimizer" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
-        Usar Optimizador Gratis
-      </a>
-      <a href="#quote" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
+      <a href="#quote" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
         Cotizar Proyecto
+      </a>
+      <a href="#resources" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
+        Ver Plugins del Vault
       </a>
     </div>
   </header>
 
-  <!-- NUEVA HERRAMIENTA: OPTIMIZADOR VISUAL DE PAPER / VELOCITY -->
-  <section id="optimizer" class="max-w-5xl mx-auto px-6 py-20">
-    <div class="text-center mb-12">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Herramienta Gratuita de Synthetix</span>
-      <h2 class="text-3xl font-black text-white mt-1">Generador de Configuraciones de Alto Rendimiento</h2>
-      <p class="text-purple-300/60 text-sm mt-2">Ajusta los sliders para maximizar tus TPS y descarga tu archivo optimizado.</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-6 p-8 rounded-3xl card-glass border border-purple-500/30">
-      
-      <!-- Controles -->
-      <div class="space-y-5">
-        <div>
-          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Tipo de Servidor</label>
-          <select id="optType" onchange="updateConfigPreview()" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-            <option value="paper">PaperMC (paper-world-defaults.yml)</option>
-            <option value="velocity">Velocity Proxy (velocity.toml)</option>
-          </select>
-        </div>
-
-        <div>
-          <div class="flex justify-between text-xs mb-1">
-            <span class="text-purple-300 font-mono">Modo de Anti-Xray</span>
-            <span id="xrayVal" class="text-fuchsia-400 font-bold">Modo 2 (Ofuscación Total)</span>
-          </div>
-          <select id="optXray" onchange="updateConfigPreview()" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white">
-            <option value="2">Modo 2 (Recomendado para Survival/Factions)</option>
-            <option value="1">Modo 1 (Ligero)</option>
-            <option value="0">Desactivado</option>
-          </select>
-        </div>
-
-        <div>
-          <div class="flex justify-between text-xs mb-1">
-            <span class="text-purple-300 font-mono">Distancia de Renderizado de Entidades</span>
-            <span id="trackingVal" class="text-fuchsia-400 font-bold">48 bloques</span>
-          </div>
-          <input type="range" id="optTracking" min="32" max="96" value="48" step="8" oninput="updateConfigPreview()" class="w-full accent-purple-500">
-        </div>
-
-        <button onclick="downloadGeneratedConfig()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 transition shadow-lg shadow-purple-600/30">
-          <i data-lucide="download" class="w-4 h-4"></i>
-          <span>Descargar Configuración Optimizada</span>
-        </button>
-      </div>
-
-      <!-- Preview del archivo -->
-      <div class="bg-black/80 rounded-2xl p-4 border border-purple-950 font-mono text-[11px] text-purple-300/80 overflow-x-auto flex flex-col justify-between">
-        <pre id="configPreview" class="leading-relaxed"># Generando configuración...</pre>
-        <span class="text-[9px] text-purple-400/40 text-right">Synthetix Optimizer Engine v2.0</span>
-      </div>
-
-    </div>
-  </section>
-
   <!-- SERVICIOS -->
-  <section id="services" class="max-w-6xl mx-auto px-6 py-16">
+  <section id="services" class="max-w-6xl mx-auto px-6 py-20">
     <div class="mb-12">
       <p class="text-xs uppercase font-mono tracking-widest text-purple-400 mb-2">Especialidades</p>
       <h2 class="text-3xl font-extrabold text-white">Ingeniería a Medida</h2>
@@ -220,6 +166,26 @@
           </p>
         </div>
         <span class="text-xs font-mono text-indigo-300">● Anti-Bot & Multi-Lobby</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO DE RECURSOS PÚBLICO -->
+  <section id="resources" class="max-w-6xl mx-auto px-6 py-20">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+      <div>
+        <p class="text-xs uppercase font-mono tracking-widest text-purple-400 mb-2">Descargas Verificadas</p>
+        <h2 class="text-3xl font-extrabold text-white">Synthetix Resource Vault</h2>
+      </div>
+      <a href="/login" class="text-xs font-bold text-fuchsia-400 hover:text-white mt-2 sm:mt-0 flex items-center space-x-1">
+        <span>Ingresar al Vault Completo</span>
+        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+
+    <div id="publicVaultList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 text-center py-12 col-span-3">
+        <p class="text-xs text-purple-400">Cargando plugins disponibles...</p>
       </div>
     </div>
   </section>
@@ -323,60 +289,36 @@
   </footer>
 
   <script>
-    // Lógica del Optimizador
-    function updateConfigPreview() {
-      const type = document.getElementById('optType').value;
-      const xray = document.getElementById('optXray').value;
-      const tracking = document.getElementById('optTracking').value;
-      document.getElementById('trackingVal').innerText = `${tracking} bloques`;
-
-      let content = "";
-      if (type === 'paper') {
-        content = `# Synthetix Studio - PaperMC World Defaults
-anticheat:
-  anti-xray:
-    enabled: ${xray !== '0'}
-    engine-mode: ${xray}
-    max-block-height: 64
-    update-radius: 2
-entities:
-  spawning:
-    tracking-range:
-      players: ${tracking}
-      monsters: ${Math.round(tracking * 0.75)}
-      animals: 32
-chunks:
-  auto-save-interval: 400
-  max-auto-save-chunks-per-tick: 18`;
-      } else {
-        content = `# Synthetix Studio - Velocity Configuration
-bind = "0.0.0.0:25565"
-motd = "<#a855f7>Synthetix Network Proxy</color>"
-show-max-players = 500
-online-mode = true
-force-key-authentication = true
-player-info-forwarding-mode = "modern"
-
-[advanced]
-compression-threshold = 256
-compression-level = -1
-connection-timeout = 5000`;
-      }
-      document.getElementById('configPreview').innerText = content;
+    // Cargar plugins públicos en la portada
+    async function loadPublicVault() {
+      const container = document.getElementById('publicVaultList');
+      try {
+        const res = await fetch('/api/vault');
+        const data = await res.json();
+        if (data.resources && data.resources.length > 0) {
+          container.innerHTML = data.resources.slice(0, 3).map(r => `
+            <div class="p-6 rounded-3xl card-glass border border-purple-900/40 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="font-bold text-white text-base">${r.name}</span>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">v${r.version}</span>
+                </div>
+                <span class="text-[10px] text-fuchsia-400 font-mono block mb-2">MC: ${r.mcVersions}</span>
+                <p class="text-xs text-purple-300/70 mb-4">${r.description || 'Plugin optimizado por Synthetix Studio.'}</p>
+              </div>
+              <a href="/login" class="w-full py-2 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-bold flex items-center justify-center space-x-1 border border-purple-800">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>Descargar en el Portal</span>
+              </a>
+            </div>
+          `).join('');
+          lucide.createIcons();
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-3">Próximamente publicaremos plugins en el Vault.</p>';
+        }
+      } catch (e) {}
     }
-
-    function downloadGeneratedConfig() {
-      const type = document.getElementById('optType').value;
-      const text = document.getElementById('configPreview').innerText;
-      const filename = type === 'paper' ? 'paper-world-defaults.yml' : 'velocity.toml';
-      const blob = new Blob([text], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename;
-      a.click();
-    }
-
-    updateConfigPreview();
+    loadPublicVault();
   </script>
 
   <script type="module" src="/assets/js/main.js"></script>

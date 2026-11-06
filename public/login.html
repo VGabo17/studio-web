@@ -24,6 +24,11 @@
       <p id="portalSub" class="text-purple-300/60 text-xs mt-1">Accede a tus proyectos, builds y tickets técnicos</p>
     </div>
 
+    <!-- AVISO DE ERROR SI FALLA DISCORD -->
+    <div id="discordErrorAlert" class="hidden p-3 rounded-xl bg-amber-950/60 border border-amber-500/50 text-amber-300 text-xs text-center mb-4">
+      ⚠️ No se pudo conectar con Discord. Revisa las variables en Cloudflare o entra con correo y contraseña.
+    </div>
+
     <!-- BOTÓN DISCORD OAUTH2 -->
     <a href="/api/auth/discord" class="w-full flex items-center justify-center space-x-3 bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-lg shadow-indigo-500/25 mb-5">
       <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -38,7 +43,7 @@
       <div class="flex-grow border-t border-purple-950"></div>
     </div>
 
-    <!-- Switch de Pestañas -->
+    <!-- Pestañas -->
     <div class="flex p-1 bg-black/50 border border-purple-900/50 rounded-xl mb-5">
       <button id="tabLogin" onclick="switchTab('login')" class="flex-1 py-2 text-xs font-bold rounded-lg bg-purple-600 text-white transition">Ingresar</button>
       <button id="tabRegister" onclick="switchTab('register')" class="flex-1 py-2 text-xs font-bold rounded-lg text-purple-300/70 hover:text-white transition">Registro</button>
@@ -83,6 +88,13 @@
 
   <script>
     lucide.createIcons();
+
+    // Comprobar si hay error de Discord en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error') === 'discord_failed' || urlParams.get('error') === 'no_code') {
+      document.getElementById('discordErrorAlert').classList.remove('hidden');
+    }
+
     let currentMode = 'login';
 
     function switchTab(mode) {
