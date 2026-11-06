@@ -11,22 +11,25 @@
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
-<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between">
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between overflow-x-hidden">
 
   <!-- NAVBAR LIMPIO -->
-  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
+  <nav class="sticky top-0 z-40 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
-      <!-- LOGO OFICIAL LIMPIO -->
-      <a href="/" class="flex items-center space-x-2.5">
-        <div class="w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
+      <!-- LOGO IDÉNTICO AL DASH -->
+      <a href="/" class="flex items-center space-x-2.5 transition">
+        <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
             <polyline points="2 17 12 22 22 17"></polyline>
             <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
         </div>
-        <span class="font-black text-lg tracking-wider text-white">SYNTHETIX <span class="text-purple-400 font-light">STUDIO</span></span>
+        <div class="flex items-center space-x-1.5">
+          <span class="font-black text-base sm:text-lg tracking-wider text-white">SYNTHETIX</span>
+          <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300 uppercase">STUDIO</span>
+        </div>
       </a>
 
       <!-- ENLACES ESCRITORIO -->
@@ -37,25 +40,68 @@
         <a href="/vault" class="hover:text-purple-300 transition">Resource Vault</a>
       </div>
 
-      <!-- BOTONES -->
+      <!-- BOTONES Y TRIGGER DEL SIDEBAR -->
       <div class="flex items-center space-x-3">
-        <a href="/dashboard" id="portalNavBtn" class="px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
-          Portal Web
+        <a href="/dashboard" id="desktopPortalBtn" class="hidden sm:inline-block px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
+          Portal Clientes
         </a>
-        <button id="mobileNavToggle" class="md:hidden p-2 rounded-xl bg-purple-950/40 text-purple-300"><i data-lucide="menu" class="w-5 h-5"></i></button>
+        <button id="openSidebarBtn" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white transition focus:outline-none">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
       </div>
 
     </div>
-
-    <!-- MENÚ MÓVIL DESPLEGABLE -->
-    <div id="mobileMenu" class="hidden md:hidden pt-4 pb-4 px-4 border-t border-purple-900/40 bg-[#090414] rounded-2xl mt-3 space-y-3">
-      <a href="/" class="block text-sm font-bold text-white py-1">Inicio</a>
-      <a href="#pricing" class="block text-sm text-purple-300 py-1">Tarifas Accesibles</a>
-      <a href="/services" class="block text-sm text-purple-300 py-1">Servicios Detallados</a>
-      <a href="/vault" class="block text-sm text-purple-300 py-1">Descargar Plugins (.JARs)</a>
-      <a href="/dashboard" class="block text-sm text-fuchsia-300 font-bold py-1">Mi Dashboard / Pedidos</a>
-    </div>
   </nav>
+
+  <!-- OVERLAY OSCURO DEL SIDEBAR -->
+  <div id="drawerOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+
+  <!-- SIDEBAR DESLIZABLE DE ÉLITE (DRAWER) -->
+  <aside id="sidebarDrawer" class="fixed top-0 right-0 w-[290px] max-w-[85vw] h-full bg-[#080314]/95 border-l border-purple-500/30 z-50 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out shadow-2xl backdrop-blur-2xl">
+    <div>
+      <!-- Cabecera del Sidebar -->
+      <div class="flex items-center justify-between pb-5 border-b border-purple-950/60">
+        <div class="flex items-center space-x-2">
+          <span class="font-black text-white text-base tracking-wider">SYNTHETIX</span>
+          <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300">STUDIO</span>
+        </div>
+        <button id="closeSidebarBtn" class="p-1.5 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white border border-purple-800/60">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Enlaces con Íconos -->
+      <div class="py-6 space-y-2">
+        <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs">
+          <i data-lucide="home" class="w-4 h-4 text-purple-400"></i>
+          <span>Inicio</span>
+        </a>
+        <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition">
+          <i data-lucide="tag" class="w-4 h-4 text-purple-400"></i>
+          <span>Tarifas Oficiales</span>
+        </a>
+        <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition">
+          <i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i>
+          <span>Todos los Servicios</span>
+        </a>
+        <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition">
+          <div class="flex items-center space-x-3">
+            <i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i>
+            <span>Resource Vault</span>
+          </div>
+          <span class="text-[9px] font-mono bg-purple-950 text-fuchsia-300 border border-fuchsia-500/40 px-1.5 py-0.5 rounded">.JARs</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Perfil / Login en el pie del Sidebar -->
+    <div id="sidebarUserSlot" class="pt-4 border-t border-purple-950/60">
+      <a href="/login" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg shadow-purple-600/30 transition">
+        <i data-lucide="log-in" class="w-4 h-4"></i>
+        <span>Iniciar Sesión / Registro</span>
+      </a>
+    </div>
+  </aside>
 
   <!-- HERO -->
   <header class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
@@ -83,7 +129,7 @@
     </div>
   </header>
 
-  <!-- TARIFAS ACCESIBLES Y REALES -->
+  <!-- TARIFAS -->
   <section id="pricing" class="max-w-6xl mx-auto px-6 py-16">
     <div class="text-center mb-14">
       <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Precios Para Todos</span>
@@ -93,7 +139,7 @@
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       
-      <!-- PLAN 1: PLUGIN BÁSICO / FIX -->
+      <!-- PLAN 1: PLUGIN BÁSICO -->
       <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Desarrollo Java</span>
@@ -114,7 +160,7 @@
         </button>
       </div>
 
-      <!-- PLAN 2: BOT DE DISCORD -->
+      <!-- PLAN 2: BOT DISCORD -->
       <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Discord.js</span>
@@ -198,16 +244,51 @@
   <script>
     lucide.createIcons();
 
-    document.getElementById('mobileNavToggle').addEventListener('click', () => {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
-    });
+    // Manejo del Sidebar Drawer
+    const overlay = document.getElementById('drawerOverlay');
+    const drawer = document.getElementById('sidebarDrawer');
 
+    function openSidebar() {
+      overlay.classList.remove('hidden');
+      setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+      drawer.classList.remove('translate-x-full');
+    }
+
+    function closeSidebar() {
+      overlay.classList.add('opacity-0');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => overlay.classList.add('hidden'), 300);
+    }
+
+    document.getElementById('openSidebarBtn').addEventListener('click', openSidebar);
+    document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Cargar perfil en el Sidebar si está conectado
     const token = localStorage.getItem('synthetix_token');
     const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
+
     if (token && user.username) {
-      const btn = document.getElementById('portalNavBtn');
-      btn.innerText = `${user.username} (${user.role})`;
-      btn.className = "px-3.5 py-1.5 rounded-xl bg-purple-900/60 border border-fuchsia-500/50 text-xs font-bold text-fuchsia-300";
+      const desktopBtn = document.getElementById('desktopPortalBtn');
+      if (desktopBtn) {
+        desktopBtn.innerText = `${user.username} (${user.role})`;
+        desktopBtn.className = "hidden sm:inline-block px-3.5 py-1.5 rounded-xl bg-purple-900/60 border border-fuchsia-500/50 text-xs font-bold text-fuchsia-300";
+      }
+
+      document.getElementById('sidebarUserSlot').innerHTML = `
+        <div class="p-3.5 rounded-2xl bg-black/60 border border-purple-900/60 flex items-center justify-between mb-2">
+          <div>
+            <p class="text-xs font-bold text-white">${user.username}</p>
+            <span class="text-[10px] font-mono text-fuchsia-400 uppercase font-bold">${user.role}</span>
+          </div>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        </div>
+        <a href="/dashboard" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Entrar a mi Dashboard</span>
+        </a>
+      `;
+      lucide.createIcons();
     }
 
     async function orderPlan(planTitle, price) {

@@ -11,25 +11,29 @@
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between">
 
-  <!-- NAVBAR LIMPIO SIN TEXTOS PEGADOS -->
-  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
+  <!-- NAVBAR LIMPIO -->
+  <nav class="sticky top-0 z-40 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
-      <a href="/" class="flex items-center space-x-2.5">
-        <div class="w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center">
+      <!-- LOGO CON PASTILLA IDÉNTICO AL DASH -->
+      <a href="/" class="flex items-center space-x-2.5 transition">
+        <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
             <polyline points="2 17 12 22 22 17"></polyline>
             <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
         </div>
-        <span class="font-black text-base sm:text-lg tracking-wider text-white">SYNTHETIX <span class="text-purple-400 font-light">VAULT</span></span>
+        <div class="flex items-center space-x-1.5">
+          <span class="font-black text-base sm:text-lg tracking-wider text-white">SYNTHETIX</span>
+          <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300 uppercase">VAULT</span>
+        </div>
       </a>
 
       <div class="flex items-center space-x-3 text-xs font-bold">
         <a href="/" class="hidden sm:inline-block text-purple-300 hover:text-white transition">Inicio</a>
         <a href="/services" class="hidden sm:inline-block text-purple-300 hover:text-white transition">Tarifas</a>
-        <a href="/dashboard" class="px-3.5 py-1.5 rounded-xl bg-purple-950 border border-purple-500/40 text-white">Mi Dashboard</a>
+        <a href="/dashboard" class="px-3.5 py-1.5 rounded-xl bg-purple-950 border border-purple-500/40 text-white hover:border-purple-400 transition">Mi Dashboard</a>
       </div>
 
     </div>
@@ -74,9 +78,7 @@
       }
     }
 
-    function filterVault() {
-      renderVault();
-    }
+    function filterVault() { renderVault(); }
 
     function renderVault() {
       const container = document.getElementById('vaultList');
