@@ -49,13 +49,11 @@ export default {
       headers: { "Content-Type": "application/json" }
     });
 
-    // Rutas limpias
     const cleanRoutes = ['/login', '/dashboard', '/admin'];
     if (cleanRoutes.includes(url.pathname)) {
       return env.ASSETS.fetch(new Request(new URL(`${url.pathname}.html`, request.url), request));
     }
 
-    // Helper: Validar sesión
     async function getSessionUser() {
       const auth = request.headers.get("Authorization");
       if (!auth || !auth.startsWith("Bearer ")) return null;
@@ -64,9 +62,7 @@ export default {
       return session ? JSON.parse(session) : null;
     }
 
-    // ------------------------------------------------------------------------
-    // AUTH: REGISTRO
-    // ------------------------------------------------------------------------
+    // REGISTRO
     if (url.pathname === '/api/auth/register' && request.method === 'POST') {
       try {
         const { username, email, password, discord } = await request.json();
@@ -95,9 +91,7 @@ export default {
         await KV.put(`username:${normUser}`, normEmail);
         await KV.put("stats:user_count", String((parseInt(userCount || "0", 10)) + 1));
 
-        // Agregar a la lista de usuarios para el Founder
-        const usersListRaw = await KV.get("users:list") || "[]";
-        const usersList = JSON.parse(usersListRaw);
+        const usersList = JSON.parse(await KV.get("users:list") || "[]");
         usersList.push({ id: userData.id, username, email: normEmail, role, discord: userData.discord });
         await KV.put("users:list", JSON.stringify(usersList));
 
@@ -110,9 +104,7 @@ export default {
       }
     }
 
-    // ------------------------------------------------------------------------
-    // AUTH: LOGIN
-    // ------------------------------------------------------------------------
+    // LOGIN
     if (url.pathname === '/api/auth/login' && request.method === 'POST') {
       try {
         const { email, password } = await request.json();
@@ -136,24 +128,19 @@ export default {
       }
     }
 
-    // ------------------------------------------------------------------------
-    // AUTH: ME
-    // ------------------------------------------------------------------------
+    // ME
     if (url.pathname === '/api/auth/me' && request.method === 'GET') {
       const user = await getSessionUser();
       if (!user) return json({ error: "Sesión inválida" }, 401);
       return json({ success: true, user });
     }
 
-    // ------------------------------------------------------------------------
     // FOUNDER: GESTIÓN DE USUARIOS
-    // ------------------------------------------------------------------------
     if (url.pathname === '/api/founder/users' && request.method === 'GET') {
       const currentUser = await getSessionUser();
       if (!currentUser || (currentUser.role !== 'Founder' && currentUser.role !== 'Admin')) {
         return json({ error: "Acceso denegado" }, 403);
       }
-
       const users = await KV.get("users:list") || "[]";
       return json({ success: true, users: JSON.parse(users) });
     }
@@ -166,9 +153,6 @@ export default {
       }
 
       const { email, newRole } = await request.json();
-      const validRoles = ['User', 'Client', 'Soporte', 'Dev', 'Admin', 'Founder'];
-      if (!validRoles.includes(newRole)) return json({ error: "Rol no válido" }, 400);
-
       const targetRaw = await KV.get(`user:${email}`);
       if (!targetRaw) return json({ error: "Usuario no encontrado" }, 404);
 
@@ -176,61 +160,133 @@ export default {
       targetUser.role = newRole;
       await KV.put(`user:${email}`, JSON.stringify(targetUser));
 
-      // Actualizar en users:list
       const usersList = JSON.parse(await KV.get("users:list") || "[]");
       const idx = usersList.findIndex(u => u.email === email);
       if (idx !== -1) {
         usersList[idx].role = newRole;
         await KV.put("users:list", JSON.stringify(usersList));
       }
-
       return json({ success: true, message: `Rol actualizado a ${newRole}` });
     }
 
     // ------------------------------------------------------------------------
-    // TICKETS: CREAR Y LISTAR
+    // SISTEMA REAL DE TICKETS (CON CHAT Y MENSAJES EN VIVO)
     // ------------------------------------------------------------------------
     if (url.pathname === '/api/tickets' && request.method === 'GET') {
       const user = await getSessionUser();
       if (!user) return json({ error: "No autorizado" }, 401);
 
-      const allTickets = JSON.parse(await KV.get("tickets:all") || "[]");
-      // Founder y Soporte ven todos los tickets; los usuarios solo los suyos
-      const filtered = (user.role === 'Founder' || user.role === 'Admin' || user.role === 'Soporte') 
-        ? allTickets 
-        : allTickets.filter(t => t.authorEmail === user.email);
+      const ticketId = url.searchParams.get("id");
+      if (ticketId) {
+        const ticketData = await KV.get(`ticket:${ticketId}`);
+        if (!ticketData) return json({ error: "Ticket no encontrado" }, 404);
+        return json({ success: true, ticket: JSON.parse(ticketData) });
+      }
+
+      const index = JSON.parse(await KV.get("tickets:index") || "[]");
+      const isStaff = (user.role === 'Founder' || user.role === 'Admin' || user.role === 'Soporte');
+      const filtered = isStaff ? index : index.filter(t => t.authorEmail === user.email);
 
       return json({ success: true, tickets: filtered });
     }
 
+    // CREAR TICKET
     if (url.pathname === '/api/tickets' && request.method === 'POST') {
       const user = await getSessionUser();
       if (!user) return json({ error: "No autorizado" }, 401);
 
       const { title, category, message } = await request.json();
-      if (!title || !message) return json({ error: "Completa los campos" }, 400);
+      if (!title || !message) return json({ error: "Completa todos los campos" }, 400);
 
-      const allTickets = JSON.parse(await KV.get("tickets:all") || "[]");
       const ticketId = "TK-" + Math.floor(1000 + Math.random() * 9000);
+      const now = new Date().toLocaleString();
 
-      const newTicket = {
+      const ticketObject = {
         id: ticketId,
         title,
         category,
-        message,
         author: user.username,
         authorEmail: user.email,
         status: "Abierto",
-        createdAt: new Date().toLocaleDateString()
+        createdAt: now,
+        messages: [
+          {
+            sender: user.username,
+            role: user.role,
+            text: message,
+            time: now
+          }
+        ]
       };
 
-      allTickets.unshift(newTicket);
-      await KV.put("tickets:all", JSON.stringify(allTickets));
+      // Guardar ticket individual con sus mensajes
+      await KV.put(`ticket:${ticketId}`, JSON.stringify(ticketObject));
 
-      return json({ success: true, ticket: newTicket });
+      // Guardar en el índice global
+      const index = JSON.parse(await KV.get("tickets:index") || "[]");
+      index.unshift({
+        id: ticketId,
+        title,
+        category,
+        author: user.username,
+        authorEmail: user.email,
+        status: "Abierto",
+        createdAt: now
+      });
+      await KV.put("tickets:index", JSON.stringify(index));
+
+      return json({ success: true, ticket: ticketObject });
     }
 
-    // Fallback a archivos estáticos
+    // RESPONDER A UN TICKET
+    if (url.pathname === '/api/tickets/reply' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user) return json({ error: "No autorizado" }, 401);
+
+      const { ticketId, text } = await request.json();
+      if (!ticketId || !text) return json({ error: "Mensaje vacío" }, 400);
+
+      const raw = await KV.get(`ticket:${ticketId}`);
+      if (!raw) return json({ error: "Ticket no existe" }, 404);
+
+      const ticket = JSON.parse(raw);
+      ticket.messages.push({
+        sender: user.username,
+        role: user.role,
+        text,
+        time: new Date().toLocaleString()
+      });
+
+      await KV.put(`ticket:${ticketId}`, JSON.stringify(ticket));
+      return json({ success: true, ticket });
+    }
+
+    // CAMBIAR ESTADO DE UN TICKET
+    if (url.pathname === '/api/tickets/status' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user || (user.role !== 'Founder' && user.role !== 'Admin' && user.role !== 'Soporte')) {
+        return json({ error: "Sin permisos" }, 403);
+      }
+
+      const { ticketId, newStatus } = await request.json();
+      const raw = await KV.get(`ticket:${ticketId}`);
+      if (!raw) return json({ error: "Ticket no encontrado" }, 404);
+
+      const ticket = JSON.parse(raw);
+      ticket.status = newStatus;
+      await KV.put(`ticket:${ticketId}`, JSON.stringify(ticket));
+
+      // Actualizar índice
+      const index = JSON.parse(await KV.get("tickets:index") || "[]");
+      const idx = index.findIndex(t => t.id === ticketId);
+      if (idx !== -1) {
+        index[idx].status = newStatus;
+        await KV.put("tickets:index", JSON.stringify(index));
+      }
+
+      return json({ success: true });
+    }
+
     return env.ASSETS.fetch(request);
   }
 };

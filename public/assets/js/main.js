@@ -4,20 +4,79 @@ import { sendQuote } from './quote.js';
 document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) window.lucide.createIcons();
 
-  // Detección de sesión en la portada
+  // Detección limpia de sesión en navbar
   const token = localStorage.getItem('synthetix_token');
   const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
 
   if (token && user.username) {
-    const portalLinks = document.querySelectorAll('a[href="/login"]');
-    portalLinks.forEach(link => {
-      link.href = '/dashboard';
-      link.innerHTML = `<i data-lucide="layout-dashboard" class="w-4 h-4 text-purple-400"></i><span class="text-fuchsia-300 font-bold">${user.username} (${user.role})</span>`;
-    });
+    // En escritorio: botón limpio con su nombre y rol
+    const desktopSlot = document.getElementById('desktopAuthSlot');
+    if (desktopSlot) {
+      desktopSlot.innerHTML = `
+        <a href="/dashboard" class="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition">
+          <span class="w-2 h-2 rounded-full bg-fuchsia-400 animate-pulse"></span>
+          <span>${user.username}</span>
+          <span class="text-[9px] font-mono uppercase bg-purple-900 px-1.5 py-0.5 rounded text-purple-300">${user.role}</span>
+        </a>
+      `;
+    }
+
+    // En móvil: el botón superior sigue siendo un icono compacto de 40px con un punto de luz
+    const mobileBtn = document.getElementById('mobileUserBtn');
+    if (mobileBtn) {
+      mobileBtn.href = '/dashboard';
+      mobileBtn.className = "w-10 h-10 rounded-xl bg-purple-950/80 border border-fuchsia-500/60 flex items-center justify-center text-fuchsia-300 relative shadow-sm";
+      mobileBtn.innerHTML = `
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-fuchsia-400 animate-ping"></span>
+      `;
+    }
+
+    // En el menú hamburguesa móvil
+    const mobileSlot = document.getElementById('mobileAuthSlot');
+    if (mobileSlot) {
+      mobileSlot.innerHTML = `
+        <a href="/dashboard" class="flex items-center justify-between text-white font-bold py-2.5 px-3 rounded-xl bg-purple-900/60 border border-fuchsia-500/40">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="layout-dashboard" class="w-4 h-4 text-fuchsia-300"></i>
+            <span class="text-sm">${user.username}</span>
+          </div>
+          <span class="text-[10px] font-mono text-fuchsia-300 bg-purple-950 px-2 py-0.5 rounded uppercase font-bold">${user.role}</span>
+        </a>
+      `;
+    }
+
     if (window.lucide) window.lucide.createIcons();
   }
 
-  // MC Checker Handler
+  // Menú hamburguesa móvil
+  const hBtn = document.getElementById('hamburgerBtn');
+  const mMenu = document.getElementById('mobileMenu');
+  const hIcon = document.getElementById('hamburgerIcon');
+
+  if (hBtn && mMenu) {
+    hBtn.addEventListener('click', () => {
+      const isClosed = mMenu.classList.contains('hidden');
+      if (isClosed) {
+        mMenu.classList.remove('hidden');
+        hIcon.setAttribute('data-lucide', 'x');
+      } else {
+        mMenu.classList.add('hidden');
+        hIcon.setAttribute('data-lucide', 'menu');
+      }
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mMenu.classList.add('hidden');
+        hIcon.setAttribute('data-lucide', 'menu');
+        if (window.lucide) window.lucide.createIcons();
+      });
+    });
+  }
+
+  // MC Ping Tester
   const pingBtn = document.getElementById('pingBtn');
   const ipInput = document.getElementById('mcServerInput');
   const resultBox = document.getElementById('mcResult');

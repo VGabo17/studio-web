@@ -13,39 +13,29 @@
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen">
 
-  <!-- NAVEGACIÓN PRINCIPAL -->
-  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/85 border-b border-purple-500/20 px-4 sm:px-6 py-3.5">
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-6 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
       <!-- LOGO -->
       <a href="/" class="group flex items-center space-x-3 transition">
         <div class="relative flex items-center justify-center">
-          <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-600 rounded-xl blur-sm opacity-50 group-hover:opacity-100 transition duration-500"></div>
-          <div class="relative w-10 h-10 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner group-hover:border-purple-300 transition">
-            <svg class="w-5 h-5 text-purple-300 group-hover:text-white transition transform group-hover:scale-110 duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
+          <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-xl blur-sm opacity-50"></div>
+          <div class="relative w-10 h-10 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center">
+            <i data-lucide="terminal" class="w-5 h-5 text-purple-300"></i>
           </div>
           <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-400 border border-[#06030d]"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-400"></span>
           </span>
         </div>
 
         <div class="flex flex-col text-left">
           <div class="flex items-center space-x-1.5">
-            <span class="font-black text-lg sm:text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-purple-300 group-hover:to-fuchsia-300 transition">
-              SYNTHETIX
-            </span>
-            <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950/80 border border-purple-500/40 text-purple-300 tracking-widest shadow-sm">
-              STUDIO
-            </span>
+            <span class="font-black text-lg sm:text-xl tracking-wider text-white">SYNTHETIX</span>
+            <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950 border border-purple-500/40 text-purple-300">STUDIO</span>
           </div>
-          <span class="text-[9px] font-mono tracking-widest text-purple-400/60 uppercase">
-            DEV & INFRASTRUCTURE
-          </span>
+          <span class="text-[9px] font-mono tracking-widest text-purple-400/60 uppercase">DEV & INFRASTRUCTURE</span>
         </div>
       </a>
 
@@ -54,76 +44,71 @@
         <a href="#services" class="hover:text-purple-300 transition">Servicios</a>
         <a href="#network" class="hover:text-purple-300 transition">Network Tester</a>
         <a href="#quote" class="hover:text-purple-300 transition">Cotizador</a>
-        <a href="/login" class="text-purple-300 hover:text-white transition flex items-center space-x-1 font-semibold">
-          <i data-lucide="user" class="w-4 h-4"></i>
-          <span>Portal</span>
+      </div>
+
+      <!-- BOTÓN DASHBOARD / LOGIN (LIMPIO) -->
+      <div class="hidden md:flex items-center space-x-3" id="desktopAuthSlot">
+        <a href="/login" class="px-4 py-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-xs font-bold text-purple-200 hover:text-white transition">
+          Portal Clientes
         </a>
       </div>
 
-      <!-- BOTONES ESCRITORIO -->
-      <div class="hidden md:flex items-center space-x-3">
-        <a href="#quote" class="relative group overflow-hidden rounded-xl p-[1px] focus:outline-none">
-          <span class="absolute inset-0 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-600 rounded-xl group-hover:opacity-100 transition"></span>
-          <span class="relative block px-4 py-2 rounded-xl bg-[#090414] transition duration-200 group-hover:bg-opacity-0">
-            <span class="text-xs font-bold text-white tracking-wide">Iniciar Proyecto</span>
-          </span>
-        </a>
-      </div>
-
-      <!-- BOTÓN MENÚ HAMBURGUESA (Móvil) -->
+      <!-- BOTONES MÓVIL (COMPACTO) -->
       <div class="flex md:hidden items-center space-x-2">
-        <a href="/login" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:text-white">
+        <a href="/login" id="mobileUserBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-300" title="Mi Cuenta">
           <i data-lucide="user" class="w-5 h-5"></i>
         </a>
-        <button id="hamburgerBtn" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white focus:outline-none transition">
-          <i data-lucide="menu" id="hamburgerIcon" class="w-6 h-6"></i>
+        <button id="hamburgerBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/40 flex items-center justify-center text-purple-300">
+          <i data-lucide="menu" id="hamburgerIcon" class="w-5 h-5"></i>
         </button>
       </div>
 
     </div>
 
-    <!-- MENÚ DESPLEGABLE MÓVIL (Hamburguesa) -->
+    <!-- MENÚ HAMBURGUESA MÓVIL -->
     <div id="mobileMenu" class="hidden md:hidden pt-4 pb-6 px-4 mt-3 border-t border-purple-900/40 bg-[#090414]/95 backdrop-blur-2xl rounded-2xl shadow-2xl space-y-4">
-      <a href="#services" class="mobile-nav-link flex items-center space-x-3 text-purple-200 hover:text-white py-2 border-b border-purple-950/60">
+      <a href="#services" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
         <i data-lucide="cpu" class="w-5 h-5 text-purple-400"></i>
         <span class="font-medium text-sm">Servicios Especializados</span>
       </a>
-      <a href="#network" class="mobile-nav-link flex items-center space-x-3 text-purple-200 hover:text-white py-2 border-b border-purple-950/60">
+      <a href="#network" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
         <i data-lucide="activity" class="w-5 h-5 text-purple-400"></i>
         <span class="font-medium text-sm">Network Ping Tester</span>
       </a>
-      <a href="#quote" class="mobile-nav-link flex items-center space-x-3 text-purple-200 hover:text-white py-2 border-b border-purple-950/60">
+      <a href="#quote" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
         <i data-lucide="calculator" class="w-5 h-5 text-purple-400"></i>
         <span class="font-medium text-sm">Cotizador Modular</span>
       </a>
-      <a href="/login" class="mobile-nav-link flex items-center justify-between text-white font-bold py-2 px-3 rounded-xl bg-purple-900/40 border border-purple-500/40">
-        <div class="flex items-center space-x-3">
-          <i data-lucide="log-in" class="w-5 h-5 text-purple-300"></i>
-          <span class="text-sm">Acceder al Portal</span>
-        </div>
-        <span class="text-[10px] font-mono text-purple-300 bg-purple-950 px-2 py-0.5 rounded">Dashboard</span>
-      </a>
+      <div id="mobileAuthSlot">
+        <a href="/login" class="flex items-center justify-between text-white font-bold py-2.5 px-3 rounded-xl bg-purple-900/40 border border-purple-500/40">
+          <div class="flex items-center space-x-3">
+            <i data-lucide="log-in" class="w-5 h-5 text-purple-300"></i>
+            <span class="text-sm">Acceder al Portal</span>
+          </div>
+          <span class="text-[10px] font-mono text-purple-300 bg-purple-950 px-2 py-0.5 rounded">Dashboard</span>
+        </a>
+      </div>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO PROFESIONAL (SIN TEXTO DE COLORES) -->
   <header class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
-      <span>ARQUITECTURA DE ALTO RENDIMIENTO • MC & DISCORD</span>
+      <span>ESTUDIO PROFESIONAL • MINECRAFT & DISCORD</span>
     </div>
     
     <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6">
-      Desarrollo de Élite en <br>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-200 neon-glow-text">Neón & Lila</span>
+      Ingeniería Avanzada para <br>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-indigo-200">Servidores & Comunidades</span>
     </h1>
 
     <p class="text-purple-200/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-      Infraestructuras masivas de Minecraft, optimización de TPS al límite, plugins Paper en Java nativo y bots de Discord conectados a bases de datos.
+      Desarrollo de plugins Paper/Spigot sin pérdidas de memoria, arquitecturas completas con Velocity y bots de Discord conectados a bases de datos en tiempo real.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
-      <a href="#quote" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition transform hover:-translate-y-0.5 shadow-xl shadow-purple-700/40">
+      <a href="#quote" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition transform hover:-translate-y-0.5 shadow-xl shadow-purple-700/40">
         Configurar Presupuesto
       </a>
       <a href="#network" class="border border-purple-800/80 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
@@ -266,7 +251,7 @@
           <textarea id="details" rows="3" class="w-full bg-black/60 border border-purple-900/60 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-purple-400 transition" placeholder="Versión de Minecraft, comandos o requerimientos específicos..."></textarea>
         </div>
 
-        <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-lg shadow-purple-600/30">
+        <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-lg shadow-purple-600/30">
           Enviar Orden a Synthetix
         </button>
         <p id="formStatus" class="text-center text-xs font-medium hidden mt-2"></p>
@@ -276,46 +261,8 @@
 
   <!-- FOOTER -->
   <footer class="border-t border-purple-950/60 py-10 text-center text-xs text-purple-300/40">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-6 gap-4">
-      <p>© Synthetix Studio. Todos los derechos reservados.</p>
-      <div class="flex items-center space-x-2">
-        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-        <span>Acelerado y protegido por Cloudflare Edge</span>
-      </div>
-    </div>
+    <p>© Synthetix Studio. Todos los derechos reservados.</p>
   </footer>
-
-  <!-- Control del Menú Móvil -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const hBtn = document.getElementById('hamburgerBtn');
-      const mMenu = document.getElementById('mobileMenu');
-      const hIcon = document.getElementById('hamburgerIcon');
-
-      if (hBtn && mMenu) {
-        hBtn.addEventListener('click', () => {
-          const isClosed = mMenu.classList.contains('hidden');
-          if (isClosed) {
-            mMenu.classList.remove('hidden');
-            hIcon.setAttribute('data-lucide', 'x');
-          } else {
-            mMenu.classList.add('hidden');
-            hIcon.setAttribute('data-lucide', 'menu');
-          }
-          if (window.lucide) window.lucide.createIcons();
-        });
-
-        // Cerrar al pulsar un enlace
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-          link.addEventListener('click', () => {
-            mMenu.classList.add('hidden');
-            hIcon.setAttribute('data-lucide', 'menu');
-            if (window.lucide) window.lucide.createIcons();
-          });
-        });
-      }
-    });
-  </script>
 
   <script type="module" src="/assets/js/main.js"></script>
 </body>
