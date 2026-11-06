@@ -24,7 +24,7 @@
       </div>
 
       <div class="flex items-center space-x-3">
-        <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950/80 border border-purple-500/40 text-purple-300">
+        <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-fuchsia-500/60 text-fuchsia-300">
           <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
           <span id="roleText">...</span>
         </div>
@@ -42,14 +42,14 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div class="flex items-center space-x-2 text-xs font-mono text-purple-400 mb-1">
-            <span>PORTAL DE INGENIERÍA</span>
+            <span>ESPACIO DE TRABAJO</span>
             <span>•</span>
             <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
           </div>
           <h1 class="text-2xl sm:text-4xl font-black text-white">
             Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">...</span> ⚡
           </h1>
-          <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Gestión de proyectos en curso, tickets de soporte y control del estudio.</p>
+          <p id="roleDescription" class="text-purple-300/60 text-xs sm:text-sm mt-1">Cargando permisos...</p>
         </div>
 
         <button onclick="openTicketModal()" class="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-purple-600/30">
@@ -59,17 +59,25 @@
       </div>
     </div>
 
-    <!-- PESTAÑAS PRINCIPALES -->
+    <!-- PESTAÑAS SEGÚN ROL -->
     <div class="flex flex-wrap gap-2 border-b border-purple-900/50 pb-2">
       <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition">Tickets & Soporte</button>
-      <button onclick="setMainTab('projects')" id="tabBtnProjects" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition">Mis Proyectos & Builds</button>
-      <button onclick="setMainTab('founder')" id="tabBtnFounder" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-fuchsia-300 border border-fuchsia-500/40 hover:text-white transition flex items-center space-x-1.5">
+      <button onclick="setMainTab('vault')" id="tabBtnVault" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1">
+        <i data-lucide="package" class="w-3.5 h-3.5"></i>
+        <span>Resource Vault (Plugins)</span>
+      </button>
+      <button onclick="setMainTab('projects')" id="tabBtnProjects" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition">Mis Builds</button>
+      <button onclick="setMainTab('dev')" id="tabBtnDev" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1">
+        <i data-lucide="code" class="w-3.5 h-3.5"></i>
+        <span>Dev Studio</span>
+      </button>
+      <button onclick="setMainTab('founder')" id="tabBtnFounder" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-fuchsia-300 border border-fuchsia-500/40 hover:text-white transition flex items-center space-x-1">
         <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-400"></i>
-        <span>Founder Nexus (Centro de Mando)</span>
+        <span>Founder Nexus</span>
       </button>
     </div>
 
-    <!-- VISTA 1: TICKETS DE SOPORTE CON CHAT -->
+    <!-- VISTA 1: TICKETS -->
     <div id="viewTickets" class="grid lg:grid-cols-3 gap-6">
       <div class="lg:col-span-1 p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
         <div class="flex items-center justify-between border-b border-purple-950 pb-3">
@@ -85,10 +93,9 @@
         <div id="ticketDetailContent" class="space-y-4">
           <div class="text-center py-20 text-purple-400/60">
             <i data-lucide="message-square" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
-            <p class="text-sm font-semibold">Selecciona un ticket de la lista para ver la conversación</p>
+            <p class="text-sm font-semibold">Selecciona un ticket para ver la conversación</p>
           </div>
         </div>
-
         <div id="replyArea" class="hidden pt-4 border-t border-purple-950 mt-4">
           <form id="replyForm" class="flex gap-2">
             <input type="text" id="replyText" required placeholder="Escribe una respuesta técnica..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-400">
@@ -101,24 +108,77 @@
       </div>
     </div>
 
-    <!-- VISTA 2: PROYECTOS & BUILDS (CLIENTE Y FOUNDER) -->
+    <!-- VISTA 2: RESOURCE VAULT -->
+    <div id="viewVault" class="hidden space-y-6">
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
+        <div class="flex items-center justify-between border-b border-purple-950 pb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white">Synthetix Resource Vault</h2>
+            <p class="text-xs text-purple-300/60">Descarga directa de plugins verificados y utilidades</p>
+          </div>
+          <button onclick="loadVault()" class="text-xs text-purple-400 hover:text-white flex items-center space-x-1">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>Actualizar</span>
+          </button>
+        </div>
+        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <p class="text-xs text-purple-400 py-6">Cargando catálogo...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA 3: MIS BUILDS / PROYECTOS -->
     <div id="viewProjects" class="hidden space-y-6">
       <div class="p-6 sm:p-8 rounded-3xl card-glass border border-purple-900/40 space-y-6">
         <div class="border-b border-purple-950 pb-4">
-          <h2 class="text-lg font-bold text-white">Software Vault & Estado de Desarrollo</h2>
-          <p class="text-xs text-purple-300/60">Monitorea el avance de tus plugins, bots y arquitecturas contratadas</p>
+          <h2 class="text-lg font-bold text-white">Mis Proyectos & Builds Activos</h2>
+          <p class="text-xs text-purple-300/60">Avance en vivo y descargas de tus pedidos</p>
         </div>
-
         <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
           <p class="text-xs text-purple-400 py-6">Cargando proyectos...</p>
         </div>
       </div>
     </div>
 
-    <!-- VISTA 3: FOUNDER NEXUS (CENTRO DE CONTROL) -->
+    <!-- VISTA 4: DEV STUDIO (PUBLICAR EN EL VAULT) -->
+    <div id="viewDev" class="hidden space-y-6">
+      <div class="p-6 sm:p-8 rounded-3xl card-glass border border-cyan-500/40 max-w-xl mx-auto space-y-4">
+        <div class="flex items-center space-x-2 border-b border-purple-950 pb-3">
+          <i data-lucide="terminal" class="text-cyan-400 w-5 h-5"></i>
+          <h3 class="font-bold text-white text-base">Dev Studio: Publicar Recurso / Plugin</h3>
+        </div>
+        <form id="vaultUploadForm" class="space-y-3">
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre del Plugin</label>
+            <input type="text" id="vName" required placeholder="Ej: SynthetixCore" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Versión</label>
+              <input type="text" id="vVersion" placeholder="1.2.0" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+            </div>
+            <div>
+              <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Compatibilidad MC</label>
+              <input type="text" id="vMC" placeholder="1.16 - 1.21" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Enlace de Descarga Directa (.JAR)</label>
+            <input type="url" id="vUrl" required placeholder="https://..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Descripción / Changelog</label>
+            <textarea id="vDesc" rows="3" placeholder="Novedades y comandos..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-3 rounded-xl transition shadow-lg shadow-cyan-600/30">
+            Publicar en el Vault
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- VISTA 5: FOUNDER NEXUS -->
     <div id="viewFounder" class="hidden space-y-8">
-      
-      <!-- SUB-PESTAÑAS DEL FOUNDER -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <button onclick="setFounderSubTab('quotes')" id="fTabQuotes" class="p-4 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1">
           <i data-lucide="inbox" class="w-5 h-5"></i>
@@ -138,57 +198,48 @@
         </button>
       </div>
 
-      <!-- SECCIÓN A: COTIZACIONES CRM -->
       <div id="fSecQuotes" class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <h3 class="font-bold text-white text-base">Bandeja de Cotizaciones Recibidas</h3>
-        <div id="quotesList" class="space-y-3">Cargando solicitudes...</div>
+        <h3 class="font-bold text-white text-base">Bandeja de Cotizaciones</h3>
+        <div id="quotesList" class="space-y-3">Cargando...</div>
       </div>
 
-      <!-- SECCIÓN B: ASIGNAR PROYECTO -->
       <div id="fSecAssign" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-4">
-        <h3 class="font-bold text-white text-base">Asignar Proyecto a Cliente</h3>
+        <h3 class="font-bold text-white text-base">Asignar Proyecto</h3>
         <form id="createProjectForm" class="space-y-3">
           <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre del Proyecto</label>
-            <input type="text" id="pTitle" required placeholder="Ej: Plugin Spigot Clanes v1.0" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre</label>
+            <input type="text" id="pTitle" required placeholder="Ej: Plugin Spigot Clanes" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
           </div>
           <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Correo del Cliente</label>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Correo Cliente</label>
             <input type="email" id="pClientEmail" required placeholder="cliente@correo.com" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
           </div>
           <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Progreso Actual (%)</label>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Progreso (%)</label>
             <input type="number" id="pProgress" min="0" max="100" value="25" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
           </div>
           <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Enlace de Descarga o Repositorio (Opcional)</label>
+            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Enlace de Descarga</label>
             <input type="url" id="pDownloadUrl" placeholder="https://..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
           </div>
-          <div>
-            <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Notas de Versión / Changelog</label>
-            <textarea id="pNotes" rows="2" placeholder="Notas para el cliente..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white"></textarea>
-          </div>
-          <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-3 rounded-xl transition">Guardar y Publicar Proyecto</button>
+          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-3 rounded-xl">Guardar</button>
         </form>
       </div>
 
-      <!-- SECCIÓN C: ANUNCIO GLOBAL -->
       <div id="fSecAnnounce" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 max-w-xl mx-auto space-y-4">
-        <h3 class="font-bold text-white text-base">Barra de Alerta / Anuncio en la Web</h3>
-        <p class="text-xs text-purple-300/60">Aparecerá fijada en la parte superior de toda la web pública.</p>
+        <h3 class="font-bold text-white text-base">Anuncio Global</h3>
         <form id="announcementForm" class="space-y-4">
-          <input type="text" id="announcementText" placeholder="Ej: ⚡ Descuento del 20% en Redes de Minecraft este mes" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
-          <label class="flex items-center space-x-2 text-xs text-purple-200 cursor-pointer">
+          <input type="text" id="announcementText" placeholder="Texto..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+          <label class="flex items-center space-x-2 text-xs text-purple-200">
             <input type="checkbox" id="announcementActive" class="w-4 h-4 accent-purple-500">
-            <span>Mostrar Banner Activo en la Portada</span>
+            <span>Mostrar Banner en Portada</span>
           </label>
-          <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 font-bold text-xs text-white py-2.5 rounded-xl">Actualizar Banner Global</button>
+          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-2.5 rounded-xl">Actualizar</button>
         </form>
       </div>
 
-      <!-- SECCIÓN D: USUARIOS -->
       <div id="fSecUsers" class="hidden p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <h3 class="font-bold text-white text-base">Usuarios Registrados & Asignación de Roles</h3>
+        <h3 class="font-bold text-white text-base">Usuarios & Roles</h3>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead class="text-purple-400 font-mono uppercase bg-black/40 border-b border-purple-950">
@@ -204,26 +255,25 @@
           </table>
         </div>
       </div>
-
     </div>
 
   </main>
 
   <!-- MODAL TICKET -->
   <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="max-w-md w-full card-glass rounded-3xl p-6 sm:p-8 border border-purple-500/40 shadow-2xl">
+    <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-bold text-white">Nuevo Ticket de Soporte</h3>
+        <h3 class="text-lg font-bold text-white">Nuevo Ticket</h3>
         <button onclick="closeTicketModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <form id="ticketForm" class="space-y-4">
         <div>
-          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Título del Requerimiento</label>
-          <input type="text" id="tTitle" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Ej: Error al conectar Redis">
+          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Título</label>
+          <input type="text" id="tTitle" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Categoría</label>
-          <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400">
+          <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
             <option value="Plugins Paper/Spigot">Plugins Paper/Spigot</option>
             <option value="Bot de Discord">Bot de Discord</option>
             <option value="Network Velocity">Network Velocity</option>
@@ -232,9 +282,9 @@
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Descripción</label>
-          <textarea id="tMessage" rows="3" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-400" placeholder="Describe qué necesitas..."></textarea>
+          <textarea id="tMessage" rows="3" required class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white"></textarea>
         </div>
-        <button type="submit" id="tSubmitBtn" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-3 rounded-xl text-sm shadow-lg">Crear Ticket</button>
+        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl text-xs">Crear Ticket</button>
       </form>
     </div>
   </div>
@@ -252,6 +302,7 @@
       renderUser(currentUser);
       validateSession();
       loadTickets();
+      loadVault();
       loadProjects();
     }
 
@@ -261,9 +312,18 @@
       document.getElementById('roleText').innerText = user.role.toUpperCase();
       document.getElementById('welcomeRole').innerText = user.role.toUpperCase();
 
-      if (user.role === 'Founder' || user.role === 'Admin') {
+      const desc = document.getElementById('roleDescription');
+      if (user.role === 'Founder') {
+        desc.innerText = "Acceso Total • Control de Infraestructura, CRM y Gestión de Rangos";
         document.getElementById('tabBtnFounder').classList.remove('hidden');
-        document.getElementById('roleBadge').className = "inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-fuchsia-500/60 text-fuchsia-300";
+        document.getElementById('tabBtnDev').classList.remove('hidden');
+      } else if (user.role === 'Dev') {
+        desc.innerText = "Espacio Dev • Publicación de Plugins, Control de Builds y Tickets Técnicos";
+        document.getElementById('tabBtnDev').classList.remove('hidden');
+      } else if (user.role === 'Soporte') {
+        desc.innerText = "Centro de Soporte • Atención de Dudas y Gestión de Tickets";
+      } else {
+        desc.innerText = "Panel de Cliente • Monitoreo de Builds y Descargas del Vault";
       }
     }
 
@@ -280,26 +340,114 @@
       } catch (e) {}
     }
 
-    // Pestañas Principales
     function setMainTab(tab) {
-      const tabs = ['tickets', 'projects', 'founder'];
+      const tabs = ['tickets', 'vault', 'projects', 'dev', 'founder'];
       tabs.forEach(t => {
         const view = document.getElementById(`view${t.charAt(0).toUpperCase() + t.slice(1)}`);
         const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
-        if (t === tab) {
-          view.classList.remove('hidden');
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition";
-        } else {
-          view.classList.add('hidden');
-          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition";
+        if (view && btn) {
+          if (t === tab) {
+            view.classList.remove('hidden');
+            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition";
+          } else {
+            view.classList.add('hidden');
+            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition";
+          }
         }
       });
-
       if (tab === 'founder') loadFounderQuotes();
       lucide.createIcons();
     }
 
-    // Sub-pestañas Founder
+    // --- RESOURCE VAULT ---
+    async function loadVault() {
+      const container = document.getElementById('vaultContainer');
+      try {
+        const res = await fetch('/api/vault');
+        const data = await res.json();
+        if (data.resources && data.resources.length > 0) {
+          container.innerHTML = data.resources.map(r => `
+            <div class="p-5 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-white">${r.name}</span>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">v${r.version}</span>
+                </div>
+                <span class="text-[10px] text-fuchsia-400 font-mono block mb-2">MC: ${r.mcVersions}</span>
+                <p class="text-xs text-purple-300/70 leading-relaxed">${r.description || 'Sin descripción'}</p>
+              </div>
+              <div class="pt-3 border-t border-purple-950 flex items-center justify-between">
+                <span class="text-[10px] text-purple-400/50">Por ${r.author}</span>
+                <a href="${r.downloadUrl}" target="_blank" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center space-x-1">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>Descargar</span>
+                </a>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-3">No hay plugins en el catálogo aún.</p>';
+        }
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    // Subir al Vault (Dev / Founder)
+    document.getElementById('vaultUploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch('/api/vault', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('vName').value,
+            version: document.getElementById('vVersion').value,
+            mcVersions: document.getElementById('vMC').value,
+            downloadUrl: document.getElementById('vUrl').value,
+            description: document.getElementById('vDesc').value
+          })
+        });
+        const d = await res.json();
+        if (d.success) {
+          alert("¡Plugin publicado en el Resource Vault!");
+          document.getElementById('vaultUploadForm').reset();
+          loadVault();
+          setMainTab('vault');
+        } else {
+          alert(d.error);
+        }
+      } catch (err) { alert("Error de red"); }
+    });
+
+    // --- PROYECTOS ---
+    async function loadProjects() {
+      const container = document.getElementById('projectsContainer');
+      try {
+        const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.projects && data.projects.length > 0) {
+          container.innerHTML = data.projects.map(p => `
+            <div class="p-5 rounded-2xl bg-black/40 border border-purple-900/50 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
+                <span class="text-xs font-bold text-purple-300">${p.progress}%</span>
+              </div>
+              <h4 class="text-sm font-bold text-white">${p.title}</h4>
+              <div class="w-full bg-purple-950/60 rounded-full h-2 border border-purple-900">
+                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-2 rounded-full" style="width: ${p.progress}%"></div>
+              </div>
+              <p class="text-xs text-purple-300/60">${p.notes || "En desarrollo"}</p>
+              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-2"><i data-lucide="download" class="w-3.5 h-3.5"></i><span>Descargar Build</span></a>` : ''}
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-2">No hay proyectos activos.</p>';
+        }
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    // --- FOUNDER CRM & USERS ---
     function setFounderSubTab(sub) {
       const subs = ['quotes', 'assignProject', 'announcement', 'users'];
       const map = { quotes: 'fSecQuotes', assignProject: 'fSecAssign', announcement: 'fSecAnnounce', users: 'fSecUsers' };
@@ -310,69 +458,17 @@
         const btn = document.getElementById(btnMap[s]);
         if (s === sub) {
           sec.classList.remove('hidden');
-          btn.className = "p-4 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1 shadow-md shadow-purple-600/30";
+          btn.className = "p-4 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1";
         } else {
           sec.classList.add('hidden');
           btn.className = "p-4 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
         }
       });
-
       if (sub === 'quotes') loadFounderQuotes();
       if (sub === 'users') loadFounderUsers();
       lucide.createIcons();
     }
 
-    // --- PROYECTOS ---
-    async function loadProjects() {
-      const container = document.getElementById('projectsContainer');
-      try {
-        const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-
-        if (data.projects && data.projects.length > 0) {
-          container.innerHTML = data.projects.map(p => `
-            <div class="p-5 rounded-2xl bg-black/40 border border-purple-900/50 space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
-                <span class="text-xs font-bold text-purple-300">${p.progress}% completado</span>
-              </div>
-              <h4 class="text-sm font-bold text-white">${p.title}</h4>
-              <div class="w-full bg-purple-950/60 rounded-full h-2 border border-purple-900">
-                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-2 rounded-full" style="width: ${p.progress}%"></div>
-              </div>
-              <p class="text-xs text-purple-300/60">${p.notes || "En desarrollo"}</p>
-              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-2"><i data-lucide="download" class="w-3.5 h-3.5"></i><span>Descargar Archivos / Repo</span></a>` : ''}
-            </div>
-          `).join('');
-        } else {
-          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-2">No tienes proyectos o builds activos por el momento.</p>';
-        }
-        lucide.createIcons();
-      } catch (e) {}
-    }
-
-    // Crear Proyecto (Founder)
-    document.getElementById('createProjectForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        await fetch('/api/founder/project-create', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: document.getElementById('pTitle').value,
-            clientEmail: document.getElementById('pClientEmail').value,
-            progress: document.getElementById('pProgress').value,
-            downloadUrl: document.getElementById('pDownloadUrl').value,
-            notes: document.getElementById('pNotes').value
-          })
-        });
-        alert("¡Proyecto asignado con éxito!");
-        document.getElementById('createProjectForm').reset();
-        loadProjects();
-      } catch (e) { alert("Error al asignar"); }
-    });
-
-    // --- CRM DE COTIZACIONES ---
     async function loadFounderQuotes() {
       const list = document.getElementById('quotesList');
       try {
@@ -387,21 +483,19 @@
                   <span class="text-xs font-bold text-white">${q.name}</span>
                   <span class="text-[10px] font-mono text-purple-400 bg-purple-950 px-2 py-0.5 rounded">Discord: ${q.discord}</span>
                 </div>
-                <p class="text-xs text-purple-200 mt-1 font-semibold">Servicio: ${q.service}</p>
-                <p class="text-[11px] text-purple-400/70 mt-0.5">${q.details}</p>
+                <p class="text-xs text-purple-200 mt-1 font-semibold">${q.service}</p>
+                <p class="text-[11px] text-purple-400/70">${q.details}</p>
               </div>
-              <div class="flex items-center space-x-2">
-                <select onchange="changeQuoteStatus('${q.id}', this.value)" class="bg-black border border-purple-800 rounded-lg text-xs text-white px-2 py-1">
-                  <option value="Pendiente" ${q.status === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
-                  <option value="En Negociación" ${q.status === 'En Negociación' ? 'selected' : ''}>En Negociación</option>
-                  <option value="Aceptado" ${q.status === 'Aceptado' ? 'selected' : ''}>Aceptado</option>
-                  <option value="Rechazado" ${q.status === 'Rechazado' ? 'selected' : ''}>Rechazado</option>
-                </select>
-              </div>
+              <select onchange="changeQuoteStatus('${q.id}', this.value)" class="bg-black border border-purple-800 rounded-lg text-xs text-white px-2 py-1">
+                <option value="Pendiente" ${q.status === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                <option value="En Negociación" ${q.status === 'En Negociación' ? 'selected' : ''}>En Negociación</option>
+                <option value="Aceptado" ${q.status === 'Aceptado' ? 'selected' : ''}>Aceptado</option>
+                <option value="Rechazado" ${q.status === 'Rechazado' ? 'selected' : ''}>Rechazado</option>
+              </select>
             </div>
           `).join('');
         } else {
-          list.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No hay cotizaciones pendientes en la base de datos.</p>';
+          list.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">Sin cotizaciones pendientes.</p>';
         }
       } catch (e) {}
     }
@@ -415,21 +509,6 @@
       loadFounderQuotes();
     }
 
-    // --- ANUNCIO GLOBAL ---
-    document.getElementById('announcementForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await fetch('/api/founder/set-announcement', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: document.getElementById('announcementText').value,
-          active: document.getElementById('announcementActive').checked
-        })
-      });
-      alert("¡Banner global actualizado!");
-    });
-
-    // --- USUARIOS ---
     async function loadFounderUsers() {
       const tbody = document.getElementById('usersTableBody');
       try {
@@ -499,7 +578,7 @@
         const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         const t = data.ticket;
-        const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin');
+        const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin' || currentUser.role === 'Soporte');
 
         detail.innerHTML = `
           <div class="flex items-center justify-between border-b border-purple-950 pb-3">
@@ -523,11 +602,11 @@
           </div>
           <div class="space-y-3 max-h-[360px] overflow-y-auto pr-2">
             ${t.messages.map(m => `
-              <div class="p-3.5 rounded-2xl ${m.role === 'Founder' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-6' : 'bg-black/50 border border-purple-950 mr-6'}">
+              <div class="p-3.5 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-6' : 'bg-black/50 border border-purple-950 mr-6'}">
                 <div class="flex items-center justify-between text-[11px] mb-1">
                   <div class="flex items-center space-x-2">
                     <span class="font-bold text-white">${m.sender}</span>
-                    <span class="text-[9px] font-mono px-1.5 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300 border border-fuchsia-500/40' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
+                    <span class="text-[9px] font-mono px-1.5 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
                   </div>
                   <span class="text-[10px] text-purple-400/50">${m.time}</span>
                 </div>

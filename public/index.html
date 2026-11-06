@@ -39,23 +39,22 @@
         </div>
       </a>
 
-      <!-- ENLACES ESCRITORIO -->
+      <!-- ENLACES -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="#services" class="hover:text-purple-300 transition">Servicios</a>
+        <a href="#optimizer" class="hover:text-purple-300 transition">Optimizador</a>
         <a href="#network" class="hover:text-purple-300 transition">Network Tester</a>
         <a href="#quote" class="hover:text-purple-300 transition">Cotizador</a>
       </div>
 
-      <!-- BOTÓN DASHBOARD / LOGIN (LIMPIO) -->
       <div class="hidden md:flex items-center space-x-3" id="desktopAuthSlot">
         <a href="/login" class="px-4 py-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-xs font-bold text-purple-200 hover:text-white transition">
           Portal Clientes
         </a>
       </div>
 
-      <!-- BOTONES MÓVIL (COMPACTO) -->
       <div class="flex md:hidden items-center space-x-2">
-        <a href="/login" id="mobileUserBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-300" title="Mi Cuenta">
+        <a href="/login" id="mobileUserBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-purple-300">
           <i data-lucide="user" class="w-5 h-5"></i>
         </a>
         <button id="hamburgerBtn" class="w-10 h-10 rounded-xl bg-purple-950/60 border border-purple-500/40 flex items-center justify-center text-purple-300">
@@ -65,11 +64,15 @@
 
     </div>
 
-    <!-- MENÚ HAMBURGUESA MÓVIL -->
+    <!-- MENÚ MÓVIL -->
     <div id="mobileMenu" class="hidden md:hidden pt-4 pb-6 px-4 mt-3 border-t border-purple-900/40 bg-[#090414]/95 backdrop-blur-2xl rounded-2xl shadow-2xl space-y-4">
       <a href="#services" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
         <i data-lucide="cpu" class="w-5 h-5 text-purple-400"></i>
         <span class="font-medium text-sm">Servicios Especializados</span>
+      </a>
+      <a href="#optimizer" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
+        <i data-lucide="sliders" class="w-5 h-5 text-purple-400"></i>
+        <span class="font-medium text-sm">Optimizador Paper & Velocity</span>
       </a>
       <a href="#network" class="mobile-nav-link flex items-center space-x-3 text-purple-200 py-2 border-b border-purple-950">
         <i data-lucide="activity" class="w-5 h-5 text-purple-400"></i>
@@ -91,7 +94,7 @@
     </div>
   </nav>
 
-  <!-- HERO PROFESIONAL (SIN TEXTO DE COLORES) -->
+  <!-- HERO -->
   <header class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
@@ -104,21 +107,76 @@
     </h1>
 
     <p class="text-purple-200/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-      Desarrollo de plugins Paper/Spigot sin pérdidas de memoria, arquitecturas completas con Velocity y bots de Discord conectados a bases de datos en tiempo real.
+      Desarrollo de plugins Paper/Spigot sin fugas de memoria, setups integrales con Velocity y bots de Discord conectados a bases de datos en tiempo real.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
-      <a href="#quote" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition transform hover:-translate-y-0.5 shadow-xl shadow-purple-700/40">
-        Configurar Presupuesto
+      <a href="#optimizer" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
+        Usar Optimizador Gratis
       </a>
-      <a href="#network" class="border border-purple-800/80 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
-        Probar Network Tester
+      <a href="#quote" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
+        Cotizar Proyecto
       </a>
     </div>
   </header>
 
+  <!-- NUEVA HERRAMIENTA: OPTIMIZADOR VISUAL DE PAPER / VELOCITY -->
+  <section id="optimizer" class="max-w-5xl mx-auto px-6 py-20">
+    <div class="text-center mb-12">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Herramienta Gratuita de Synthetix</span>
+      <h2 class="text-3xl font-black text-white mt-1">Generador de Configuraciones de Alto Rendimiento</h2>
+      <p class="text-purple-300/60 text-sm mt-2">Ajusta los sliders para maximizar tus TPS y descarga tu archivo optimizado.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 p-8 rounded-3xl card-glass border border-purple-500/30">
+      
+      <!-- Controles -->
+      <div class="space-y-5">
+        <div>
+          <label class="block text-xs font-mono uppercase text-purple-300 mb-1">Tipo de Servidor</label>
+          <select id="optType" onchange="updateConfigPreview()" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2.5 text-xs text-white">
+            <option value="paper">PaperMC (paper-world-defaults.yml)</option>
+            <option value="velocity">Velocity Proxy (velocity.toml)</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-purple-300 font-mono">Modo de Anti-Xray</span>
+            <span id="xrayVal" class="text-fuchsia-400 font-bold">Modo 2 (Ofuscación Total)</span>
+          </div>
+          <select id="optXray" onchange="updateConfigPreview()" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white">
+            <option value="2">Modo 2 (Recomendado para Survival/Factions)</option>
+            <option value="1">Modo 1 (Ligero)</option>
+            <option value="0">Desactivado</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-purple-300 font-mono">Distancia de Renderizado de Entidades</span>
+            <span id="trackingVal" class="text-fuchsia-400 font-bold">48 bloques</span>
+          </div>
+          <input type="range" id="optTracking" min="32" max="96" value="48" step="8" oninput="updateConfigPreview()" class="w-full accent-purple-500">
+        </div>
+
+        <button onclick="downloadGeneratedConfig()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2 transition shadow-lg shadow-purple-600/30">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Descargar Configuración Optimizada</span>
+        </button>
+      </div>
+
+      <!-- Preview del archivo -->
+      <div class="bg-black/80 rounded-2xl p-4 border border-purple-950 font-mono text-[11px] text-purple-300/80 overflow-x-auto flex flex-col justify-between">
+        <pre id="configPreview" class="leading-relaxed"># Generando configuración...</pre>
+        <span class="text-[9px] text-purple-400/40 text-right">Synthetix Optimizer Engine v2.0</span>
+      </div>
+
+    </div>
+  </section>
+
   <!-- SERVICIOS -->
-  <section id="services" class="max-w-6xl mx-auto px-6 py-20">
+  <section id="services" class="max-w-6xl mx-auto px-6 py-16">
     <div class="mb-12">
       <p class="text-xs uppercase font-mono tracking-widest text-purple-400 mb-2">Especialidades</p>
       <h2 class="text-3xl font-extrabold text-white">Ingeniería a Medida</h2>
@@ -263,6 +321,63 @@
   <footer class="border-t border-purple-950/60 py-10 text-center text-xs text-purple-300/40">
     <p>© Synthetix Studio. Todos los derechos reservados.</p>
   </footer>
+
+  <script>
+    // Lógica del Optimizador
+    function updateConfigPreview() {
+      const type = document.getElementById('optType').value;
+      const xray = document.getElementById('optXray').value;
+      const tracking = document.getElementById('optTracking').value;
+      document.getElementById('trackingVal').innerText = `${tracking} bloques`;
+
+      let content = "";
+      if (type === 'paper') {
+        content = `# Synthetix Studio - PaperMC World Defaults
+anticheat:
+  anti-xray:
+    enabled: ${xray !== '0'}
+    engine-mode: ${xray}
+    max-block-height: 64
+    update-radius: 2
+entities:
+  spawning:
+    tracking-range:
+      players: ${tracking}
+      monsters: ${Math.round(tracking * 0.75)}
+      animals: 32
+chunks:
+  auto-save-interval: 400
+  max-auto-save-chunks-per-tick: 18`;
+      } else {
+        content = `# Synthetix Studio - Velocity Configuration
+bind = "0.0.0.0:25565"
+motd = "<#a855f7>Synthetix Network Proxy</color>"
+show-max-players = 500
+online-mode = true
+force-key-authentication = true
+player-info-forwarding-mode = "modern"
+
+[advanced]
+compression-threshold = 256
+compression-level = -1
+connection-timeout = 5000`;
+      }
+      document.getElementById('configPreview').innerText = content;
+    }
+
+    function downloadGeneratedConfig() {
+      const type = document.getElementById('optType').value;
+      const text = document.getElementById('configPreview').innerText;
+      const filename = type === 'paper' ? 'paper-world-defaults.yml' : 'velocity.toml';
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+
+    updateConfigPreview();
+  </script>
 
   <script type="module" src="/assets/js/main.js"></script>
 </body>
