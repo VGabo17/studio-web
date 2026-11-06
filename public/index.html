@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Synthetix Studio | Desarrollo, Redes & Plugins Minecraft</title>
   
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#06030d">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   
@@ -17,7 +20,6 @@
   <nav class="sticky top-0 z-40 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
-      <!-- LOGO CON PASTILLA -->
       <a href="/" class="flex items-center space-x-2.5 transition">
         <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -32,16 +34,14 @@
         </div>
       </a>
 
-      <!-- ENLACES ESCRITORIO -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="/" class="text-white font-bold">Inicio</a>
-        <a href="#benchmarks" class="hover:text-purple-300 transition">Specs</a>
         <a href="#pricing" class="hover:text-purple-300 transition">Tarifas</a>
-        <a href="#comparison" class="hover:text-purple-300 transition">Garantía</a>
+        <a href="#reviews" class="hover:text-purple-300 transition">Reseñas ⭐</a>
+        <a href="/services" class="hover:text-purple-300 transition">Servicios</a>
         <a href="/vault" class="hover:text-purple-300 transition">Vault</a>
       </div>
 
-      <!-- BOTONES -->
       <div class="flex items-center space-x-3">
         <a href="/dashboard" id="desktopPortalBtn" class="hidden sm:inline-block px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
           Portal Clientes
@@ -71,7 +71,7 @@
       <div class="py-6 space-y-2">
         <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs"><i data-lucide="home" class="w-4 h-4 text-purple-400"></i><span>Inicio</span></a>
         <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas Oficiales</span></a>
-        <a href="#comparison" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="shield-check" class="w-4 h-4 text-purple-400"></i><span>Garantía Técnica</span></a>
+        <a href="#reviews" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="star" class="w-4 h-4 text-amber-400"></i><span>Reseñas de Clientes</span></a>
         <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i><span>Servicios</span></a>
         <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><div class="flex items-center space-x-3"><i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span></div><span class="text-[9px] font-mono bg-purple-950 text-fuchsia-300 border border-fuchsia-500/40 px-1.5 py-0.5 rounded">CATÁLOGO</span></a>
         <a href="/terms" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i><span>Términos del Servicio</span></a>
@@ -89,7 +89,7 @@
   <header class="max-w-5xl mx-auto px-6 pt-20 pb-12 text-center">
     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-      <span>ESTUDIO Y MARKETPLACE PROFESIONAL • MINECRAFT & DISCORD</span>
+      <span>PLATAFORMA PWA & MARKETPLACE MINECRAFT</span>
     </div>
     
     <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6">
@@ -98,7 +98,7 @@
     </h1>
 
     <p class="text-purple-200/70 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-      Setups de servidores completos, plugins Java de alto rendimiento, redes masivas con Velocity y Resource Vault comunitario. Todo gestionado directamente en la web.
+      Setups de servidores completos, plugins Java de alto rendimiento con licencias Anti-Leak y Resource Vault en R2. Todo en la web.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
@@ -106,77 +106,22 @@
         Ver Tarifas ($5 - $35)
       </a>
       <a href="/vault" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
-        Explorar Vault de Recursos
+        Explorar Vault
       </a>
     </div>
   </header>
 
-  <!-- BARRA DE TELEMETRÍA Y BENCHMARKS -->
-  <section id="benchmarks" class="max-w-6xl mx-auto px-6 py-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-3xl card-glass border border-purple-500/30">
-      <div class="text-center p-3 border-r border-purple-950/60 last:border-0">
-        <p class="text-2xl sm:text-3xl font-black text-emerald-400">20.0 TPS</p>
-        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Rendimiento Constante</span>
-      </div>
-      <div class="text-center p-3 border-r border-purple-950/60 last:border-0">
-        <p class="text-2xl sm:text-3xl font-black text-white">Java 21</p>
-        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Folia & Purpur Ready</span>
-      </div>
-      <div class="text-center p-3 border-r border-purple-950/60 last:border-0">
-        <p class="text-2xl sm:text-3xl font-black text-fuchsia-400">0% Leaks</p>
-        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Memoria Optimizada</span>
-      </div>
-      <div class="text-center p-3">
-        <p class="text-2xl sm:text-3xl font-black text-white">99.99%</p>
-        <span class="text-[11px] text-purple-300/60 uppercase font-mono tracking-wider">Uptime en Proxies</span>
-      </div>
+  <!-- BENCHMARKS -->
+  <section class="max-w-6xl mx-auto px-6 py-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-3xl card-glass border border-purple-500/30 text-center">
+      <div><p class="text-2xl sm:text-3xl font-black text-emerald-400">20.0 TPS</p><span class="text-[11px] text-purple-300/60 uppercase font-mono">Garantizado</span></div>
+      <div><p class="text-2xl sm:text-3xl font-black text-white">Java 21</p><span class="text-[11px] text-purple-300/60 uppercase font-mono">Folia / Purpur</span></div>
+      <div><p class="text-2xl sm:text-3xl font-black text-fuchsia-400">DRM Ready</p><span class="text-[11px] text-purple-300/60 uppercase font-mono">Anti-Leak Nativo</span></div>
+      <div><p class="text-2xl sm:text-3xl font-black text-white">Cloudflare R2</p><span class="text-[11px] text-purple-300/60 uppercase font-mono">Descargas a Alta Velocidad</span></div>
     </div>
   </section>
 
-  <!-- TABLA COMPARATIVA: SYNTHETIX VS AFICIONADOS -->
-  <section id="comparison" class="max-w-5xl mx-auto px-6 py-16">
-    <div class="text-center mb-10">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Garantía de Calidad</span>
-      <h2 class="text-3xl font-black text-white mt-1">¿Por qué Synthetix Studio?</h2>
-      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Diferencia entre un servidor aficionado y una red optimizada profesionalmente.</p>
-    </div>
-
-    <div class="overflow-x-auto rounded-3xl card-glass border border-purple-900/60">
-      <table class="w-full text-left text-xs sm:text-sm">
-        <thead class="bg-black/60 font-mono uppercase text-purple-400 border-b border-purple-950">
-          <tr>
-            <th class="p-4 sm:p-5">Aspecto Técnico</th>
-            <th class="p-4 sm:p-5 text-fuchsia-300">Synthetix Studio</th>
-            <th class="p-4 sm:p-5 text-purple-400/50">Desarrollo Típico / Aficionado</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-purple-950/50 text-purple-200/80">
-          <tr>
-            <td class="p-4 font-semibold text-white">Manejo de Hilos (Threading)</td>
-            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>Asíncrono (Cero congelamientos de TPS)</span></td>
-            <td class="p-4 text-rose-400/80 font-light">Síncrono en hilo principal (Tirones de lag)</td>
-          </tr>
-          <tr>
-            <td class="p-4 font-semibold text-white">Mitigación Anti-Bot</td>
-            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>Filtros Velocity en Capa de Red</span></td>
-            <td class="p-4 text-rose-400/80 font-light">Plugins básicos Spigot que crashean la RAM</td>
-          </tr>
-          <tr>
-            <td class="p-4 font-semibold text-white">Gestión y Entregas</td>
-            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>Portal Web con Descargas y Tickets</span></td>
-            <td class="p-4 text-rose-400/80 font-light">Mensajes directos de Discord sin garantías</td>
-          </tr>
-          <tr>
-            <td class="p-4 font-semibold text-white">Garantía de Soporte</td>
-            <td class="p-4 text-emerald-400 font-bold flex items-center space-x-1.5"><i data-lucide="check" class="w-4 h-4"></i><span>14 Días de Corrección de Bugs Gratis</span></td>
-            <td class="p-4 text-rose-400/80 font-light">Cobro extra por cada ajuste menor</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- TARIFAS CLARAS -->
+  <!-- TARIFAS -->
   <section id="pricing" class="max-w-6xl mx-auto px-6 py-16">
     <div class="text-center mb-12">
       <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Precios Transparentes</span>
@@ -190,15 +135,7 @@
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Desarrollo Java</span>
           <h3 class="text-xl font-bold text-white mb-1">Plugin Básico</h3>
           <p class="text-[11px] text-purple-300/60 mb-3">Comandos, eventos o fixes simples</p>
-          <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-3xl font-black text-white">$5</span>
-            <span class="text-[11px] text-purple-400">USD</span>
-          </div>
-          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Java 17/21 optimizado</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Spigot / Paper / Purpur</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Entrega directa en la web</li>
-          </ul>
+          <div class="flex items-baseline space-x-1 mb-4"><span class="text-3xl font-black text-white">$5</span><span class="text-[11px] text-purple-400">USD</span></div>
         </div>
         <button onclick="orderPlan('Plugin Básico Java', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($5)</button>
       </div>
@@ -208,15 +145,7 @@
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Discord.js</span>
           <h3 class="text-xl font-bold text-white mb-1">Bot de Discord</h3>
           <p class="text-[11px] text-purple-300/60 mb-3">Tickets, verificación y embeds</p>
-          <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-3xl font-black text-white">$10</span>
-            <span class="text-[11px] text-purple-400">USD</span>
-          </div>
-          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sistema de tickets y logs</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Vinculación MC-Discord</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Base de datos MySQL / SQLite</li>
-          </ul>
+          <div class="flex items-baseline space-x-1 mb-4"><span class="text-3xl font-black text-white">$10</span><span class="text-[11px] text-purple-400">USD</span></div>
         </div>
         <button onclick="orderPlan('Bot de Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($10)</button>
       </div>
@@ -227,15 +156,7 @@
           <span class="text-[10px] font-mono text-fuchsia-400 uppercase tracking-wider block mb-2">Setup Completo</span>
           <h3 class="text-xl font-bold text-white mb-1">Modalidad MC</h3>
           <p class="text-[11px] text-purple-300/60 mb-3">Survival, BoxPvP, Skyblock</p>
-          <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-3xl font-black text-fuchsia-400">$20</span>
-            <span class="text-[11px] text-purple-400">USD</span>
-          </div>
-          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Economía, rangos y menús</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Configuración DeluxeMenus</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Optimización extrema a 20 TPS</li>
-          </ul>
+          <div class="flex items-baseline space-x-1 mb-4"><span class="text-3xl font-black text-fuchsia-400">$20</span><span class="text-[11px] text-purple-400">USD</span></div>
         </div>
         <button onclick="orderPlan('Modalidad Completa MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">Ordenar ($20)</button>
       </div>
@@ -245,34 +166,24 @@
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Redes Masivas</span>
           <h3 class="text-xl font-bold text-white mb-1">Network Setup</h3>
           <p class="text-[11px] text-purple-300/60 mb-3">Velocity Proxy y sincronización</p>
-          <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-3xl font-black text-white">$35</span>
-            <span class="text-[11px] text-purple-400">USD</span>
-          </div>
-          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Proxy Velocity + Balanceo</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sincronización Redis global</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Mitigación Anti-Bot probada</li>
-          </ul>
+          <div class="flex items-baseline space-x-1 mb-4"><span class="text-3xl font-black text-white">$35</span><span class="text-[11px] text-purple-400">USD</span></div>
         </div>
         <button onclick="orderPlan('Network Velocity Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($35)</button>
       </div>
     </div>
   </section>
 
-  <!-- ESPECIFICACIONES DE HARDWARE & FLAGS RECOMENDADAS -->
-  <section class="max-w-5xl mx-auto px-6 py-12">
-    <div class="p-8 rounded-3xl card-glass border border-purple-900/60 grid md:grid-cols-2 gap-6 items-center">
-      <div class="space-y-3">
-        <span class="text-xs font-mono uppercase text-purple-400">Recomendaciones de Arquitectura</span>
-        <h3 class="text-2xl font-bold text-white">Especificaciones Óptimas</h3>
-        <p class="text-xs text-purple-300/70 leading-relaxed">
-          Para que nuestras configuraciones y redes alcancen 20.0 TPS estables con más de 100 jugadores, recomendamos procesadores con alto rendimiento mono-núcleo (Ryzen 9 7950X o Intel i9-14900K) y la ejecución con Aikar's Flags optimizadas en memoria ZGC / G1GC.
-        </p>
-      </div>
-      <div class="bg-black/60 rounded-2xl p-4 border border-purple-950 font-mono text-[11px] text-purple-300 overflow-x-auto">
-        <p class="text-purple-400 mb-1"># Flags recomendadas para servidores Paper:</p>
-        <p class="text-slate-300">java -Xms4G -Xmx4G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+AlwaysPreTouch -jar server.jar --nogui</p>
+  <!-- RESEÑAS VERIFICADAS ⭐⭐⭐⭐⭐ -->
+  <section id="reviews" class="max-w-6xl mx-auto px-6 py-16">
+    <div class="text-center mb-10">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Opiniones Reales</span>
+      <h2 class="text-3xl font-black text-white mt-1">Reseñas Verificadas</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Valoraciones públicas dejadas por dueños de servidores y clientes.</p>
+    </div>
+
+    <div id="publicReviewsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 text-center py-10 col-span-3">
+        <p class="text-xs text-purple-400">Cargando valoraciones de clientes...</p>
       </div>
     </div>
   </section>
@@ -292,6 +203,10 @@
 
   <script>
     lucide.createIcons();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
 
     const overlay = document.getElementById('drawerOverlay');
     const drawer = document.getElementById('sidebarDrawer');
@@ -327,6 +242,40 @@
       `;
       lucide.createIcons();
     }
+
+    async function loadPublicReviews() {
+      const container = document.getElementById('publicReviewsContainer');
+      try {
+        const res = await fetch('/api/reviews');
+        const data = await res.json();
+        if (data.reviews && data.reviews.length > 0) {
+          container.innerHTML = data.reviews.map(r => `
+            <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between space-y-4">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center space-x-3">
+                    <img src="https://mc-heads.net/avatar/${r.mcNick || 'steve'}/40" class="w-10 h-10 rounded-xl border border-purple-500/30 object-cover bg-black/50">
+                    <div>
+                      <p class="text-xs font-bold text-white">${r.author}</p>
+                      <span class="text-[10px] font-mono text-fuchsia-400">${r.role}</span>
+                    </div>
+                  </div>
+                  <div class="text-amber-400 text-xs tracking-widest">${'⭐'.repeat(r.stars)}</div>
+                </div>
+                <p class="text-xs text-purple-200/80 leading-relaxed italic">"${r.comment}"</p>
+              </div>
+              <div class="pt-3 border-t border-purple-950 flex items-center justify-between text-[10px] text-purple-400/50">
+                <span>${r.service}</span>
+                <span>${r.date}</span>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-8 col-span-3">Sé el primero en dejar una reseña desde tu Dashboard.</p>';
+        }
+      } catch (e) {}
+    }
+    loadPublicReviews();
 
     async function orderPlan(planTitle, price) {
       if (!token) {

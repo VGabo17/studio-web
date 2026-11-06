@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | Synthetix Studio</title>
+  <link rel="manifest" href="/manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="/assets/css/theme.css">
@@ -63,10 +64,16 @@
         </div>
       </div>
 
-      <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
-        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-        <span>Nuevo Ticket</span>
-      </button>
+      <div class="flex items-center space-x-2">
+        <button onclick="openReviewModal()" class="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl border border-purple-500/40 bg-purple-950/40 text-purple-300 hover:text-white text-xs font-bold transition">
+          <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>Dejar Reseña</span>
+        </button>
+        <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-1.5 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Nuevo Ticket</span>
+        </button>
+      </div>
     </div>
 
     <!-- PESTAÑAS HORIZONTALES -->
@@ -79,12 +86,16 @@
         <i data-lucide="package" class="w-3.5 h-3.5 text-fuchsia-400"></i>
         <span>Resource Vault</span>
       </button>
+      <button onclick="setMainTab('licenses')" id="tabBtnLicenses" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+        <span>Mis Licencias (DRM)</span>
+      </button>
       <button onclick="setMainTab('projects')" id="tabBtnProjects" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i>
         <span>Mis Builds</span>
       </button>
       <button onclick="setMainTab('profile')" id="tabBtnProfile" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
-        <i data-lucide="user-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+        <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
         <span>Mi Perfil</span>
       </button>
       <button onclick="setMainTab('dev')" id="tabBtnDev" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1.5">
@@ -97,7 +108,7 @@
       </button>
     </div>
 
-    <!-- VISTA 1: TICKETS CON CHAT Y CAPTURAS -->
+    <!-- VISTA 1: TICKETS CON FOTOS -->
     <div id="viewTickets" class="grid lg:grid-cols-3 gap-5">
       <div class="lg:col-span-1 p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
         <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
@@ -148,7 +159,30 @@
       </div>
     </div>
 
-    <!-- VISTA 3: MIS BUILDS -->
+    <!-- VISTA 3: MIS LICENCIAS (DRM ANTI-LEAK) -->
+    <div id="viewLicenses" class="hidden space-y-6">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-purple-950 pb-4">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center space-x-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+              <span>Sistema de Licencias DRM</span>
+            </h2>
+            <p class="text-xs text-purple-300/60">Claves únicas para activar tus plugins compilados de Synthetix</p>
+          </div>
+          <button onclick="showJavaSnippetModal()" class="px-3.5 py-2 rounded-xl bg-purple-950 border border-purple-800 text-purple-300 hover:text-white text-xs font-mono font-bold flex items-center space-x-1.5">
+            <i data-lucide="code" class="w-4 h-4"></i>
+            <span>Ver Código Java</span>
+          </button>
+        </div>
+
+        <div id="licensesContainer" class="space-y-3">
+          <p class="text-xs text-purple-400 py-4">Cargando licencias...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA 4: MIS BUILDS -->
     <div id="viewProjects" class="hidden space-y-4">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
         <div class="border-b border-purple-950 pb-3">
@@ -161,7 +195,7 @@
       </div>
     </div>
 
-    <!-- VISTA 4: MI PERFIL Y SEGURIDAD -->
+    <!-- VISTA 5: MI PERFIL Y SEGURIDAD -->
     <div id="viewProfile" class="hidden space-y-6">
       <div class="grid md:grid-cols-3 gap-6">
         <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-4 text-center flex flex-col items-center">
@@ -206,7 +240,7 @@
       </div>
     </div>
 
-    <!-- VISTA 5: DEV STUDIO (SUBIDA A R2) -->
+    <!-- VISTA 6: DEV STUDIO (SUBIDA A R2) -->
     <div id="viewDev" class="hidden space-y-4">
       <div class="p-6 sm:p-8 rounded-3xl card-glass border border-cyan-500/40 max-w-xl mx-auto space-y-4">
         <div class="flex items-center space-x-2 border-b border-purple-950 pb-3">
@@ -216,10 +250,8 @@
             <p class="text-[10px] text-purple-300/60">Soporta archivos pesados (.zip, .jar, .schem) sin límite</p>
           </div>
         </div>
-
         <form id="vaultUploadForm" class="space-y-3">
           <input type="text" id="vName" required placeholder="Título del Recurso" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-
           <div class="grid grid-cols-2 gap-3">
             <select id="vCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
               <option value="Plugin">Plugin Spigot/Paper (.jar)</option>
@@ -232,29 +264,30 @@
               <option value="vip">Exclusivo VIP / Clientes</option>
             </select>
           </div>
-
           <div class="grid grid-cols-2 gap-3">
             <input type="text" id="vVersion" placeholder="Versión (1.0.0)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
             <input type="text" id="vMC" placeholder="Versiones MC (1.16 - 1.21)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           </div>
-
           <div class="p-4 rounded-xl border border-dashed border-cyan-500/40 bg-black/40 text-center">
             <label class="block text-xs font-bold text-cyan-300 mb-1">Selecciona archivo binario (alojado en R2)</label>
             <input type="file" id="vFile" required class="text-xs text-purple-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-cyan-600 file:text-black">
           </div>
-
           <textarea id="vDesc" rows="2" placeholder="Notas de instalación y características..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-          <button type="submit" id="vUploadBtn" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-2.5 rounded-xl transition shadow-lg shadow-cyan-600/20">Publicar Recurso en R2</button>
+          <button type="submit" id="vUploadBtn" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-2.5 rounded-xl transition shadow-lg">Publicar Recurso en R2</button>
         </form>
       </div>
     </div>
 
-    <!-- VISTA 6: FOUNDER NEXUS -->
+    <!-- VISTA 7: FOUNDER NEXUS -->
     <div id="viewFounder" class="hidden space-y-6">
-      <div class="grid grid-cols-2 gap-2.5 max-w-md">
-        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1">
+      <div class="grid grid-cols-3 gap-2.5 max-w-lg">
+        <button onclick="setFounderSubTab('licenses')" id="fTabLicenses" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="shield-alert" class="w-4 h-4"></i>
+          <span>Gestor DRM</span>
+        </button>
+        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
           <i data-lucide="folder-plus" class="w-4 h-4"></i>
-          <span>Asignar Proyecto</span>
+          <span>Crear Proyecto</span>
         </button>
         <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
           <i data-lucide="users" class="w-4 h-4"></i>
@@ -262,7 +295,16 @@
         </button>
       </div>
 
-      <div id="fSecAssign" class="p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl space-y-3">
+      <!-- SECCIÓN DRM FOUNDER -->
+      <div id="fSecLicenses" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-4">
+        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
+          <h3 class="font-bold text-white text-sm">Control Central de Licencias Anti-Leak</h3>
+          <button onclick="openCreateLicenseModal()" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold">+ Crear Licencia</button>
+        </div>
+        <div id="founderLicensesList" class="space-y-2">Cargando licencias activas...</div>
+      </div>
+
+      <div id="fSecAssign" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl space-y-3">
         <h3 class="font-bold text-white text-sm">Asignar Proyecto a Cliente</h3>
         <form id="createProjectForm" class="space-y-3">
           <input type="text" id="pTitle" required placeholder="Nombre del proyecto (Ej: Setup BoxPvP)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
@@ -292,6 +334,80 @@
     </div>
 
   </main>
+
+  <!-- MODAL: DEJAR RESEÑA ⭐ -->
+  <div id="reviewModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white flex items-center space-x-1.5">
+          <i data-lucide="star" class="w-4 h-4 text-amber-400"></i>
+          <span>Dejar Reseña Verificada</span>
+        </h3>
+        <button onclick="closeReviewModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <form id="reviewForm" class="space-y-3">
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Calificación en Estrellas</label>
+          <select id="revStars" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+            <option value="5">⭐⭐⭐⭐⭐ 5 Estrellas (Excelente)</option>
+            <option value="4">⭐⭐⭐⭐ 4 Estrellas (Muy Bueno)</option>
+            <option value="3">⭐⭐⭐ 3 Estrellas (Bueno)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Servicio / Plugin Valorador</label>
+          <input type="text" id="revService" required placeholder="Ej: Setup BoxPvP o Plugin Clanes" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Tu Experiencia</label>
+          <textarea id="revComment" rows="3" required placeholder="¿Cómo te funcionó el TPS, soporte y calidad?..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-xs">Publicar Reseña en la Web</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CREAR LICENCIA DRM (FOUNDER) -->
+  <div id="createLicenseModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Generar Licencia Anti-Leak</h3>
+        <button onclick="closeCreateLicenseModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <form id="createLicenseForm" class="space-y-3">
+        <input type="email" id="licEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        <input type="text" id="licPlugin" required placeholder="Nombre del Plugin (Ej: SynthetixCore)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs">Generar Clave Única</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CÓDIGO JAVA DRM SNIPPET -->
+  <div id="javaSnippetModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-xl w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-white flex items-center space-x-1.5">
+          <i data-lucide="code" class="w-4 h-4 text-cyan-400"></i>
+          <span>Código Java DRM para tu Plugin</span>
+        </h3>
+        <button onclick="closeJavaSnippetModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <p class="text-xs text-purple-300/70">Pega este método en el `onEnable()` de tu plugin Java para validar la clave contra Synthetix en tiempo real:</p>
+      <div class="bg-black/80 p-4 rounded-2xl border border-purple-950 font-mono text-[11px] text-purple-300 overflow-x-auto leading-relaxed">
+        <pre>public boolean verifyLicense(String key) {
+    try {
+        URL url = new URL("https://test.synthetixhost.lol/api/license/verify?key=" + key);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setConnectTimeout(4000);
+        return con.getResponseCode() == 200;
+    } catch (Exception e) {
+        return false;
+    }
+}</pre>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL TICKET -->
   <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -333,6 +449,7 @@
       validateSession();
       loadTickets();
       loadVault();
+      loadLicenses();
       loadProjects();
     }
 
@@ -357,7 +474,7 @@
 
       const desc = document.getElementById('roleDescription');
       if (user.role === 'Founder') {
-        desc.innerText = "Acceso Total • Control de Infraestructura R2 y Rangos";
+        desc.innerText = "Acceso Total • Control de DRM, R2 y Gestión de Rangos";
         document.getElementById('tabBtnFounder').classList.remove('hidden');
         document.getElementById('tabBtnDev').classList.remove('hidden');
       } else if (user.role === 'Dev') {
@@ -384,7 +501,7 @@
     }
 
     function setMainTab(tab) {
-      const tabs = ['tickets', 'vault', 'projects', 'profile', 'dev', 'founder'];
+      const tabs = ['tickets', 'vault', 'licenses', 'projects', 'profile', 'dev', 'founder'];
       tabs.forEach(t => {
         const view = document.getElementById(`view${t.charAt(0).toUpperCase() + t.slice(1)}`);
         const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -398,8 +515,118 @@
           }
         }
       });
+      if (tab === 'licenses') loadLicenses();
       lucide.createIcons();
     }
+
+    // --- DRM LICENSES ---
+    async function loadLicenses() {
+      const container = document.getElementById('licensesContainer');
+      try {
+        const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.licenses && data.licenses.length > 0) {
+          container.innerHTML = data.licenses.map(l => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center space-x-2 mb-1">
+                  <span class="text-sm font-mono font-bold text-emerald-400 select-all">${l.key}</span>
+                  <span class="text-[9px] font-mono px-2 py-0.5 rounded ${l.status === 'Activa' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-rose-950 text-rose-300 border border-rose-800'}">${l.status}</span>
+                </div>
+                <p class="text-xs font-bold text-white">${l.resourceName}</p>
+                <p class="text-[10px] text-purple-400/60 mt-0.5">IPs activadas: ${l.ips.length ? l.ips.join(', ') : 'Ninguna todavía'}</p>
+              </div>
+              <button onclick="navigator.clipboard.writeText('${l.key}'); alert('¡Clave copiada!');" class="px-3 py-1.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-mono font-bold border border-purple-800">
+                Copiar Clave
+              </button>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No tienes licencias asignadas actualmente.</p>';
+        }
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    // Modales de Licencias
+    function openCreateLicenseModal() { document.getElementById('createLicenseModal').classList.remove('hidden'); }
+    function closeCreateLicenseModal() { document.getElementById('createLicenseModal').classList.add('hidden'); }
+    function showJavaSnippetModal() { document.getElementById('javaSnippetModal').classList.remove('hidden'); }
+    function closeJavaSnippetModal() { document.getElementById('javaSnippetModal').classList.add('hidden'); }
+
+    document.getElementById('createLicenseForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/founder/licenses/create', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientEmail: document.getElementById('licEmail').value,
+          resourceName: document.getElementById('licPlugin').value
+        })
+      });
+      const d = await res.json();
+      if (d.success) {
+        alert("¡Licencia generada: " + d.license.key);
+        closeCreateLicenseModal();
+        document.getElementById('createLicenseForm').reset();
+        loadFounderLicenses();
+      }
+    });
+
+    async function loadFounderLicenses() {
+      const container = document.getElementById('founderLicensesList');
+      try {
+        const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.licenses && data.licenses.length > 0) {
+          container.innerHTML = data.licenses.map(l => `
+            <div class="p-3 rounded-2xl bg-black/50 border border-purple-900/60 flex items-center justify-between text-xs">
+              <div>
+                <span class="font-mono font-bold text-emerald-400">${l.key}</span>
+                <p class="text-[11px] text-white">${l.clientEmail} • ${l.resourceName}</p>
+                <span class="text-[9px] text-purple-400/50">IPs: ${l.ips.join(', ') || 'Sin uso'}</span>
+              </div>
+              <button onclick="toggleLicense('${l.key}')" class="px-2.5 py-1 rounded-lg ${l.status === 'Activa' ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'} text-[10px] font-bold">
+                ${l.status === 'Activa' ? 'Revocar' : 'Reactivar'}
+              </button>
+            </div>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function toggleLicense(key) {
+      await fetch('/api/founder/licenses/toggle', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key })
+      });
+      loadFounderLicenses();
+      loadLicenses();
+    }
+
+    // --- RESEÑAS ⭐ ---
+    function openReviewModal() { document.getElementById('reviewModal').classList.remove('hidden'); }
+    function closeReviewModal() { document.getElementById('reviewModal').classList.add('hidden'); }
+
+    document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/reviews/create', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stars: document.getElementById('revStars').value,
+          service: document.getElementById('revService').value,
+          comment: document.getElementById('revComment').value
+        })
+      });
+      const d = await res.json();
+      if (d.success) {
+        alert("¡Gracias por tu reseña! Ya está visible en la portada oficial.");
+        closeReviewModal();
+        document.getElementById('reviewForm').reset();
+      }
+    });
 
     // --- PERFIL Y CONTRASEÑA ---
     document.getElementById('mcNickForm').addEventListener('submit', async (e) => {
@@ -412,7 +639,7 @@
       });
       const d = await res.json();
       if (d.success) {
-        alert("¡Nick de Minecraft vinculado!");
+        alert("¡Nick vinculado!");
         currentUser = d.user;
         localStorage.setItem('synthetix_user', JSON.stringify(currentUser));
         renderUser(currentUser);
@@ -421,19 +648,20 @@
 
     document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const currentPassword = document.getElementById('currentPass').value;
-      const newPassword = document.getElementById('newPass').value;
       const res = await fetch('/api/profile/change-password', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ currentPassword, newPassword })
+        body: JSON.stringify({
+          currentPassword: document.getElementById('currentPass').value,
+          newPassword: document.getElementById('newPass').value
+        })
       });
       const d = await res.json();
       alert(d.message || d.error);
       if (d.success) document.getElementById('changePasswordForm').reset();
     });
 
-    // --- TICKETS CON CHAT Y CAPTURAS ---
+    // --- TICKETS CON FOTOS ---
     async function loadTickets() {
       const container = document.getElementById('ticketsContainer');
       try {
@@ -519,7 +747,6 @@
             </div>
           </div>
 
-          <!-- MENSAJES Y FOTOS -->
           <div class="space-y-3 max-h-[340px] overflow-y-auto pr-1">
             ${t.messages.map(m => `
               <div class="p-3.5 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-4' : 'bg-black/50 border border-purple-950 mr-4'}">
@@ -533,7 +760,7 @@
                 ${m.text ? `<p class="text-xs text-purple-100/90 leading-relaxed">${m.text}</p>` : ''}
                 ${m.attachmentUrl ? `
                   <div class="mt-2.5">
-                    <img src="${m.attachmentUrl}" class="rounded-xl max-h-56 border border-purple-500/30 object-contain cursor-pointer hover:border-purple-400 transition" onclick="window.open('${m.attachmentUrl}', '_blank')" title="Toca para ampliar captura">
+                    <img src="${m.attachmentUrl}" class="rounded-xl max-h-56 border border-purple-500/30 object-contain cursor-pointer hover:border-purple-400 transition" onclick="window.open('${m.attachmentUrl}', '_blank')" title="Toca para ampliar">
                   </div>
                 ` : ''}
               </div>
@@ -558,12 +785,10 @@
               </div>
 
               <div class="flex gap-2 items-center">
-                <!-- Botón de Adjuntar Foto / Captura -->
-                <label class="p-2 rounded-xl bg-purple-950/60 hover:bg-purple-900 border border-purple-800 text-purple-300 hover:text-white cursor-pointer transition" title="Adjuntar captura de pantalla">
+                <label class="p-2 rounded-xl bg-purple-950/60 hover:bg-purple-900 border border-purple-800 text-purple-300 hover:text-white cursor-pointer transition" title="Adjuntar captura">
                   <i data-lucide="image" class="w-4 h-4"></i>
                   <input type="file" id="chatFileInput" accept="image/*" class="hidden" onchange="handleChatFileSelect(this)">
                 </label>
-
                 <input type="text" id="replyText" placeholder="Escribe tu mensaje o pega una captura con Ctrl+V..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-purple-400">
                 <button type="submit" id="btnSendReply" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-md shadow-purple-600/30">
                   <span>Enviar</span>
@@ -573,7 +798,6 @@
             </form>
           `;
 
-          // Soporte para pegar capturas con Ctrl+V
           const inputEl = document.getElementById('replyText');
           if (inputEl) {
             inputEl.addEventListener('paste', (e) => {
@@ -623,7 +847,6 @@
       const input = document.getElementById('replyText');
       const text = input.value.trim();
       const sendBtn = document.getElementById('btnSendReply');
-
       if (!text && !selectedChatFile) return;
 
       sendBtn.disabled = true;
@@ -632,9 +855,7 @@
       const formData = new FormData();
       formData.append("ticketId", activeTicketId);
       formData.append("text", text);
-      if (selectedChatFile) {
-        formData.append("image", selectedChatFile);
-      }
+      if (selectedChatFile) formData.append("image", selectedChatFile);
 
       try {
         const res = await fetch('/api/tickets/reply', {
@@ -645,9 +866,8 @@
         const data = await res.json();
         if (data.error) alert(data.error);
         selectTicket(activeTicketId);
-      } catch (err) {
-        alert("Error al enviar mensaje");
-      } finally {
+      } catch (err) { alert("Error"); }
+      finally {
         sendBtn.disabled = false;
         sendBtn.innerText = "Enviar";
       }
@@ -695,7 +915,7 @@
       }
     });
 
-    // --- RESOURCE VAULT R2 ---
+    // --- RESOURCE VAULT ---
     async function loadVault() {
       const container = document.getElementById('vaultContainer');
       try {
@@ -783,14 +1003,14 @@
         });
         const d = await res.json();
         if (d.success) {
-          alert("¡Recurso subido con éxito a R2!");
+          alert("¡Recurso subido a R2!");
           document.getElementById('vaultUploadForm').reset();
           loadVault();
           setMainTab('vault');
         } else {
           alert(d.error);
         }
-      } catch (err) { alert("Error de conexión"); }
+      } catch (err) { alert("Error"); }
       finally {
         btn.disabled = false;
         btn.innerText = "Publicar Recurso en R2";
@@ -824,7 +1044,6 @@
               <div class="w-full bg-purple-950/60 rounded-full h-1.5 border border-purple-900">
                 <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-1.5 rounded-full" style="width: ${p.progress}%"></div>
               </div>
-              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-1"><i data-lucide="download" class="w-3 h-3"></i><span>Descargar</span></a>` : ''}
             </div>
           `).join('');
         } else {
@@ -835,18 +1054,19 @@
     }
 
     function setFounderSubTab(sub) {
-      if (sub === 'assignProject') {
-        document.getElementById('fSecAssign').classList.remove('hidden');
-        document.getElementById('fSecUsers').classList.add('hidden');
-        document.getElementById('fTabAssign').className = "p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1";
-        document.getElementById('fTabUsers').className = "p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
-      } else {
-        document.getElementById('fSecAssign').classList.add('hidden');
-        document.getElementById('fSecUsers').classList.remove('hidden');
-        document.getElementById('fTabUsers').className = "p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1";
-        document.getElementById('fTabAssign').className = "p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
-        loadFounderUsers();
-      }
+      ['Licenses', 'Assign', 'Users'].forEach(s => {
+        const sec = document.getElementById(`fSec${s}`);
+        const btn = document.getElementById(`fTab${s}`);
+        if (s.toLowerCase() === sub.toLowerCase()) {
+          sec.classList.remove('hidden');
+          btn.className = "p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1 shadow-md";
+        } else {
+          sec.classList.add('hidden');
+          btn.className = "p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
+        }
+      });
+      if (sub === 'licenses') loadFounderLicenses();
+      if (sub === 'users') loadFounderUsers();
       lucide.createIcons();
     }
 
@@ -862,7 +1082,7 @@
             <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-900 text-purple-200">${u.role}</span></td>
             <td class="p-2.5">
               <select onchange="changeRole('${u.email}', this.value)" class="bg-black/60 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
-                <option value="" disabled selected>Cambiar rol...</option>
+                <option value="" disabled selected>Cambiar...</option>
                 <option value="VIP">VIP</option>
                 <option value="Client">Client</option>
                 <option value="Dev">Dev</option>
