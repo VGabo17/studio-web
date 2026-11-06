@@ -124,6 +124,20 @@ export default {
       return json({ success: true, status: lic.status });
     }
 
+    // ELIMINAR LICENCIA DEFINITIVAMENTE
+    if (url.pathname === '/api/founder/licenses/delete' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user || user.role !== 'Founder') return json({ error: "Denegado" }, 403);
+      const { key } = await request.json();
+
+      await KV.delete(`license:${key}`);
+      const all = JSON.parse(await KV.get("licenses:all") || "[]");
+      const updated = all.filter(l => l.key !== key);
+      await KV.put("licenses:all", JSON.stringify(updated));
+
+      return json({ success: true });
+    }
+
     // --- RESEÑAS ⭐ ---
     if (url.pathname === '/api/reviews' && request.method === 'GET') {
       const reviews = JSON.parse(await KV.get("reviews:all") || "[]");
@@ -166,7 +180,7 @@ export default {
       if (item.accessTier === 'vip') {
         const user = await getSessionUser();
         const isVip = user && (user.role === 'VIP' || user.role === 'Client' || user.role === 'Dev' || user.role === 'Founder' || user.role === 'Admin');
-        if (!isVip) return new Response("Acceso bloqueado: Exclusivo VIP.", { status: 403 });
+        if (!isVip) return new Response("Acceso exclusivo VIP.", { status: 403 });
       }
 
       const ext = item.fileExtension || "zip";
@@ -465,7 +479,7 @@ export default {
       return json({ success: true, user });
     }
 
-    // --- PROYECTOS & ROLES ---
+    // --- PROYECTOS & ASIGNACIÓN ---
     if (url.pathname === '/api/projects' && request.method === 'GET') {
       const user = await getSessionUser();
       if (!user) return json({ error: "No autorizado" }, 401);
@@ -478,15 +492,17 @@ export default {
       const user = await getSessionUser();
       if (!user || (user.role !== 'Founder' && user.role !== 'Dev')) return json({ error: "Denegado" }, 403);
       const { title, clientEmail, progress, downloadUrl } = await request.json();
+      if (!title || !clientEmail) return json({ error: "Faltan datos del proyecto" }, 400);
+
       const all = JSON.parse(await KV.get("projects:all") || "[]");
       const newProj = {
         id: "PRJ-" + Math.floor(1000 + Math.random() * 9000),
-        title, clientEmail, progress: parseInt(progress) || 0,
+        title, clientEmail: clientEmail.toLowerCase().trim(), progress: parseInt(progress) || 0,
         downloadUrl: downloadUrl || "", author: user.username, updatedAt: new Date().toLocaleDateString()
       };
       all.unshift(newProj);
       await KV.put("projects:all", JSON.stringify(all));
-      return json({ success: true });
+      return json({ success: true, project: newProj });
     }
 
     if (url.pathname === '/api/founder/users' && request.method === 'GET') {
@@ -500,8 +516,8 @@ export default {
       const user = await getSessionUser();
       if (!user || user.role !== 'Founder') return json({ error: "Denegado" }, 403);
       const { email, newRole } = await request.json();
-      const raw = await KV.get(`user:${email}`);
-      const targetUser = JSON.parse(raw);
+      const targetRaw = await KV.get(`user:${email}`);
+      const targetUser = JSON.parse(targetRaw);
       targetUser.role = newRole;
       await KV.put(`user:${email}`, JSON.stringify(targetUser));
 
