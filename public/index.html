@@ -5,34 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Synthetix Studio | Minecraft Networks & Discord Engineering</title>
   
-  <!-- Tailwind CSS Framework -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- Hojas de Estilos Modulares -->
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen">
 
-  <!-- NAVEGACIÓN -->
-  <nav class="sticky top-0 z-50 backdrop-blur-xl bg-[#06030d]/85 border-b border-purple-900/40 px-6 py-4">
+  <!-- NAVEGACIÓN PREMIUM -->
+  <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/80 border-b border-purple-500/20 px-4 sm:px-6 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-9 h-9 rounded-xl bg-purple-950/80 border border-purple-500/50 flex items-center justify-center">
-          <i data-lucide="terminal" class="text-purple-400 w-5 h-5"></i>
+      
+      <!-- LOGO REDISEÑADO -->
+      <a href="#" class="group flex items-center space-x-3 transition">
+        <!-- Contenedor del Ícono con Glow -->
+        <div class="relative flex items-center justify-center">
+          <!-- Halo de luz neón detrás -->
+          <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-600 rounded-xl blur-sm opacity-50 group-hover:opacity-100 transition duration-500"></div>
+          
+          <!-- Caja del Ícono -->
+          <div class="relative w-10 h-10 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner group-hover:border-purple-300 transition">
+            <!-- Isotipo Símbolo Cyber/Nexus -->
+            <svg class="w-5 h-5 text-purple-300 group-hover:text-white transition transform group-hover:scale-110 duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          
+          <!-- Micro-Luz de Estado Activo -->
+          <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-fuchsia-400 border border-[#06030d]"></span>
+          </span>
         </div>
-        <span class="font-bold text-xl tracking-wider text-white">SYNTHETIX<span class="text-purple-300">.STUDIO</span></span>
-      </div>
+
+        <!-- Marca Tipográfica -->
+        <div class="flex flex-col text-left">
+          <div class="flex items-center space-x-1.5">
+            <span class="font-black text-lg sm:text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-purple-300 group-hover:to-fuchsia-300 transition">
+              SYNTHETIX
+            </span>
+            <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-purple-950/80 border border-purple-500/40 text-purple-300 tracking-widest shadow-sm">
+              STUDIO
+            </span>
+          </div>
+          <span class="text-[9px] font-mono tracking-widest text-purple-400/60 uppercase">
+            DEV & INFRASTRUCTURE
+          </span>
+        </div>
+      </a>
+
+      <!-- ENLACES ESCRITORIO -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="#services" class="hover:text-purple-300 transition">Servicios</a>
         <a href="#network" class="hover:text-purple-300 transition">Network Tester</a>
         <a href="#quote" class="hover:text-purple-300 transition">Cotizador</a>
       </div>
-      <a href="#quote" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-lg shadow-purple-600/30">
-        Iniciar Proyecto
+
+      <!-- BOTÓN CTA ESTILIZADO -->
+      <a href="#quote" class="relative group overflow-hidden rounded-xl p-[1px] focus:outline-none">
+        <span class="absolute inset-0 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-600 rounded-xl group-hover:opacity-100 transition"></span>
+        <span class="relative block px-4 sm:px-5 py-2 rounded-xl bg-[#090414] transition duration-200 group-hover:bg-opacity-0">
+          <span class="text-xs sm:text-sm font-bold text-white tracking-wide">Iniciar Proyecto</span>
+        </span>
       </a>
+
     </div>
   </nav>
 
@@ -215,7 +254,6 @@
     </div>
   </footer>
 
-  <!-- Script Modular Principal -->
   <script type="module" src="/assets/js/main.js"></script>
 </body>
 </html>
