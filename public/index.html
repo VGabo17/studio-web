@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Synthetix Studio | Desarrollo y Redes de Minecraft</title>
+  <title>Synthetix Studio | Plugins & Redes de Minecraft</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -13,10 +13,11 @@
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 flex flex-col justify-between">
 
-  <!-- NAVBAR MULTIPÁGINA -->
+  <!-- NAVBAR LIMPIO -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
+      <!-- LOGO OFICIAL LIMPIO -->
       <a href="/" class="flex items-center space-x-2.5">
         <div class="w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -25,10 +26,10 @@
             <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
         </div>
-        <span class="font-black text-lg tracking-wider text-white">SYNTHETIX<span class="text-purple-400">.STUDIO</span></span>
+        <span class="font-black text-lg tracking-wider text-white">SYNTHETIX <span class="text-purple-400 font-light">STUDIO</span></span>
       </a>
 
-      <!-- ENLACES REALES MULTIPÁGINA -->
+      <!-- ENLACES ESCRITORIO -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="/" class="text-white font-bold">Inicio</a>
         <a href="#pricing" class="hover:text-purple-300 transition">Tarifas</a>
@@ -36,21 +37,22 @@
         <a href="/vault" class="hover:text-purple-300 transition">Resource Vault</a>
       </div>
 
+      <!-- BOTONES -->
       <div class="flex items-center space-x-3">
         <a href="/dashboard" id="portalNavBtn" class="px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
-          Portal Clientes
+          Portal Web
         </a>
-        <button id="mobileNavToggle" class="md:hidden p-2 text-purple-300"><i data-lucide="menu" class="w-5 h-5"></i></button>
+        <button id="mobileNavToggle" class="md:hidden p-2 rounded-xl bg-purple-950/40 text-purple-300"><i data-lucide="menu" class="w-5 h-5"></i></button>
       </div>
 
     </div>
 
-    <!-- MENÚ MÓVIL -->
+    <!-- MENÚ MÓVIL DESPLEGABLE -->
     <div id="mobileMenu" class="hidden md:hidden pt-4 pb-4 px-4 border-t border-purple-900/40 bg-[#090414] rounded-2xl mt-3 space-y-3">
       <a href="/" class="block text-sm font-bold text-white py-1">Inicio</a>
-      <a href="#pricing" class="block text-sm text-purple-300 py-1">Tarifas Oficiales</a>
-      <a href="/services" class="block text-sm text-purple-300 py-1">Todos los Servicios</a>
-      <a href="/vault" class="block text-sm text-purple-300 py-1">Resource Vault (.JARs)</a>
+      <a href="#pricing" class="block text-sm text-purple-300 py-1">Tarifas Accesibles</a>
+      <a href="/services" class="block text-sm text-purple-300 py-1">Servicios Detallados</a>
+      <a href="/vault" class="block text-sm text-purple-300 py-1">Descargar Plugins (.JARs)</a>
       <a href="/dashboard" class="block text-sm text-fuchsia-300 font-bold py-1">Mi Dashboard / Pedidos</a>
     </div>
   </nav>
@@ -59,126 +61,122 @@
   <header class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-      <span>PLATAFORMA Y ESTUDIO 100% GESTIONADO EN LA WEB</span>
+      <span>DESARROLLO DE SOFTWARE & CONFIGURACIONES</span>
     </div>
     
     <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6">
-      Ingeniería de Servidores & Plugins <br>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Directo en la Web</span>
+      Plugins, Bots & Redes <br>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Gestionados en la Web</span>
     </h1>
 
     <p class="text-purple-200/70 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-      Sin depender de Discord. Elige tu plan, abre tu sala de proyecto privada en el portal, habla con el desarrollador y descarga tus archivos directamente.
+      Elige tu plan, abre tu sala de proyecto privada, chatea con el desarrollador y descarga tus archivos directamente en tu cuenta.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
       <a href="#pricing" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
-        Ver Tarifas y Planes
+        Ver Tarifas Accesibles
       </a>
       <a href="/vault" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
-        Explorar Resource Vault
+        Descargas del Vault
       </a>
     </div>
   </header>
 
-  <!-- SECCIÓN DE TARIFAS (PRICING GRID) -->
+  <!-- TARIFAS ACCESIBLES Y REALES -->
   <section id="pricing" class="max-w-6xl mx-auto px-6 py-16">
     <div class="text-center mb-14">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Precios Transparentes</span>
-      <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Tarifas de Servicios</h2>
-      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Paga únicamente por lo que tu servidor necesita. Todos los proyectos incluyen soporte y código optimizado.</p>
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Precios Para Todos</span>
+      <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Tarifas del Estudio</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Planes pensados para pequeños y grandes servidores de Minecraft.</p>
     </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       
-      <!-- PLAN 1: PLUGIN SPIGOT / PAPER -->
+      <!-- PLAN 1: PLUGIN BÁSICO / FIX -->
       <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Desarrollo Java</span>
-          <h3 class="text-xl font-bold text-white mb-2">Plugin a Medida</h3>
+          <h3 class="text-xl font-bold text-white mb-1">Plugin Básico</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">Comandos, eventos o fixes simples</p>
           <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-xs text-purple-400">Desde</span>
-            <span class="text-3xl font-black text-white">$20</span>
-            <span class="text-[10px] text-purple-400">/ build</span>
+            <span class="text-3xl font-black text-white">$5</span>
+            <span class="text-[11px] text-purple-400">USD</span>
           </div>
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Java 17 / 21 nativo</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Lógica asíncrona sin lag</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Compatibilidad Paper / Purpur</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Entrega .JAR directa en web</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Java 17/21 optimizado</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Spigot / Paper / Purpur</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Entrega .JAR directa</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Plugin Spigot/Paper', '$20 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
-          Ordenar en la Web
+        <button onclick="orderPlan('Plugin Básico Java', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
+          Ordenar ($5)
         </button>
       </div>
 
       <!-- PLAN 2: BOT DE DISCORD -->
       <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
-          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Automatización</span>
-          <h3 class="text-xl font-bold text-white mb-2">Bot de Discord</h3>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Discord.js</span>
+          <h3 class="text-xl font-bold text-white mb-1">Bot de Discord</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">Tickets, verificación y embeds</p>
           <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-xs text-purple-400">Desde</span>
-            <span class="text-3xl font-black text-white">$35</span>
-            <span class="text-[10px] text-purple-400">/ proyecto</span>
+            <span class="text-3xl font-black text-white">$10</span>
+            <span class="text-[11px] text-purple-400">USD</span>
           </div>
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sistema de tickets y logs</li>
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Vinculación MC-Discord</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sistema de tickets con logs</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Base de datos MySQL / SQLite</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Botones y menús modernos</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Código limpio en Node.js</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Bot de Discord Avanzado', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
-          Ordenar en la Web
+        <button onclick="orderPlan('Bot de Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
+          Ordenar ($10)
         </button>
       </div>
 
-      <!-- PLAN 3: MODALIDAD COMPLETA (DESTACADO) -->
+      <!-- PLAN 3: MODALIDAD COMPLETA -->
       <div class="p-6 rounded-3xl card-glass border-2 border-fuchsia-500/60 flex flex-col justify-between relative shadow-xl shadow-purple-900/40">
         <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-[9px] font-bold uppercase tracking-wider text-white px-3 py-0.5 rounded-full">
-          Más Popular
+          Más Vendido
         </span>
         <div>
-          <span class="text-[10px] font-mono text-fuchsia-400 uppercase tracking-wider block mb-2">Configuración Integral</span>
-          <h3 class="text-xl font-bold text-white mb-2">Modalidad Minecraft</h3>
+          <span class="text-[10px] font-mono text-fuchsia-400 uppercase tracking-wider block mb-2">Setup Completo</span>
+          <h3 class="text-xl font-bold text-white mb-1">Modalidad MC</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">Survival, BoxPvP, Skyblock</p>
           <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-xs text-purple-400">Desde</span>
-            <span class="text-3xl font-black text-fuchsia-400">$60</span>
-            <span class="text-[10px] text-purple-400">/ setup</span>
+            <span class="text-3xl font-black text-fuchsia-400">$20</span>
+            <span class="text-[11px] text-purple-400">USD</span>
           </div>
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Survival, BoxPvP, Skyblock</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Economía equilibrada y rangos</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Menús DeluxeMenus custom</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Optimización extrema a 20 TPS</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Economía, rangos y menús</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Configuración DeluxeMenus</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2"></i> Optimización a 20 TPS</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Modalidad Completa MC', '$60 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">
-          Ordenar en la Web
+        <button onclick="orderPlan('Modalidad Completa MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">
+          Ordenar ($20)
         </button>
       </div>
 
-      <!-- PLAN 4: NETWORK VELOCITY ENTERPRISE -->
+      <!-- PLAN 4: NETWORK VELOCITY -->
       <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
-          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Infraestructura Masiva</span>
-          <h3 class="text-xl font-bold text-white mb-2">Network Velocity</h3>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-2">Redes Masivas</span>
+          <h3 class="text-xl font-bold text-white mb-1">Network Setup</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">Velocity Proxy y sincronización</p>
           <div class="flex items-baseline space-x-1 mb-4">
-            <span class="text-xs text-purple-400">Desde</span>
-            <span class="text-3xl font-black text-white">$120</span>
-            <span class="text-[10px] text-purple-400">/ red</span>
+            <span class="text-3xl font-black text-white">$35</span>
+            <span class="text-[11px] text-purple-400">USD</span>
           </div>
           <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Proxy Velocity + Balanceo</li>
             <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Sincronización Redis global</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Filtros y protección Anti-Bot</li>
-            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Soporte técnico prioritario</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 mr-2"></i> Filtro y mitigación Anti-Bot</li>
           </ul>
         </div>
-        <button onclick="orderPlan('Network Velocity Enterprise', '$120 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
-          Ordenar en la Web
+        <button onclick="orderPlan('Network Velocity Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">
+          Ordenar ($35)
         </button>
       </div>
 
@@ -200,12 +198,10 @@
   <script>
     lucide.createIcons();
 
-    // Menú móvil toggle
     document.getElementById('mobileNavToggle').addEventListener('click', () => {
       document.getElementById('mobileMenu').classList.toggle('hidden');
     });
 
-    // Detectar si está logueado para cambiar botón del navbar
     const token = localStorage.getItem('synthetix_token');
     const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
     if (token && user.username) {
@@ -214,15 +210,14 @@
       btn.className = "px-3.5 py-1.5 rounded-xl bg-purple-900/60 border border-fuchsia-500/50 text-xs font-bold text-fuchsia-300";
     }
 
-    // Función para ordenar directamente en la web
     async function orderPlan(planTitle, price) {
       if (!token) {
-        alert("Para ordenar debes iniciar sesión o crear tu cuenta en 10 segundos.");
+        alert("Inicia sesión o crea tu cuenta en 10 segundos para hacer un pedido.");
         window.location.href = '/login';
         return;
       }
 
-      const notes = prompt(`¿Qué detalles específicos necesitas para ${planTitle}? (Versión MC, qué comandos o funciones quieres):`);
+      const notes = prompt(`¿Qué necesitas para tu ${planTitle}? (Versión de MC, funciones, etc.):`);
       if (notes === null) return;
 
       try {
@@ -234,10 +229,9 @@
           },
           body: JSON.stringify({ planTitle, price, details: notes })
         });
-
         const data = await res.json();
         if (data.success) {
-          alert(`¡Pedido ${data.orderId} creado en la web con éxito! Te llevamos a tu sala de proyecto.`);
+          alert(`¡Pedido creado con éxito! Te llevamos a tu sala de proyecto.`);
           window.location.href = '/dashboard';
         } else {
           alert(data.error);
