@@ -12,5 +12,11 @@
       "binding": "SYNTHETIX_KV",
       "id": "f03b18c3a2cf444f97cac17eeb8ee4d8"
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "SYNTHETIX_BUCKET",
+      "bucket_name": "synthetix-vault"
+    }
   ]
 }

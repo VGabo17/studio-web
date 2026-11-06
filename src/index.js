@@ -31,6 +31,7 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const KV = env.SYNTHETIX_KV;
+    const R2 = env.SYNTHETIX_BUCKET;
 
     const json = (data, status = 200) => new Response(JSON.stringify(data), {
       status, headers: { "Content-Type": "application/json" }
@@ -55,92 +56,113 @@ export default {
     }
 
     // ------------------------------------------------------------------------
-    // RESOURCE VAULT MULTI-FORMATO (JAR, ZIP, SCHEM, YML)
+    // RESOURCE VAULT (INTEGRACIÓN R2 + KV)
     // ------------------------------------------------------------------------
     if (url.pathname === '/api/vault' && request.method === 'GET') {
       const resources = await KV.get("vault:resources") || "[]";
       return json({ success: true, resources: JSON.parse(resources) });
     }
 
-    // Descarga directa con control de permisos por Rol
+    // Descarga desde R2
     if (url.pathname === '/api/vault/download' && request.method === 'GET') {
       const id = url.searchParams.get("id");
-      if (!id) return new Response("ID faltante", { status: 400 });
+      if (!id) return new Response("ID requerido", { status: 400 });
 
       const resources = JSON.parse(await KV.get("vault:resources") || "[]");
       const item = resources.find(r => r.id === id);
       if (!item) return new Response("Recurso no encontrado", { status: 404 });
 
-      // Verificación de acceso VIP / Privado
+      // Verificación de acceso VIP
       if (item.accessTier === 'vip') {
         const user = await getSessionUser();
         const isVip = user && (user.role === 'VIP' || user.role === 'Client' || user.role === 'Dev' || user.role === 'Founder' || user.role === 'Admin');
         if (!isVip) {
-          return new Response("Acceso bloqueado: Este recurso es exclusivo para usuarios con rango VIP o Clientes.", { status: 403 });
+          return new Response("Acceso bloqueado: Exclusivo para usuarios VIP o Clientes.", { status: 403 });
         }
       }
 
-      const fileBuffer = await KV.get(`vault:file:${id}`, { type: "arrayBuffer" });
-      if (!fileBuffer) return new Response("Archivo no encontrado en la base de datos", { status: 404 });
-
       const ext = item.fileExtension || "zip";
       const filename = `${item.name.replace(/[^a-zA-Z0-9_-]/g, '_')}-v${item.version}.${ext}`;
-      
       let contentType = "application/octet-stream";
       if (ext === 'jar') contentType = "application/java-archive";
       if (ext === 'zip') contentType = "application/zip";
       if (ext === 'yml') contentType = "text/yaml";
 
-      return new Response(fileBuffer, {
-        headers: {
-          "Content-Type": contentType,
-          "Content-Disposition": `attachment; filename="${filename}"`
+      // Intentar obtener desde R2
+      if (R2) {
+        const r2Object = await R2.get(`files/${id}`);
+        if (r2Object) {
+          return new Response(r2Object.body, {
+            headers: {
+              "Content-Type": contentType,
+              "Content-Disposition": `attachment; filename="${filename}"`
+            }
+          });
         }
-      });
+      }
+
+      // Fallback a KV
+      const kvBuffer = await KV.get(`vault:file:${id}`, { type: "arrayBuffer" });
+      if (kvBuffer) {
+        return new Response(kvBuffer, {
+          headers: {
+            "Content-Type": contentType,
+            "Content-Disposition": `attachment; filename="${filename}"`
+          }
+        });
+      }
+
+      return new Response("Archivo no encontrado en almacenamiento", { status: 404 });
     }
 
-    // Subida Multi-formato (Solo Dev o Founder)
+    // Subida a R2 (Sin límite de tamaño)
     if (url.pathname === '/api/vault/upload' && request.method === 'POST') {
       const user = await getSessionUser();
       if (!user || (user.role !== 'Founder' && user.role !== 'Dev' && user.role !== 'Admin')) {
-        return json({ error: "Permiso denegado. Solo Staff puede subir recursos." }, 403);
+        return json({ error: "Permiso denegado." }, 403);
       }
 
       try {
         const formData = await request.formData();
         const file = formData.get("file");
         const name = formData.get("name");
-        const category = formData.get("category") || "Plugin"; // Plugin, Setup, Config, Mapa, Bot
-        const accessTier = formData.get("accessTier") || "free"; // free, vip, premium
+        const category = formData.get("category") || "Plugin";
+        const accessTier = formData.get("accessTier") || "free";
         const version = formData.get("version") || "1.0.0";
         const mcVersions = formData.get("mcVersions") || "1.16 - 1.21";
         const description = formData.get("description") || "";
-        const price = formData.get("price") || "Gratis";
 
         if (!file || typeof file === 'string' || !name) {
-          return json({ error: "Debes adjuntar un archivo válido y un título." }, 400);
+          return json({ error: "Debes adjuntar un archivo y un nombre." }, 400);
         }
 
         const ext = file.name.split('.').pop().toLowerCase();
         const resId = "RES-" + Math.floor(1000 + Math.random() * 9000);
         const arrayBuffer = await file.arrayBuffer();
 
-        // Almacenar archivo binario en KV
-        await KV.put(`vault:file:${resId}`, arrayBuffer);
+        // Guardar en R2 Bucket
+        if (R2) {
+          await R2.put(`files/${resId}`, arrayBuffer);
+        } else {
+          // Fallback a KV si R2 no está vinculado
+          await KV.put(`vault:file:${resId}`, arrayBuffer);
+        }
 
-        // Guardar metadata
+        // Guardar metadata en el índice
         const resources = JSON.parse(await KV.get("vault:resources") || "[]");
+        const sizeKb = file.size / 1024;
+        const formattedSize = sizeKb > 1024 ? `${(sizeKb / 1024).toFixed(1)} MB` : `${sizeKb.toFixed(1)} KB`;
+
         const newResource = {
           id: resId,
           name,
           category,
           accessTier,
-          price,
           version,
           mcVersions,
           description,
           fileExtension: ext,
-          fileSize: `${(file.size / 1024).toFixed(1)} KB`,
+          fileSize: formattedSize,
           author: user.username,
           createdAt: new Date().toLocaleDateString()
         };
@@ -150,7 +172,7 @@ export default {
 
         return json({ success: true, resource: newResource });
       } catch (err) {
-        return json({ error: "Error al procesar subida: " + err.message }, 500);
+        return json({ error: "Fallo al subir a R2: " + err.message }, 500);
       }
     }
 
@@ -158,11 +180,78 @@ export default {
       const user = await getSessionUser();
       if (!user || (user.role !== 'Founder' && user.role !== 'Admin')) return json({ error: "Denegado" }, 403);
       const { id } = await request.json();
+
+      if (R2) await R2.delete(`files/${id}`);
       await KV.delete(`vault:file:${id}`);
+
       const resources = JSON.parse(await KV.get("vault:resources") || "[]");
       const updated = resources.filter(r => r.id !== id);
       await KV.put("vault:resources", JSON.stringify(updated));
       return json({ success: true });
+    }
+
+    // ------------------------------------------------------------------------
+    // PERFIL & CAMBIO DE CONTRASEÑA
+    // ------------------------------------------------------------------------
+    // Cambiar contraseña por el propio usuario
+    if (url.pathname === '/api/profile/change-password' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user) return json({ error: "No autorizado" }, 401);
+
+      const { currentPassword, newPassword } = await request.json();
+      if (!currentPassword || !newPassword) return json({ error: "Completa ambos campos" }, 400);
+
+      const raw = await KV.get(`user:${user.email}`);
+      if (!raw) return json({ error: "Usuario no existe" }, 404);
+
+      const dbUser = JSON.parse(raw);
+      const valid = await verifyPassword(currentPassword, dbUser.passwordHash);
+      if (!valid) return json({ error: "La contraseña actual es incorrecta" }, 400);
+
+      dbUser.passwordHash = await hashPassword(newPassword);
+      await KV.put(`user:${user.email}`, JSON.stringify(dbUser));
+
+      return json({ success: true, message: "¡Contraseña actualizada con éxito!" });
+    }
+
+    // Actualizar datos del perfil (Minecraft Nick, Discord)
+    if (url.pathname === '/api/profile/update' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user) return json({ error: "No autorizado" }, 401);
+
+      const { mcNick, discord } = await request.json();
+      const raw = await KV.get(`user:${user.email}`);
+      if (!raw) return json({ error: "Usuario no existe" }, 404);
+
+      const dbUser = JSON.parse(raw);
+      dbUser.mcNick = (mcNick || "").trim();
+      dbUser.discord = (discord || "").trim();
+
+      await KV.put(`user:${user.email}`, JSON.stringify(dbUser));
+
+      // Actualizar sesión activa
+      const auth = request.headers.get("Authorization");
+      const token = auth.replace("Bearer ", "").trim();
+      const { passwordHash, ...safeUser } = dbUser;
+      await KV.put(`session:${token}`, JSON.stringify(safeUser), { expirationTtl: 604800 });
+
+      return json({ success: true, user: safeUser });
+    }
+
+    // Reset de contraseña por el Founder (Para usuarios que la olvidaron)
+    if (url.pathname === '/api/founder/reset-password' && request.method === 'POST') {
+      const user = await getSessionUser();
+      if (!user || user.role !== 'Founder') return json({ error: "Acceso denegado" }, 403);
+
+      const { email, tempPassword } = await request.json();
+      const raw = await KV.get(`user:${email}`);
+      if (!raw) return json({ error: "Usuario no encontrado" }, 404);
+
+      const target = JSON.parse(raw);
+      target.passwordHash = await hashPassword(tempPassword);
+      await KV.put(`user:${email}`, JSON.stringify(target));
+
+      return json({ success: true, message: `Contraseña restablecida a: ${tempPassword}` });
     }
 
     // ------------------------------------------------------------------------
@@ -185,7 +274,7 @@ export default {
         const passwordHash = await hashPassword(password);
         const userData = {
           id: crypto.randomUUID(), username, email: normEmail,
-          role, createdAt: new Date().toLocaleDateString()
+          role, mcNick: "", createdAt: new Date().toLocaleDateString()
         };
 
         await KV.put(`user:${normEmail}`, JSON.stringify({ ...userData, passwordHash }));
@@ -233,9 +322,7 @@ export default {
       return json({ success: true, user });
     }
 
-    // ------------------------------------------------------------------------
-    // PEDIDOS WEB DIRECTOS
-    // ------------------------------------------------------------------------
+    // PEDIDOS WEB
     if (url.pathname === '/api/orders/create' && request.method === 'POST') {
       const user = await getSessionUser();
       if (!user) return json({ error: "Inicia sesión para ordenar." }, 401);
@@ -255,7 +342,7 @@ export default {
         messages: [{
           sender: "Sistema",
           role: "Synthetix",
-          text: `⚡ Pedido para "${planTitle}" (${price}). Requerimientos: ${details || 'Sin especificaciones'}. Puedes coordinar aquí mismo con el staff.`,
+          text: `⚡ Pedido iniciado para "${planTitle}" (${price}). Notas: ${details || 'Sin notas'}. Chatea con el staff aquí mismo.`,
           time: now
         }]
       };
@@ -286,29 +373,6 @@ export default {
       const isStaff = (user.role === 'Founder' || user.role === 'Admin' || user.role === 'Soporte' || user.role === 'Dev');
       const filtered = isStaff ? index : index.filter(t => t.authorEmail === user.email);
       return json({ success: true, tickets: filtered });
-    }
-
-    if (url.pathname === '/api/tickets' && request.method === 'POST') {
-      const user = await getSessionUser();
-      if (!user) return json({ error: "No autorizado" }, 401);
-
-      const { title, category, message } = await request.json();
-      const ticketId = "TK-" + Math.floor(1000 + Math.random() * 9000);
-      const now = new Date().toLocaleString();
-
-      const ticketObject = {
-        id: ticketId, title, category,
-        author: user.username, authorEmail: user.email,
-        status: "Abierto", createdAt: now,
-        messages: [{ sender: user.username, role: user.role, text: message, time: now }]
-      };
-
-      await KV.put(`ticket:${ticketId}`, JSON.stringify(ticketObject));
-      const index = JSON.parse(await KV.get("tickets:index") || "[]");
-      index.unshift({ id: ticketId, title, category, author: user.username, authorEmail: user.email, status: "Abierto", createdAt: now });
-      await KV.put("tickets:index", JSON.stringify(index));
-
-      return json({ success: true, ticket: ticketObject });
     }
 
     if (url.pathname === '/api/tickets/reply' && request.method === 'POST') {
