@@ -34,8 +34,8 @@
       </a>
 
       <div class="flex items-center space-x-3">
-        <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-purple-500/60 text-purple-300">
-          <span id="roleDot" class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+        <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-fuchsia-500/60 text-fuchsia-300">
+          <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
           <span id="roleText">USUARIO</span>
         </div>
         <button onclick="logout()" class="p-2 rounded-xl bg-purple-950/50 hover:bg-rose-950/60 border border-purple-900/60 text-purple-300 hover:text-rose-300 transition" title="Cerrar Sesión">
@@ -47,7 +47,7 @@
 
   <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 space-y-6">
     
-    <!-- HEADER USUARIO -->
+    <!-- HEADER -->
     <div class="p-5 sm:p-7 rounded-3xl card-glass border border-purple-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div class="flex items-center space-x-4">
         <img id="userMcAvatar" src="https://mc-heads.net/avatar/steve/64" class="w-14 h-14 rounded-2xl border-2 border-purple-500/40 shadow-lg bg-black/60 object-cover">
@@ -60,7 +60,7 @@
           <h1 class="text-xl sm:text-3xl font-black text-white">
             Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">...</span> ⚡
           </h1>
-          <p id="roleDescription" class="text-purple-300/70 text-xs mt-0.5">Bienvenido a Synthetix Studio.</p>
+          <p id="roleDescription" class="text-purple-300/60 text-xs mt-0.5">Bienvenido a Synthetix Studio.</p>
         </div>
       </div>
 
@@ -69,14 +69,14 @@
           <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400"></i>
           <span>Dejar Reseña</span>
         </button>
-        <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-1.5 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30 transition">
+        <button onclick="openTicketModal()" class="inline-flex items-center justify-center space-x-1.5 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-purple-600/30">
           <i data-lucide="plus-circle" class="w-4 h-4"></i>
           <span>Nuevo Ticket</span>
         </button>
       </div>
     </div>
 
-    <!-- PESTAÑAS HORIZONTALES (PROTECCIÓN ESTRICTA DE R2 Y NEXUS) -->
+    <!-- PESTAÑAS HORIZONTALES CON ROLES PROTEGIDOS (R2 Y NEXUS OCULTOS POR DEFECTO) -->
     <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1 border-b border-purple-900/40">
       <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5 shadow-md shadow-purple-600/30">
         <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
@@ -86,25 +86,25 @@
         <i data-lucide="package" class="w-3.5 h-3.5 text-fuchsia-400"></i>
         <span>Resource Vault</span>
       </button>
-      <button onclick="setMainTab('projects')" id="tabBtnProjects" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/30 hover:text-white transition flex items-center space-x-1.5">
-        <i data-lucide="folder-git-2" class="w-3.5 h-3.5 text-cyan-400"></i>
-        <span>Mis Builds</span>
-      </button>
       <button onclick="setMainTab('licenses')" id="tabBtnLicenses" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
         <span>Mis Licencias (DRM)</span>
       </button>
+      <button onclick="setMainTab('projects')" id="tabBtnProjects" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
+        <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i>
+        <span>Mis Builds</span>
+      </button>
       <button onclick="setMainTab('profile')" id="tabBtnProfile" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
-        <i data-lucide="user-check" class="w-3.5 h-3.5 text-purple-400"></i>
+        <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
         <span>Mi Perfil & Clave</span>
       </button>
-      <!-- SOLO DEV / FOUNDER -->
-      <button onclick="setMainTab('dev')" id="tabBtnDev" style="display: none;" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1.5">
+      <!-- SOLO STAFF (DEV / FOUNDER / ADMIN) -->
+      <button onclick="setMainTab('dev')" id="tabBtnDev" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="upload" class="w-3.5 h-3.5"></i>
         <span>Subir a R2</span>
       </button>
       <!-- SOLO FOUNDER / ADMIN -->
-      <button onclick="setMainTab('founder')" id="tabBtnFounder" style="display: none;" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-amber-300 border border-amber-500/40 hover:text-white transition flex items-center space-x-1.5">
+      <button onclick="setMainTab('founder')" id="tabBtnFounder" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-fuchsia-300 border border-fuchsia-500/40 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-400"></i>
         <span>Founder Nexus</span>
       </button>
@@ -155,28 +155,7 @@
       </div>
     </div>
 
-    <!-- VISTA 3: MIS BUILDS (RECURSOS PAGADOS) -->
-    <div id="viewProjects" class="hidden space-y-4">
-      <div class="p-6 rounded-3xl card-glass border border-cyan-500/30 space-y-4">
-        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
-          <div class="flex items-center space-x-3">
-            <div class="p-2 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-cyan-400">
-              <i data-lucide="package-check" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h2 class="text-base font-bold text-white">Mis Proyectos & Builds Activos</h2>
-              <p class="text-[11px] text-cyan-300/70">Tus plugins entregados, setups personalizados y avances en vivo</p>
-            </div>
-          </div>
-          <button onclick="loadProjects()" class="text-xs text-cyan-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
-        </div>
-        <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
-          <p class="text-xs text-purple-400 text-center py-6 col-span-2">Cargando proyectos...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- VISTA 4: MIS LICENCIAS (CLIENTE DRM) -->
+    <!-- VISTA 3: MIS LICENCIAS (CLIENTE) -->
     <div id="viewLicenses" class="hidden space-y-6">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-6">
         <div class="flex items-center justify-between border-b border-purple-950 pb-4">
@@ -191,6 +170,22 @@
         </div>
         <div id="licensesContainer" class="space-y-3">
           <p class="text-xs text-purple-400 text-center py-4">No tienes licencias asignadas actualmente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA 4: MIS BUILDS (PROYECTOS DEL CLIENTE) -->
+    <div id="viewProjects" class="hidden space-y-4">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
+        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-white">Mis Proyectos & Builds Activos</h2>
+            <p class="text-[11px] text-purple-300/60">Avance en vivo y descargas asignadas a tu cuenta</p>
+          </div>
+          <button onclick="loadProjects()" class="text-xs text-purple-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
+        </div>
+        <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
+          <p class="text-xs text-purple-400 text-center py-6 col-span-2">Cargando proyectos...</p>
         </div>
       </div>
     </div>
@@ -233,7 +228,7 @@
       </div>
     </div>
 
-    <!-- VISTA 6: DEV STUDIO (SUBIDA A R2 - SOLO DEV / STAFF / FOUNDER) -->
+    <!-- VISTA 6: DEV STUDIO (SUBIDA A R2 - SOLO STAFF) -->
     <div id="viewDev" class="hidden space-y-4">
       <div class="p-6 sm:p-8 rounded-3xl card-glass border border-cyan-500/40 max-w-xl mx-auto space-y-4">
         <h3 class="font-bold text-white text-sm">Publicar en R2 Object Storage</h3>
@@ -264,6 +259,8 @@
 
     <!-- VISTA 7: FOUNDER NEXUS (SOLO FOUNDER/ADMIN) -->
     <div id="viewFounder" class="hidden space-y-6">
+      
+      <!-- KPI CARDS -->
       <div class="grid grid-cols-3 gap-3">
         <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Licencias DRM</span>
@@ -271,7 +268,7 @@
         </div>
         <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Proyectos</span>
-          <p id="kpiProjects" class="text-xl sm:text-2xl font-black text-cyan-400 mt-1">0</p>
+          <p id="kpiProjects" class="text-xl sm:text-2xl font-black text-fuchsia-400 mt-1">0</p>
         </div>
         <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
           <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Usuarios</span>
@@ -279,6 +276,7 @@
         </div>
       </div>
 
+      <!-- SUBPESTAÑAS -->
       <div class="grid grid-cols-3 gap-2.5 max-w-lg">
         <button onclick="setFounderSubTab('licenses')" id="fTabLicenses" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1 shadow-md">
           <i data-lucide="shield-alert" class="w-4 h-4"></i>
@@ -294,6 +292,7 @@
         </button>
       </div>
 
+      <!-- SECCIÓN DRM -->
       <div id="fSecLicenses" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-4">
         <div class="flex items-center justify-between border-b border-purple-950 pb-3">
           <div>
@@ -307,18 +306,20 @@
         </div>
       </div>
 
+      <!-- SECCIÓN ASIGNAR PROYECTO -->
       <div id="fSecAssign" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl space-y-3">
         <h3 class="font-bold text-white text-sm">Asignar Proyecto / Build a Cliente</h3>
         <p class="text-[11px] text-purple-300/60">Introduce el correo exacto del cliente para que le aparezca en su pestaña "Mis Builds".</p>
         <form id="createProjectForm" class="space-y-3">
           <input type="text" id="pTitle" required placeholder="Nombre del proyecto (Ej: Setup BoxPvP)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="email" id="pClientEmail" required placeholder="Correo del cliente (exacto)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <input type="number" id="pProgress" min="0" max="100" value="100" placeholder="Progreso % (100 = Listo)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <input type="number" id="pProgress" min="0" max="100" value="25" placeholder="Progreso %" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga directo (opcional)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <button type="submit" id="btnSaveProject" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-2.5 rounded-xl transition shadow-md shadow-purple-600/30">Guardar Proyecto</button>
         </form>
       </div>
 
+      <!-- SECCIÓN USUARIOS -->
       <div id="fSecUsers" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
         <h3 class="font-bold text-white text-sm">Gestión de Usuarios & Rangos</h3>
         <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="usersTableBody" class="divide-y divide-purple-950"></tbody></table></div>
@@ -436,35 +437,12 @@
       loadProjects();
     }
 
-    const ROLE_MAP = {
-      user:    { label: 'USER',    level: 1, badge: 'border-purple-500/50 text-purple-300', dot: 'bg-purple-400', desc: 'Acceso estándar • Abre tickets y explora recursos gratuitos del Vault.' },
-      client:  { label: 'CLIENT',  level: 2, badge: 'border-cyan-500/50 text-cyan-300',     dot: 'bg-cyan-400',   desc: 'Cliente Oficial • Acceso a descargas pagadas y entregas en Mis Builds.' },
-      vip:     { label: 'VIP',     level: 3, badge: 'border-fuchsia-500/60 text-fuchsia-300', dot: 'bg-fuchsia-400', desc: 'Rango VIP • Descargas libres de recursos exclusivos del Resource Vault.' },
-      staff:   { label: 'STAFF',   level: 4, badge: 'border-emerald-500/50 text-emerald-300', dot: 'bg-emerald-400', desc: 'Equipo de Soporte • Gestión y moderación de tickets de usuarios.' },
-      dev:     { label: 'DEV',     level: 5, badge: 'border-sky-500/50 text-sky-300',         dot: 'bg-sky-400',     desc: 'Desarrollador Oficial • Publicación en Cloudflare R2 y Builds.' },
-      founder: { label: 'FOUNDER', level: 6, badge: 'border-amber-500/60 text-amber-300',     dot: 'bg-amber-400',   desc: 'Founder Nexus • Control maestro de licencias, builds, usuarios y roles.' },
-      admin:   { label: 'FOUNDER', level: 6, badge: 'border-amber-500/60 text-amber-300',     dot: 'bg-amber-400',   desc: 'Founder Nexus • Control maestro de licencias, builds, usuarios y roles.' }
-    };
-
-    function getUserRoleConfig(role) {
-      const key = (role || 'user').toLowerCase();
-      return ROLE_MAP[key] || ROLE_MAP['user'];
-    }
-
     function renderUser(user) {
       if (!user.username) return;
       document.getElementById('usernameDisplay').innerText = user.username;
-      
-      const roleCfg = getUserRoleConfig(user.role);
-      document.getElementById('roleText').innerText = roleCfg.label;
-      document.getElementById('welcomeRole').innerText = roleCfg.label;
-      document.getElementById('roleDescription').innerText = roleCfg.desc;
-      
-      const roleBadge = document.getElementById('roleBadge');
-      const roleDot = document.getElementById('roleDot');
-      if (roleBadge) roleBadge.className = `inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border ${roleCfg.badge}`;
-      if (roleDot) roleDot.className = `w-2 h-2 rounded-full ${roleCfg.dot} animate-pulse`;
-
+      const uRole = (user.role || 'USER').toUpperCase();
+      document.getElementById('roleText').innerText = uRole;
+      document.getElementById('welcomeRole').innerText = uRole;
       document.getElementById('profileUsername').innerText = user.username;
       document.getElementById('profileEmail').innerText = user.email || '';
 
@@ -475,34 +453,46 @@
         document.getElementById('profilePreviewHead').src = avatarUrl;
       }
 
-      // BLOQUEO ESTRICTO POR ROL
-      const lvl = roleCfg.level;
+      const roleLower = (user.role || '').toLowerCase();
+      const isStaff = (roleLower === 'founder' || roleLower === 'admin' || roleLower === 'dev');
+      const isFounder = (roleLower === 'founder' || roleLower === 'admin');
+
+      // VISIBILIDAD ESTRICTA POR ROL (A LOS USUARIOS / VIP / CLIENT SE LES OCULTA)
       const btnDev = document.getElementById('tabBtnDev');
       const btnFounder = document.getElementById('tabBtnFounder');
 
-      if (lvl >= 5) {
+      if (isStaff) {
         btnDev.classList.remove('hidden');
-        btnDev.style.display = 'inline-flex';
       } else {
         btnDev.classList.add('hidden');
-        btnDev.style.display = 'none';
       }
 
-      if (lvl >= 6) {
+      if (isFounder) {
         btnFounder.classList.remove('hidden');
-        btnFounder.style.display = 'inline-flex';
       } else {
         btnFounder.classList.add('hidden');
-        btnFounder.style.display = 'none';
+      }
+
+      const desc = document.getElementById('roleDescription');
+      if (isFounder) {
+        desc.innerText = "Acceso Total • Control de Infraestructura R2, Licencias y Proyectos";
+      } else if (roleLower === 'dev') {
+        desc.innerText = "Espacio Dev • Publicación de Recursos R2 y Builds";
+      } else if (roleLower === 'vip' || roleLower === 'client') {
+        desc.innerText = "Acceso VIP • Descarga libre de recursos exclusivos del Vault";
+      } else {
+        desc.innerText = "Panel de Cliente • Descargas del Vault y Monitoreo de Builds";
       }
     }
 
     function setMainTab(tab) {
-      const roleCfg = getUserRoleConfig(currentUser.role);
-      const lvl = roleCfg.level;
+      const roleLower = (currentUser.role || '').toLowerCase();
+      const isStaff = (roleLower === 'founder' || roleLower === 'admin' || roleLower === 'dev');
+      const isFounder = (roleLower === 'founder' || roleLower === 'admin');
 
-      if (tab === 'dev' && lvl < 5) tab = 'tickets';
-      if (tab === 'founder' && lvl < 6) tab = 'tickets';
+      // Protección de navegación
+      if (tab === 'dev' && !isStaff) tab = 'tickets';
+      if (tab === 'founder' && !isFounder) tab = 'tickets';
 
       ['tickets', 'vault', 'licenses', 'projects', 'profile', 'dev', 'founder'].forEach(t => {
         const v = document.getElementById(`view${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -519,107 +509,8 @@
       });
 
       if (tab === 'licenses') loadLicenses();
-      if (tab === 'projects') loadProjects();
       if (tab === 'founder') { loadFounderUsers(); loadFounderLicenses(); }
       lucide.createIcons();
-    }
-
-    // --- PROYECTOS / MIS BUILDS (RECURSOS PAGADOS) ---
-    async function loadProjects() {
-      const container = document.getElementById('projectsContainer');
-      try {
-        const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-        const projs = data.projects || [];
-
-        const kpi = document.getElementById('kpiProjects');
-        if (kpi) kpi.innerText = projs.length;
-
-        if (projs.length > 0) {
-          container.innerHTML = projs.map(p => {
-            const isReady = (p.progress >= 100);
-            return `
-              <div class="p-4 sm:p-5 rounded-2xl bg-black/50 border ${isReady ? 'border-cyan-500/40 shadow-lg shadow-cyan-950/20' : 'border-purple-900/50'} space-y-3 flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-xs font-mono font-bold text-cyan-400">${p.id || 'BUILD'}</span>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${isReady ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40' : 'bg-purple-950 text-purple-300 border border-purple-800'}">
-                      ${isReady ? '✓ Entregado' : `${p.progress}% En Desarrollo`}
-                    </span>
-                  </div>
-                  <h4 class="text-sm font-bold text-white">${p.title}</h4>
-                  <div class="w-full bg-purple-950/60 rounded-full h-1.5 border border-purple-900 mt-2.5">
-                    <div class="bg-gradient-to-r from-cyan-500 to-purple-500 h-1.5 rounded-full transition-all duration-500" style="width: ${p.progress}%"></div>
-                  </div>
-                </div>
-
-                <div class="pt-2.5 border-t border-purple-950/60 flex items-center justify-between">
-                  <span class="text-[10px] text-purple-400/60">${p.createdAt || 'Recurso Oficial'}</span>
-                  ${p.downloadUrl ? `
-                    <a href="${p.downloadUrl}" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-black font-bold text-xs flex items-center space-x-1.5 transition shadow-md shadow-cyan-600/30">
-                      <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                      <span>Descargar Build</span>
-                    </a>
-                  ` : `
-                    <span class="text-[11px] text-purple-400 font-mono italic">Compilando archivos...</span>
-                  `}
-                </div>
-              </div>
-            `;
-          }).join('');
-        } else {
-          container.innerHTML = `
-            <div class="col-span-2 text-center py-8 bg-black/40 border border-purple-900/30 rounded-2xl p-6 space-y-2">
-              <i data-lucide="box" class="w-7 h-7 text-cyan-400/50 mx-auto"></i>
-              <p class="text-xs text-purple-300">No tienes builds o recursos pagos asignados todavía.</p>
-              <button onclick="openTicketModal()" class="px-3.5 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-xs hover:bg-purple-500 transition">
-                Cotizar un Proyecto
-              </button>
-            </div>
-          `;
-        }
-        lucide.createIcons();
-      } catch (e) {
-        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-2">No tienes proyectos o builds activos por el momento.</p>';
-      }
-    }
-
-    // --- FORMULARIO ASIGNAR PROYECTO (FOUNDER) ---
-    const cpForm = document.getElementById('createProjectForm');
-    if (cpForm) {
-      cpForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = document.getElementById('btnSaveProject');
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Guardando...";
-
-        try {
-          const res = await fetch('/api/founder/project-create', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              title: document.getElementById('pTitle').value.trim(),
-              clientEmail: document.getElementById('pClientEmail').value.trim(),
-              progress: document.getElementById('pProgress').value,
-              downloadUrl: document.getElementById('pDownloadUrl').value.trim()
-            })
-          });
-          const d = await res.json();
-          if (d.success) {
-            alert("¡Proyecto asignado al cliente con éxito!");
-            cpForm.reset();
-            loadProjects();
-            setMainTab('projects');
-          } else {
-            alert(d.error || "Error al crear proyecto");
-          }
-        } catch(e) {
-          alert("Error de conexión");
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerText = "Guardar Proyecto";
-        }
-      });
     }
 
     // --- TICKETS ---
@@ -652,10 +543,8 @@
       if (currentFilter !== 'all') filtered = filtered.filter(t => t.status === currentFilter);
       if (search) filtered = filtered.filter(t => t.id.toLowerCase().includes(search) || t.title.toLowerCase().includes(search));
 
-      const roleCfg = getUserRoleConfig(currentUser.role);
-      const isFounder = (roleCfg.level >= 6);
-
       if (filtered.length > 0) {
+        const isFounder = (currentUser.role || '').toLowerCase() === 'founder';
         container.innerHTML = filtered.map(t => `
           <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left relative group">
             <div class="flex items-center justify-between mb-1">
@@ -686,8 +575,7 @@
         const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         const t = data.ticket;
-        const roleCfg = getUserRoleConfig(currentUser.role);
-        const isStaff = (roleCfg.level >= 4);
+        const isStaff = ((currentUser.role || '').toLowerCase() === 'founder' || currentUser.role === 'Admin' || currentUser.role === 'Soporte');
 
         detail.innerHTML = `
           <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
@@ -858,9 +746,8 @@
 
     function renderVault() {
       const container = document.getElementById('vaultContainer');
-      const roleCfg = getUserRoleConfig(currentUser.role);
-      const isStaff = (roleCfg.level >= 4);
-      const isVip = (roleCfg.level >= 2);
+      const isStaff = ((currentUser.role || '').toLowerCase() === 'founder' || currentUser.role === 'Admin');
+      const isVip = (currentUser.role === 'VIP' || currentUser.role === 'Client' || isStaff);
 
       if (allVaultItems.length > 0) {
         container.innerHTML = allVaultItems.map(r => {
@@ -953,7 +840,7 @@
       loadVault();
     }
 
-    // --- DRM LICENCIAS ---
+    // --- DRM LICENCIAS (CLIENTE Y FOUNDER) ---
     async function loadLicenses() {
       const c = document.getElementById('licensesContainer');
       try {
@@ -1017,7 +904,7 @@
           `).join('');
           lucide.createIcons();
         } else if (fList) {
-          fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún.</p>';
+          fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún. Pulsa "+ Crear Licencia" para emitir una.</p>';
         }
       } catch(e) {
         if (fList) fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún.</p>';
@@ -1071,8 +958,12 @@
         if (d.success) {
           loadFounderLicenses();
           loadLicenses();
+        } else {
+          alert("Error: " + (d.error || "No se pudo cambiar el estado"));
         }
-      } catch(e) {}
+      } catch(e) {
+        alert("Error de conexión al cambiar estado");
+      }
     }
 
     async function deleteLicense(key) {
@@ -1087,11 +978,86 @@
         if (d.success) {
           loadFounderLicenses();
           loadLicenses();
+        } else {
+          alert("Error al eliminar");
         }
-      } catch(e) {}
+      } catch(e) {
+        alert("Error de conexión");
+      }
     }
 
-    // --- USUARIOS Y ROLES (FOUNDER NEXUS) ---
+    // --- PROYECTOS / BUILDS ---
+    const cpForm = document.getElementById('createProjectForm');
+    if (cpForm) {
+      cpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('btnSaveProject');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Guardando...";
+
+        try {
+          const res = await fetch('/api/founder/project-create', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: document.getElementById('pTitle').value.trim(),
+              clientEmail: document.getElementById('pClientEmail').value.trim(),
+              progress: document.getElementById('pProgress').value,
+              downloadUrl: document.getElementById('pDownloadUrl').value.trim()
+            })
+          });
+          const d = await res.json();
+          if (d.success) {
+            alert("¡Proyecto asignado al cliente con éxito!");
+            cpForm.reset();
+            loadProjects();
+            setMainTab('projects');
+          } else {
+            alert(d.error || "Error al crear proyecto");
+          }
+        } catch(e) {
+          alert("Error de conexión");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Guardar Proyecto";
+        }
+      });
+    }
+
+    async function loadProjects() {
+      const container = document.getElementById('projectsContainer');
+      try {
+        const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        const projs = data.projects || [];
+
+        const kpi = document.getElementById('kpiProjects');
+        if (kpi) kpi.innerText = projs.length;
+
+        if (projs.length > 0) {
+          container.innerHTML = projs.map(p => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/50 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
+                <span class="text-xs font-bold text-purple-300">${p.progress}%</span>
+              </div>
+              <h4 class="text-sm font-bold text-white">${p.title}</h4>
+              <div class="w-full bg-purple-950/60 rounded-full h-1.5 border border-purple-900">
+                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-1.5 rounded-full" style="width: ${p.progress}%"></div>
+              </div>
+              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-1"><i data-lucide="download" class="w-3 h-3"></i><span>Descargar Build</span></a>` : ''}
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-2">No tienes proyectos o builds activos por el momento.</p>';
+        }
+        lucide.createIcons();
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-2">No tienes proyectos o builds activos por el momento.</p>';
+      }
+    }
+
+    // --- USUARIOS Y ROLES ---
     async function loadFounderUsers() {
       const tbody = document.getElementById('usersTableBody');
       try {
@@ -1103,36 +1069,31 @@
         if (kpi) kpi.innerText = users.length;
 
         if (users.length > 0) {
-          tbody.innerHTML = users.map(u => {
-            const roleCfg = getUserRoleConfig(u.role);
-            return `
-              <tr class="border-b border-purple-950">
-                <td class="p-2.5 font-semibold text-white flex items-center space-x-2">
-                  <img src="https://mc-heads.net/avatar/${u.mcNick || 'steve'}/24" class="w-6 h-6 rounded-md border border-purple-900 bg-black/50">
-                  <span>${u.username}</span>
-                </td>
-                <td class="p-2.5 text-purple-300 font-mono text-[11px]">${u.email}</td>
-                <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[9px] font-mono border font-bold uppercase ${roleCfg.badge}">${roleCfg.label}</span></td>
-                <td class="p-2.5">
-                  <select onchange="changeRole('${u.email}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
-                    <option value="" disabled selected>Cambiar...</option>
-                    <option value="user">User</option>
-                    <option value="client">Client</option>
-                    <option value="vip">VIP</option>
-                    <option value="staff">Staff</option>
-                    <option value="dev">Dev</option>
-                    <option value="founder">Founder</option>
-                  </select>
-                </td>
-              </tr>
-            `;
-          }).join('');
+          tbody.innerHTML = users.map(u => `
+            <tr class="border-b border-purple-950">
+              <td class="p-2.5 font-semibold text-white flex items-center space-x-2">
+                <img src="https://mc-heads.net/avatar/${u.mcNick || 'steve'}/24" class="w-6 h-6 rounded-md border border-purple-900 bg-black/50">
+                <span>${u.username}</span>
+              </td>
+              <td class="p-2.5 text-purple-300 font-mono text-[11px]">${u.email}</td>
+              <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-900 text-purple-200 uppercase font-bold">${u.role}</span></td>
+              <td class="p-2.5">
+                <select onchange="changeRole('${u.email}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
+                  <option value="" disabled selected>Cambiar...</option>
+                  <option value="VIP">VIP</option>
+                  <option value="Client">Client</option>
+                  <option value="Dev">Dev</option>
+                  <option value="Founder">Founder</option>
+                </select>
+              </td>
+            </tr>
+          `).join('');
         }
       } catch(e) {}
     }
 
     async function changeRole(email, newRole) {
-      if(!confirm("¿Cambiar rol de " + email + " a " + newRole.toUpperCase() + "?")) return;
+      if(!confirm("¿Cambiar rol de " + email + " a " + newRole + "?")) return;
       await fetch('/api/founder/set-role', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
