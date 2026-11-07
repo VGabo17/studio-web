@@ -36,13 +36,13 @@
 
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="/" class="text-white font-bold">Inicio</a>
+        <a href="#calculator" class="hover:text-purple-300 transition">Calculadora ⚡</a>
         <a href="#pricing" class="hover:text-purple-300 transition">Tarifas</a>
         <a href="#reviews" class="hover:text-purple-300 transition">Reseñas ⭐</a>
-        <a href="/services" class="hover:text-purple-300 transition">Servicios</a>
         <a href="/vault" class="hover:text-purple-300 transition">Vault</a>
       </div>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
+      <div class="flex items-center space-x-3">
         <a href="/dashboard" id="desktopPortalBtn" class="hidden sm:inline-block px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
           Portal Clientes
         </a>
@@ -70,9 +70,9 @@
 
       <div class="py-6 space-y-2">
         <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs"><i data-lucide="home" class="w-4 h-4 text-purple-400"></i><span>Inicio</span></a>
+        <a href="#calculator" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="calculator" class="w-4 h-4 text-fuchsia-400"></i><span>Calculadora de Precios</span></a>
         <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas Oficiales</span></a>
         <a href="#reviews" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="star" class="w-4 h-4 text-amber-400"></i><span>Reseñas de Clientes</span></a>
-        <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i><span>Servicios</span></a>
         <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><div class="flex items-center space-x-3"><i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span></div><span class="text-[9px] font-mono bg-purple-950 text-fuchsia-300 border border-fuchsia-500/40 px-1.5 py-0.5 rounded">CATÁLOGO</span></a>
         <a href="/terms" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i><span>Términos del Servicio</span></a>
       </div>
@@ -85,117 +85,103 @@
     </div>
   </aside>
 
-  <!-- HERO COMPACTO Y ADAPTABLE -->
-  <header class="max-w-5xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-12 text-center">
-    <div class="inline-flex items-center space-x-2 px-3 sm:px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-[10px] sm:text-xs font-mono mb-5">
+  <!-- HERO -->
+  <header class="max-w-5xl mx-auto px-6 pt-20 pb-12 text-center">
+    <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-      <span>PLATAFORMA PWA & MARKETPLACE MINECRAFT</span>
+      <span>PLATAFORMA PWA & CALCULADORA EN VIVO</span>
     </div>
     
-    <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white mb-4 leading-tight">
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6">
       Infraestructuras de Élite <br>
       <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Sin Caídas ni Lag</span>
     </h1>
 
-    <p class="text-purple-200/70 text-xs sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed font-light px-2">
-      Setups de servidores completos, plugins Java de alto rendimiento con licencias Anti-Leak y Resource Vault en R2. Todo gestionado directamente en la web.
+    <p class="text-purple-200/70 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+      Calcula tu presupuesto al instante, abre tu sala de proyecto privada y descarga tus archivos directamente en tu cuenta.
     </p>
 
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 px-4">
-      <a href="#pricing" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-7 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/30 text-xs sm:text-sm text-center">
-        Ver Tarifas ($5 - $35)
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#calculator" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
+        Usar Calculadora ⚡
       </a>
-      <a href="/vault" class="w-full sm:w-auto border border-purple-800 hover:border-purple-600 bg-purple-950/30 text-purple-200 font-medium px-7 py-3.5 rounded-xl transition text-xs sm:text-sm text-center">
+      <a href="/vault" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
         Explorar Vault
       </a>
     </div>
   </header>
 
-  <!-- BENCHMARKS EN CAJAS INDEPENDIENTES (2X2 EN MÓVILES) -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
-        <p class="text-xl sm:text-3xl font-black text-emerald-400">20.0 TPS</p>
-        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Rendimiento</span>
+  <!-- CALCULADORA INTERACTIVA DE PRECIOS (IDEA A) -->
+  <section id="calculator" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <div class="p-6 sm:p-10 rounded-3xl card-glass border border-fuchsia-500/40 shadow-2xl space-y-6">
+      <div class="text-center">
+        <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Cotizador Dinámico</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Calcula tu Proyecto al Instante</h2>
+        <p class="text-purple-300/70 text-xs sm:text-sm mt-1">Selecciona los componentes que requiere tu servidor.</p>
       </div>
-      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
-        <p class="text-xl sm:text-3xl font-black text-white">Java 21</p>
-        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Folia / Purpur</span>
-      </div>
-      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
-        <p class="text-xl sm:text-3xl font-black text-fuchsia-400">0% Leaks</p>
-        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Memoria Limpia</span>
-      </div>
-      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
-        <p class="text-xl sm:text-3xl font-black text-white">99.99%</p>
-        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Uptime Red</span>
+
+      <div class="grid md:grid-cols-2 gap-6 pt-4">
+        <!-- Opciones -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-mono uppercase text-purple-300 mb-1.5">Tipo de Servicio Base</label>
+            <select id="calcService" onchange="calculatePrice()" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-3 text-xs text-white">
+              <option value="5">Plugin Básico / Fix Java ($5 USD)</option>
+              <option value="10">Bot de Discord Completo ($10 USD)</option>
+              <option value="20" selected>Modalidad Completa MC ($20 USD)</option>
+              <option value="35">Network Velocity Setup ($35 USD)</option>
+            </select>
+          </div>
+
+          <div class="space-y-2.5 pt-2">
+            <label class="block text-xs font-mono uppercase text-purple-300">Complementos Opcionales</label>
+            <label class="flex items-center justify-between p-3 rounded-xl bg-purple-950/20 border border-purple-900/40 cursor-pointer">
+              <span class="text-xs text-white">Sincronización con Base de Datos MySQL/Redis</span>
+              <input type="checkbox" value="10" onchange="calculatePrice()" class="calc-addon w-4 h-4 accent-purple-500 rounded">
+            </label>
+            <label class="flex items-center justify-between p-3 rounded-xl bg-purple-950/20 border border-purple-900/40 cursor-pointer">
+              <span class="text-xs text-white">Entrega Urgentes en 24 Horas (+50%)</span>
+              <input type="checkbox" id="calcUrgent" onchange="calculatePrice()" class="w-4 h-4 accent-purple-500 rounded">
+            </label>
+          </div>
+        </div>
+
+        <!-- Resultado y Cupones (Idea C) -->
+        <div class="p-6 rounded-2xl bg-black/50 border border-purple-900 flex flex-col justify-between space-y-4">
+          <div>
+            <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Presupuesto Estimado</span>
+            <div class="flex items-baseline space-x-2 my-2">
+              <span id="calcTotal" class="text-4xl font-black text-fuchsia-400">$20.00</span>
+              <span class="text-xs text-purple-400 font-mono">USD</span>
+            </div>
+            <p id="calcDesc" class="text-[11px] text-purple-300/60">Incluye soporte técnico y código optimizado a 20 TPS.</p>
+          </div>
+
+          <!-- Aplicar Cupón -->
+          <div class="space-y-2 pt-2 border-t border-purple-950">
+            <div class="flex gap-2">
+              <input type="text" id="couponInput" placeholder="Código de Cupón" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs uppercase text-white placeholder-purple-400/40">
+              <button type="button" onclick="applyCoupon()" class="px-4 py-2 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-bold border border-purple-800">Aplicar</button>
+            </div>
+            <p id="couponStatus" class="text-[11px] font-medium hidden"></p>
+          </div>
+
+          <button onclick="orderFromCalculator()" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold py-3 rounded-xl text-xs shadow-lg shadow-purple-600/30 transition">
+            Iniciar Proyecto con este Presupuesto ⚡
+          </button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TARIFAS -->
-  <section id="pricing" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-    <div class="text-center mb-10 px-2">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Precios Transparentes</span>
-      <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Tarifas del Estudio</h2>
-      <p class="text-purple-300/60 text-xs sm:text-sm mt-1.5">Planes accesibles para proyectos de cualquier escala.</p>
+  <!-- RESЕÑAS -->
+  <section id="reviews" class="max-w-6xl mx-auto px-6 py-16">
+    <div class="text-center mb-10">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Opiniones Reales</span>
+      <h2 class="text-3xl font-black text-white mt-1">Reseñas Verificadas</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Valoraciones públicas dejadas por clientes reales.</p>
     </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-      
-      <div class="p-5 sm:p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
-        <div>
-          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-1.5">Desarrollo Java</span>
-          <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Plugin Básico</h3>
-          <p class="text-[11px] text-purple-300/60 mb-3">Comandos, eventos o fixes simples</p>
-          <div class="flex items-baseline space-x-1 mb-4"><span class="text-2xl sm:text-3xl font-black text-white">$5</span><span class="text-[11px] text-purple-400 font-mono">USD</span></div>
-        </div>
-        <button onclick="orderPlan('Plugin Básico Java', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($5)</button>
-      </div>
-
-      <div class="p-5 sm:p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
-        <div>
-          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-1.5">Discord.js</span>
-          <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Bot de Discord</h3>
-          <p class="text-[11px] text-purple-300/60 mb-3">Tickets, verificación y embeds</p>
-          <div class="flex items-baseline space-x-1 mb-4"><span class="text-2xl sm:text-3xl font-black text-white">$10</span><span class="text-[11px] text-purple-400 font-mono">USD</span></div>
-        </div>
-        <button onclick="orderPlan('Bot de Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($10)</button>
-      </div>
-
-      <div class="p-5 sm:p-6 rounded-3xl card-glass border-2 border-fuchsia-500/60 flex flex-col justify-between relative shadow-xl shadow-purple-900/40">
-        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-[9px] font-bold uppercase tracking-wider text-white px-3 py-0.5 rounded-full">Más Vendido</span>
-        <div>
-          <span class="text-[10px] font-mono text-fuchsia-400 uppercase tracking-wider block mb-1.5">Setup Completo</span>
-          <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Modalidad MC</h3>
-          <p class="text-[11px] text-purple-300/60 mb-3">Survival, BoxPvP, Skyblock</p>
-          <div class="flex items-baseline space-x-1 mb-4"><span class="text-2xl sm:text-3xl font-black text-fuchsia-400">$20</span><span class="text-[11px] text-purple-400 font-mono">USD</span></div>
-        </div>
-        <button onclick="orderPlan('Modalidad Completa MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">Ordenar ($20)</button>
-      </div>
-
-      <div class="p-5 sm:p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
-        <div>
-          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-1.5">Redes Masivas</span>
-          <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Network Setup</h3>
-          <p class="text-[11px] text-purple-300/60 mb-3">Velocity Proxy y sincronización</p>
-          <div class="flex items-baseline space-x-1 mb-4"><span class="text-2xl sm:text-3xl font-black text-white">$35</span><span class="text-[11px] text-purple-400 font-mono">USD</span></div>
-        </div>
-        <button onclick="orderPlan('Network Velocity Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($35)</button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- RESEÑAS VERIFICADAS ⭐⭐⭐⭐⭐ -->
-  <section id="reviews" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-    <div class="text-center mb-10 px-2">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Opiniones Reales</span>
-      <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Reseñas Verificadas</h2>
-      <p class="text-purple-300/60 text-xs sm:text-sm mt-1.5">Valoraciones públicas dejadas por dueños de servidores y clientes.</p>
-    </div>
-
-    <div id="publicReviewsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+    <div id="publicReviewsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 text-center py-10 col-span-3">
         <p class="text-xs text-purple-400">Cargando valoraciones...</p>
       </div>
@@ -204,7 +190,7 @@
 
   <!-- FOOTER -->
   <footer class="border-t border-purple-950/60 py-8 text-center text-xs text-purple-300/40">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 gap-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-6 gap-4">
       <p>© Synthetix Studio. Todos los derechos reservados.</p>
       <div class="flex space-x-6">
         <a href="/services" class="hover:text-purple-300">Servicios</a>
@@ -217,46 +203,100 @@
 
   <script>
     lucide.createIcons();
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
-    }
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
 
     const overlay = document.getElementById('drawerOverlay');
     const drawer = document.getElementById('sidebarDrawer');
     function openSidebar() { overlay.classList.remove('hidden'); setTimeout(() => overlay.classList.remove('opacity-0'), 10); drawer.classList.remove('translate-x-full'); }
     function closeSidebar() { overlay.classList.add('opacity-0'); drawer.classList.add('translate-x-full'); setTimeout(() => overlay.classList.add('hidden'), 300); }
-
     document.getElementById('openSidebarBtn').addEventListener('click', openSidebar);
     document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
 
-    const token = localStorage.getItem('synthetix_token');
-    const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
+    let currentCalculatedPrice = 20;
+    let appliedDiscountPercent = 0;
+    let verifiedCouponCode = "";
 
-    if (token && user.username) {
-      const desktopBtn = document.getElementById('desktopPortalBtn');
-      if (desktopBtn) {
-        desktopBtn.innerText = `${user.username} (${user.role})`;
-        desktopBtn.className = "hidden sm:inline-block px-3.5 py-1.5 rounded-xl bg-purple-900/60 border border-fuchsia-500/50 text-xs font-bold text-fuchsia-300";
+    function calculatePrice() {
+      let base = parseFloat(document.getElementById('calcService').value) || 0;
+      let addons = 0;
+      document.querySelectorAll('.calc-addon:checked').forEach(cb => { addons += parseFloat(cb.value) || 0; });
+
+      let subtotal = base + addons;
+      if (document.getElementById('calcUrgent').checked) {
+        subtotal = subtotal * 1.5; // +50% urgencia
       }
 
-      document.getElementById('sidebarUserSlot').innerHTML = `
-        <div class="p-3.5 rounded-2xl bg-black/60 border border-purple-900/60 flex items-center justify-between mb-2">
-          <div>
-            <p class="text-xs font-bold text-white">${user.username}</p>
-            <span class="text-[10px] font-mono text-fuchsia-400 uppercase font-bold">${user.role}</span>
-          </div>
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        </div>
-        <a href="/dashboard" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition">
-          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-          <span>Entrar a mi Dashboard</span>
-        </a>
-      `;
-      lucide.createIcons();
+      if (appliedDiscountPercent > 0) {
+        subtotal = subtotal * (1 - appliedDiscountPercent / 100);
+      }
+
+      currentCalculatedPrice = subtotal;
+      document.getElementById('calcTotal').innerText = `$${subtotal.toFixed(2)}`;
     }
 
+    async function applyCoupon() {
+      const code = document.getElementById('couponInput').value.trim();
+      const status = document.getElementById('couponStatus');
+      if (!code) return;
+
+      try {
+        const res = await fetch('/api/coupons/validate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+        const data = await res.json();
+        if (data.valid) {
+          appliedDiscountPercent = data.discountPercent;
+          verifiedCouponCode = data.code;
+          status.innerText = `¡Cupón aplicado con éxito! (${data.discountPercent}% OFF)`;
+          status.className = "text-[11px] text-emerald-400 font-semibold block";
+          status.classList.remove('hidden');
+          calculatePrice();
+        } else {
+          status.innerText = data.error || "Cupón no válido";
+          status.className = "text-[11px] text-rose-400 font-semibold block";
+          status.classList.remove('hidden');
+        }
+      } catch (e) {
+        alert("Error al validar cupón");
+      }
+    }
+
+    async function orderFromCalculator() {
+      const token = localStorage.getItem('synthetix_token');
+      if (!token) {
+        alert("Inicia sesión o regístrate para abrir tu sala de proyecto.");
+        window.location.href = '/login';
+        return;
+      }
+
+      const serviceSelect = document.getElementById('calcService');
+      const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
+      const priceStr = `$${currentCalculatedPrice.toFixed(2)} USD`;
+      const notes = prompt(`Añade notas o especificaciones para tu pedido (${serviceName}):`, "Quiero configurarlo para la versión 1.20.4");
+      if (notes === null) return;
+
+      try {
+        const res = await fetch('/api/orders/create', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ planTitle: serviceName, price: priceStr, details: notes, couponCode: verifiedCouponCode })
+        });
+        const d = await res.json();
+        if (d.success) {
+          alert(`¡Pedido creado con éxito! Te llevamos a tu panel de control.`);
+          window.location.href = '/dashboard';
+        } else {
+          alert(d.error);
+        }
+      } catch (e) {
+        alert("Error de conexión");
+      }
+    }
+
+    // Cargar Reseñas
     async function loadPublicReviews() {
       const container = document.getElementById('publicReviewsContainer');
       try {
@@ -290,33 +330,6 @@
       } catch (e) {}
     }
     loadPublicReviews();
-
-    async function orderPlan(planTitle, price) {
-      if (!token) {
-        alert("Inicia sesión o crea tu cuenta en 10 segundos para hacer un pedido.");
-        window.location.href = '/login';
-        return;
-      }
-      const notes = prompt(`¿Qué necesitas para tu ${planTitle}?:`);
-      if (notes === null) return;
-
-      try {
-        const res = await fetch('/api/orders/create', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ planTitle, price, details: notes })
-        });
-        const data = await res.json();
-        if (data.success) {
-          alert(`¡Pedido creado con éxito!`);
-          window.location.href = '/dashboard';
-        } else {
-          alert(data.error);
-        }
-      } catch (e) {
-        alert("Error de conexión");
-      }
-    }
   </script>
 </body>
 </html>
