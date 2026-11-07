@@ -14,7 +14,7 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-16">
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-20">
 
   <!-- NAVBAR -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
@@ -140,8 +140,15 @@
     <!-- VISTA 2: RESOURCE VAULT -->
     <div id="viewVault" class="hidden space-y-4">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <h2 class="text-base font-bold text-white border-b border-purple-950 pb-3">Resource Vault (R2 Storage)</h2>
-        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><p class="text-xs text-purple-400">Cargando...</p></div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-purple-950 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-white">Synthetix Resource Vault</h2>
+            <p class="text-[11px] text-purple-300/60">Alojamiento masivo con tecnología Cloudflare R2</p>
+          </div>
+        </div>
+        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <p class="text-xs text-purple-400 py-6">Cargando catálogo...</p>
+        </div>
       </div>
     </div>
 
@@ -164,7 +171,7 @@
       </div>
     </div>
 
-    <!-- VISTA 5: MI PERFIL Y CAMBIO DE CONTRASEÑA -->
+    <!-- VISTA 5: PERFIL -->
     <div id="viewProfile" class="hidden space-y-6">
       <div class="grid md:grid-cols-3 gap-6">
         <div class="p-6 rounded-3xl card-glass border border-purple-900/60 text-center flex flex-col items-center">
