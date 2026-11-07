@@ -60,7 +60,7 @@
           <h1 class="text-xl sm:text-3xl font-black text-white">
             Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Admin</span> ⚡
           </h1>
-          <p id="roleDescription" class="text-purple-300/60 text-xs mt-0.5">Control total del sistema y gestión de infraestructura.</p>
+          <p id="roleDescription" class="text-purple-300/60 text-xs mt-0.5">Control total del sistema, tickets y gestión de infraestructura.</p>
         </div>
       </div>
 
@@ -96,7 +96,7 @@
       </button>
       <button onclick="setMainTab('profile')" id="tabBtnProfile" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
-        <span>Mi Perfil</span>
+        <span>Mi Perfil & Seguridad</span>
       </button>
       <button onclick="setMainTab('dev')" id="tabBtnDev" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="upload" class="w-3.5 h-3.5"></i>
@@ -140,15 +140,8 @@
     <!-- VISTA 2: RESOURCE VAULT -->
     <div id="viewVault" class="hidden space-y-4">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-purple-950 pb-3">
-          <div>
-            <h2 class="text-base font-bold text-white">Synthetix Resource Vault</h2>
-            <p class="text-[11px] text-purple-300/60">Alojamiento masivo con tecnología Cloudflare R2</p>
-          </div>
-        </div>
-        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <p class="text-xs text-purple-400 py-6">Cargando catálogo...</p>
-        </div>
+        <h2 class="text-base font-bold text-white border-b border-purple-950 pb-3">Resource Vault (R2 Storage)</h2>
+        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><p class="text-xs text-purple-400">Cargando...</p></div>
       </div>
     </div>
 
@@ -171,20 +164,28 @@
       </div>
     </div>
 
-    <!-- VISTA 5: PERFIL -->
+    <!-- VISTA 5: MI PERFIL Y CAMBIO DE CONTRASEÑA -->
     <div id="viewProfile" class="hidden space-y-6">
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-3xl card-glass border border-purple-900/40 text-center flex flex-col items-center">
+        <div class="p-6 rounded-3xl card-glass border border-purple-900/60 text-center flex flex-col items-center">
           <img id="profilePreviewHead" src="https://mc-heads.net/avatar/steve/100" class="w-24 h-24 rounded-2xl border-2 border-fuchsia-500/50 shadow-xl bg-black/60 object-cover">
           <h3 id="profileUsername" class="text-lg font-bold text-white mt-3">...</h3>
           <p id="profileEmail" class="text-xs text-purple-400 font-mono">...</p>
         </div>
         <div class="md:col-span-2 space-y-6">
-          <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-3">
+          <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
             <h4 class="text-sm font-bold text-white">Vincular Cuenta de Minecraft</h4>
             <form id="mcNickForm" class="flex gap-2">
               <input type="text" id="mcNickInput" placeholder="Ej: iShadowz" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-              <button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">Guardar</button>
+              <button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">Guardar Nick</button>
+            </form>
+          </div>
+          <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
+            <h4 class="text-sm font-bold text-white">Seguridad: Cambiar Contraseña</h4>
+            <form id="changePasswordForm" class="space-y-3">
+              <input type="password" id="currentPass" required placeholder="Contraseña actual" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="password" id="newPass" required placeholder="Nueva contraseña segura" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 font-bold text-xs text-white">Actualizar Contraseña</button>
             </form>
           </div>
         </div>
@@ -336,6 +337,7 @@
       lucide.createIcons();
     }
 
+    // --- TICKETS ---
     async function loadTickets() {
       const container = document.getElementById('ticketsContainer');
       try {
@@ -414,7 +416,6 @@
         } else {
           replyArea.innerHTML = `
             <form onsubmit="sendReply(event)" class="flex gap-2 items-center">
-              <label class="p-2 rounded-xl bg-purple-950 text-purple-300 cursor-pointer"><i data-lucide="image" class="w-4 h-4"></i><input type="file" id="chatFile" accept="image/*" class="hidden" onchange="selectedChatFile=this.files[0]; alert('Imagen adjuntada');"></label>
               <input type="text" id="replyText" required placeholder="Escribe tu mensaje..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
               <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Enviar</button>
             </form>
