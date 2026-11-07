@@ -169,17 +169,20 @@
           </button>
         </div>
         <div id="licensesContainer" class="space-y-3">
-          <p class="text-xs text-purple-400 py-4">Cargando licencias...</p>
+          <p class="text-xs text-purple-400 text-center py-4">No tienes licencias asignadas actualmente.</p>
         </div>
       </div>
     </div>
 
-    <!-- VISTA 4: MIS BUILDS -->
+    <!-- VISTA 4: MIS BUILDS (CON BOTONES DE DESCARGA Y ELIMINACIÓN) -->
     <div id="viewProjects" class="hidden space-y-4">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <div class="border-b border-purple-950 pb-3">
-          <h2 class="text-base font-bold text-white">Mis Proyectos & Builds Activos</h2>
-          <p class="text-[11px] text-purple-300/60">Avance en vivo y descargas asignadas a tu cuenta</p>
+        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-white">Mis Proyectos & Builds Activos</h2>
+            <p class="text-[11px] text-purple-300/60">Avance en vivo y descargas asignadas a tu cuenta</p>
+          </div>
+          <button onclick="loadProjects()" class="text-xs text-purple-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
         </div>
         <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
           <p class="text-xs text-purple-400 text-center py-6 col-span-2">Cargando proyectos...</p>
@@ -250,7 +253,7 @@
       </div>
 
       <div id="fSecLicenses" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <div class="flex items-center justify-between border-b border-purple-950 pb-3"><h3 class="font-bold text-white text-sm">Control de Licencias</h3><button onclick="openCreateLicenseModal()" class="px-3 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-xs">+ Crear</button></div>
+        <div class="flex items-center justify-between border-b border-purple-950 pb-3"><h3 class="font-bold text-white text-sm">Control de Licencias</h3><button onclick="openCreateLicenseModal()" class="px-3.5 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-xs">+ Crear</button></div>
         <div id="founderLicensesList" class="space-y-2">Cargando...</div>
       </div>
 
@@ -322,10 +325,10 @@
     let currentUser = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
     let allLoadedTickets = [], allVaultItems = [], currentFilter = 'all', activeTicketId = null, selectedChatFile = null;
 
-    if (!token) { window.location.href = '/login'; }
-    else {
+    if (!token || !currentUser.username) {
+      window.location.href = '/login';
+    } else {
       renderUser(currentUser);
-      validateSession();
       loadTickets();
       loadVault();
       loadLicenses();
@@ -343,8 +346,9 @@
 
       if (user.mcNick) {
         document.getElementById('mcNickInput').value = user.mcNick;
-        document.getElementById('userMcAvatar').src = `https://mc-heads.net/avatar/${user.mcNick}/100`;
-        document.getElementById('profilePreviewHead').src = `https://mc-heads.net/avatar/${user.mcNick}/100`;
+        const avatarUrl = `https://mc-heads.net/avatar/${user.mcNick}/100`;
+        document.getElementById('userMcAvatar').src = avatarUrl;
+        document.getElementById('profilePreviewHead').src = avatarUrl;
       }
 
       // PERMISOS ESTRICTOS DE R2 Y FOUNDER
@@ -405,19 +409,6 @@
       lucide.createIcons();
     }
 
-    async function validateSession() {
-      try {
-        const res = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (res.status === 401) { return; } // No forzar logout si falla temporalmente la red
-        const data = await res.json();
-        if (data.success) {
-          currentUser = data.user;
-          localStorage.setItem('synthetix_user', JSON.stringify(currentUser));
-          renderUser(currentUser);
-        }
-      } catch (e) {}
-    }
-
     // --- TICKETS ---
     async function loadTickets() {
       const container = document.getElementById('ticketsContainer');
@@ -451,7 +442,7 @@
               <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
               <div class="flex items-center space-x-1.5">
                 <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
-                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" class="text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" class="text-rose-400 hover:text-white p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
               </div>
             </div>
             <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
@@ -474,8 +465,7 @@
         const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         const t = data.ticket;
-        const roleLower = (currentUser.role || '').toLowerCase();
-        const isStaff = (roleLower === 'founder' || roleLower === 'admin' || roleLower === 'soporte');
+        const isStaff = ((currentUser.role || '').toLowerCase() === 'founder' || currentUser.role === 'admin' || currentUser.role === 'soporte');
 
         detail.innerHTML = `
           <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
@@ -487,6 +477,7 @@
               <div class="p-3 rounded-2xl ${(m.role || '').toLowerCase()==='founder'?'bg-purple-950/40 border border-fuchsia-500/30 ml-4':'bg-black/50 border border-purple-950 mr-4'}">
                 <p class="text-[10px] font-bold text-white">${m.sender} <span class="text-[9px] text-purple-400">(${m.role})</span></p>
                 <p class="text-xs text-purple-100 mt-1">${m.text}</p>
+                ${m.attachmentUrl ? `<img src="${m.attachmentUrl}" class="rounded-xl max-h-48 mt-2 cursor-pointer" onclick="window.open('${m.attachmentUrl}', '_blank')">` : ''}
               </div>
             `).join('')}
           </div>
@@ -568,7 +559,7 @@
       if (d.success) { alert("¡Subido!"); loadVault(); setMainTab('vault'); }
     });
 
-    // --- LICENCIAS Y PROYECTOS ---
+    // --- LICENCIAS Y PROYECTOS (CON DESCARGA DE BUILDS Y ELIMINACIÓN DE PROYECTOS) ---
     async function loadLicenses() {
       const c = document.getElementById('licensesContainer');
       try {
@@ -612,24 +603,53 @@
       try {
         const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        if (data.projects && data.projects.length > 0) {
-          container.innerHTML = data.projects.map(p => `<div class="p-4 bg-black/40 border border-purple-900 rounded-xl text-xs"><b>${p.title}</b> - ${p.progress}%</div>`).join('');
+        const projs = data.projects || [];
+        const isStaff = ((currentUser.role || '').toLowerCase() === 'founder' || (currentUser.role || '').toLowerCase() === 'admin' || (currentUser.role || '').toLowerCase() === 'dev');
+
+        if (projs.length > 0) {
+          container.innerHTML = projs.map(p => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/50 space-y-2.5 relative group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-bold text-purple-300">${p.progress}%</span>
+                  ${isStaff ? `<button onclick="deleteProject('${p.id}')" title="Eliminar proyecto" class="text-rose-400 hover:text-white p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                </div>
+              </div>
+              <h4 class="text-sm font-bold text-white">${p.title}</h4>
+              <div class="w-full bg-purple-950/60 rounded-full h-1.5 border border-purple-900">
+                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-1.5 rounded-full" style="width: ${p.progress}%"></div>
+              </div>
+              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-1 bg-fuchsia-950/50 border border-fuchsia-500/30 px-3 py-1.5 rounded-xl"><i data-lucide="download" class="w-3.5 h-3.5"></i><span>Descargar Build / Archivos</span></a>` : ''}
+            </div>
+          `).join('');
         } else {
           container.innerHTML = '<p class="text-xs text-purple-400 text-center py-4 col-span-2">No hay proyectos activos.</p>';
         }
+        lucide.createIcons();
       } catch (e) {}
+    }
+
+    async function deleteProject(projectId) {
+      if (!confirm("¿Eliminar este proyecto definitivamente?")) return;
+      await fetch('/api/founder/project-delete', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projectId })
+      });
+      loadProjects();
     }
 
     async function deleteLicense(key) {
       if (!confirm("¿Eliminar licencia?")) return;
       await fetch('/api/founder/licenses/delete', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ key }) });
-      loadFounderLicenses(); loadLicenses();
+      loadLicenses();
     }
 
     document.getElementById('createLicenseForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       await fetch('/api/founder/licenses/create', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ clientEmail: document.getElementById('licEmail').value, resourceName: document.getElementById('licPlugin').value }) });
-      closeCreateLicenseModal(); loadFounderLicenses(); loadLicenses();
+      closeCreateLicenseModal(); loadLicenses();
     });
 
     async function loadFounderUsers() {
