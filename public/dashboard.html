@@ -108,7 +108,7 @@
       </button>
     </div>
 
-    <!-- VISTA 1: TICKETS CON CHAT Y CAPTURAS -->
+    <!-- VISTA 1: TICKETS -->
     <div id="viewTickets" class="grid lg:grid-cols-3 gap-5">
       <div class="lg:col-span-1 p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
         <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
@@ -122,7 +122,7 @@
           <button onclick="setTicketFilter('Cerrado')" id="fltClosed" class="flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white">Cerrados</button>
         </div>
         <div id="ticketsContainer" class="space-y-2 max-h-[400px] overflow-y-auto pr-1">
-          <p class="text-xs text-purple-400 text-center py-4">Cargando tickets...</p>
+          <p class="text-xs text-purple-400 text-center py-4">No hay tickets activos.</p>
         </div>
       </div>
 
@@ -148,7 +148,7 @@
           <button onclick="loadVault()" class="text-xs text-purple-400 hover:text-white"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i></button>
         </div>
         <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <p class="text-xs text-purple-400 py-6">Cargando catálogo...</p>
+          <p class="text-xs text-purple-400 py-6">No hay recursos disponibles en el Vault.</p>
         </div>
       </div>
     </div>
@@ -167,7 +167,7 @@
           </button>
         </div>
         <div id="licensesContainer" class="space-y-3">
-          <p class="text-xs text-purple-400 py-4">Cargando licencias...</p>
+          <p class="text-xs text-purple-400 text-center py-4">No tienes licencias asignadas actualmente.</p>
         </div>
       </div>
     </div>
@@ -180,7 +180,7 @@
           <p class="text-[11px] text-purple-300/60">Avance en vivo y descargas de tus pedidos</p>
         </div>
         <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
-          <p class="text-xs text-purple-400 py-6">Cargando proyectos...</p>
+          <p class="text-xs text-purple-400 text-center py-4">No hay proyectos activos.</p>
         </div>
       </div>
     </div>
@@ -191,8 +191,8 @@
         <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-4 text-center flex flex-col items-center">
           <img id="profilePreviewHead" src="https://mc-heads.net/avatar/steve/100" class="w-24 h-24 rounded-2xl border-2 border-fuchsia-500/50 shadow-xl bg-black/60 object-cover">
           <div>
-            <h3 id="profileUsername" class="text-lg font-bold text-white">...</h3>
-            <p id="profileEmail" class="text-xs text-purple-400/70 font-mono">...</p>
+            <h3 id="profileUsername" class="text-lg font-bold text-white mt-3">...</h3>
+            <p id="profileEmail" class="text-xs text-purple-400 font-mono">...</p>
           </div>
         </div>
 
@@ -202,7 +202,6 @@
               <i data-lucide="gamepad-2" class="w-4 h-4 text-fuchsia-400"></i>
               <span>Vincular Cuenta de Minecraft</span>
             </h4>
-            <p class="text-xs text-purple-300/60">Introduce tu nick de Minecraft para renderizar tu skin 3D.</p>
             <form id="mcNickForm" class="flex gap-2">
               <input type="text" id="mcNickInput" placeholder="Ej: iShadowz" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
               <button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs">Guardar Nick</button>
@@ -231,14 +230,11 @@
         <form id="vaultUploadForm" class="space-y-3">
           <input type="text" id="vName" required placeholder="Título del Recurso" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <select id="vCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-            <option value="Plugin">Plugin Spigot/Paper (.jar)</option>
-            <option value="Setup">Setup Completo Servidor (.zip)</option>
-            <option value="Config">Config / Pack (.zip, .yml)</option>
-            <option value="Mapa">Mapa / Schematic (.schem)</option>
+            <option value="Plugin">Plugin (.jar)</option><option value="Setup">Setup (.zip)</option><option value="Mapa">Mapa (.schem)</option>
           </select>
           <input type="file" id="vFile" required class="text-xs text-purple-400">
           <textarea id="vDesc" rows="2" placeholder="Notas..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-          <button type="submit" id="vUploadBtn" class="w-full bg-cyan-600 font-bold text-xs text-black py-2.5 rounded-xl">Publicar</button>
+          <button type="submit" id="vUploadBtn" class="w-full bg-cyan-600 font-bold text-xs text-black py-2.5 rounded-xl">Publicar en R2</button>
         </form>
       </div>
     </div>
@@ -251,14 +247,18 @@
         <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs">Usuarios & Roles</button>
       </div>
 
+      <!-- SECCIÓN DRM -->
       <div id="fSecLicenses" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-4">
         <div class="flex items-center justify-between border-b border-purple-950 pb-3">
           <h3 class="font-bold text-white text-sm">Control Central de Licencias Anti-Leak</h3>
           <button onclick="openCreateLicenseModal()" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold">+ Crear Licencia</button>
         </div>
-        <div id="founderLicensesList" class="space-y-2">Cargando licencias...</div>
+        <div id="founderLicensesList" class="space-y-2">
+          <p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún.</p>
+        </div>
       </div>
 
+      <!-- SECCIÓN CREAR PROYECTO -->
       <div id="fSecAssign" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl space-y-3">
         <h3 class="font-bold text-white text-sm">Asignar Proyecto a Cliente</h3>
         <form id="createProjectForm" class="space-y-3">
@@ -266,70 +266,101 @@
           <input type="email" id="pClientEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="number" id="pProgress" min="0" max="100" value="25" placeholder="Progreso %" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga directo (opcional)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-2.5 rounded-xl">Guardar Proyecto</button>
+          <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-2.5 rounded-xl transition shadow-md shadow-purple-600/30">Guardar Proyecto</button>
         </form>
       </div>
 
+      <!-- SECCIÓN USUARIOS -->
       <div id="fSecUsers" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
-        <h3 class="font-bold text-white text-sm">Usuarios & Roles</h3>
+        <h3 class="font-bold text-white text-sm">Usuarios & Gestión de Roles</h3>
         <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="usersTableBody" class="divide-y divide-purple-950"></tbody></table></div>
       </div>
     </div>
 
   </main>
 
-  <!-- MODALES LIMPIOS -->
-  <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="max-w-md w-full card-glass rounded-3xl p-5 border border-purple-500/40 shadow-2xl">
-      <div class="flex items-center justify-between mb-3"><h3 class="text-base font-bold text-white">Nuevo Ticket</h3><button onclick="closeTicketModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-      <form id="ticketForm" class="space-y-3">
-        <input type="text" id="tTitle" required placeholder="Título" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"><option value="Plugins Paper/Spigot">Plugins</option><option value="Setup Servidor">Setup</option></select>
-        <textarea id="tMessage" rows="3" required placeholder="Describe qué necesitas..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl text-xs">Crear</button>
-      </form>
-    </div>
-  </div>
-
+  <!-- MODAL: DEJAR RESEÑA -->
   <div id="reviewModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between"><h3 class="text-base font-bold text-white">Dejar Reseña</h3><button onclick="closeReviewModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Dejar Reseña Verificada</h3>
+        <button onclick="closeReviewModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
       <form id="reviewForm" class="space-y-3">
-        <select id="revStars" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"><option value="5">⭐⭐⭐⭐⭐ 5 Estrellas</option></select>
+        <select id="revStars" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <option value="5">⭐⭐⭐⭐⭐ 5 Estrellas</option>
+          <option value="4">⭐⭐⭐⭐ 4 Estrellas</option>
+          <option value="3">⭐⭐⭐ 3 Estrellas</option>
+        </select>
         <input type="text" id="revService" required placeholder="Servicio valorado" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
         <textarea id="revComment" rows="3" required placeholder="Tu experiencia..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl text-xs">Publicar</button>
+        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-xs">Publicar Reseña</button>
       </form>
     </div>
   </div>
 
+  <!-- MODAL: CREAR LICENCIA DRM -->
   <div id="createLicenseModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between"><h3 class="text-base font-bold text-white">Crear Licencia DRM</h3><button onclick="closeCreateLicenseModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Generar Licencia Anti-Leak</h3>
+        <button onclick="closeCreateLicenseModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
       <form id="createLicenseForm" class="space-y-3">
         <input type="email" id="licEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
         <input type="text" id="licPlugin" required placeholder="Nombre del plugin" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs">Generar Clave</button>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs">Generar Clave Única</button>
       </form>
     </div>
   </div>
 
+  <!-- MODAL: CÓDIGO JAVA DRM -->
   <div id="javaSnippetModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between"><h3 class="text-sm font-bold text-white">Código Java DRM</h3><button onclick="closeJavaSnippetModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-      <pre class="bg-black/90 p-4 rounded-xl text-[11px] text-purple-300 overflow-x-auto">public boolean verifyLicense(String key) {
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-white">Código Java DRM</h3>
+        <button onclick="closeJavaSnippetModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <p class="text-xs text-purple-300/70">Pega este método en el `onEnable()` de tu plugin Java:</p>
+      <div class="bg-black/90 p-4 rounded-xl border border-purple-950 font-mono text-[11px] text-purple-300 overflow-x-auto leading-relaxed">
+        <pre>public boolean verifyLicense(String key) {
     try {
         URL u = new URL("https://test.synthetixhost.lol/api/license/verify?key=" + key);
         HttpURLConnection c = (HttpURLConnection) u.openConnection();
         c.setRequestMethod("GET");
+        c.setConnectTimeout(4000);
         return c.getResponseCode() == 200;
     } catch(Exception e) { return false; }
 }</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TICKET -->
+  <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full card-glass rounded-3xl p-5 border border-purple-500/40 shadow-2xl">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-base font-bold text-white">Nuevo Ticket de Soporte</h3>
+        <button onclick="closeTicketModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <form id="ticketForm" class="space-y-3">
+        <input type="text" id="tTitle" required placeholder="Título del requerimiento" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <option value="Plugins Paper/Spigot">Plugins Paper/Spigot</option>
+          <option value="Setup Servidor">Setup Completo Servidor</option>
+          <option value="Configuración">Configuración / Pack</option>
+          <option value="Bot de Discord">Bot de Discord</option>
+        </select>
+        <textarea id="tMessage" rows="3" required placeholder="Describe qué necesitas..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl text-xs">Crear Ticket</button>
+      </form>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
+
+    // LEER DATOS DIRECTOS
     const token = localStorage.getItem('synthetix_token');
     let currentUser = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
     let allLoadedTickets = [], allVaultItems = [], currentFilter = 'all', activeTicketId = null, selectedChatFile = null;
@@ -354,8 +385,9 @@
 
       if (user.mcNick) {
         document.getElementById('mcNickInput').value = user.mcNick;
-        document.getElementById('userMcAvatar').src = `https://mc-heads.net/avatar/${user.mcNick}/100`;
-        document.getElementById('profilePreviewHead').src = `https://mc-heads.net/avatar/${user.mcNick}/100`;
+        const avatarUrl = `https://mc-heads.net/avatar/${user.mcNick}/100`;
+        document.getElementById('userMcAvatar').src = avatarUrl;
+        document.getElementById('profilePreviewHead').src = avatarUrl;
       }
 
       if (user.role === 'Founder') {
@@ -388,14 +420,20 @@
       const container = document.getElementById('ticketsContainer');
       try {
         const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) throw new Error();
         const data = await res.json();
         allLoadedTickets = data.tickets || [];
         renderTicketsList();
-      } catch (e) { container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>'; }
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay tickets activos.</p>';
+      }
     }
 
     function setTicketFilter(filter) {
       currentFilter = filter;
+      document.getElementById('fltAll').className = filter === 'all' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300";
+      document.getElementById('fltOpen').className = filter === 'Abierto' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300";
+      document.getElementById('fltClosed').className = filter === 'Cerrado' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300";
       renderTicketsList();
     }
 
@@ -416,7 +454,7 @@
               <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
               <div class="flex items-center space-x-1.5">
                 <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
-                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" class="text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" class="text-rose-400 hover:text-white p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
               </div>
             </div>
             <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
@@ -434,7 +472,7 @@
       selectedChatFile = null;
       const detail = document.getElementById('ticketDetailContent');
       const replyArea = document.getElementById('replyArea');
-      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando conversación...</p>';
+      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando...</p>';
 
       try {
         const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -500,7 +538,7 @@
       if (d.success) { closeTicketModal(); loadTickets(); selectTicket(d.ticket.id); }
     });
 
-    // --- VAULT ---
+    // --- RESOURCE VAULT ---
     async function loadVault() {
       const container = document.getElementById('vaultContainer');
       try {
@@ -517,58 +555,49 @@
       } catch (e) {}
     }
 
-    document.getElementById('vaultUploadForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const fd = new FormData();
-      fd.append("file", document.getElementById('vFile').files[0]);
-      fd.append("name", document.getElementById('vName').value);
-      fd.append("category", document.getElementById('vCategory').value);
-      fd.append("accessTier", "free");
-      fd.append("version", "1.0.0");
-      fd.append("mcVersions", "1.20");
-      fd.append("description", document.getElementById('vDesc').value);
-
-      const res = await fetch('/api/vault/upload', { method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: fd });
-      const d = await res.json();
-      if (d.success) { alert("¡Subido con éxito!"); loadVault(); setMainTab('vault'); }
-    });
-
     // --- LICENCIAS Y PROYECTOS (FOUNDER) ---
     async function loadLicenses() {
       const c = document.getElementById('licensesContainer');
       try {
         const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) throw new Error();
         const data = await res.json();
         if (data.licenses && data.licenses.length > 0) {
           c.innerHTML = data.licenses.map(l => `<div class="p-3 bg-black/40 border border-purple-900 rounded-xl text-xs flex justify-between"><span><b>${l.key}</b> (${l.resourceName})</span><span class="text-emerald-400">${l.status}</span></div>`).join('');
         } else {
-          c.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No tienes licencias activas actualmente.</p>';
+          c.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No tienes licencias asignadas actualmente.</p>';
         }
         lucide.createIcons();
-      } catch (e) {}
+      } catch (e) {
+        c.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No tienes licencias asignadas actualmente.</p>';
+      }
     }
 
     async function loadFounderLicenses() {
       const fList = document.getElementById('founderLicensesList');
       try {
         const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) throw new Error();
         const data = await res.json();
-        if (data.licenses && data.licenses.length > 0) {
-          fList.innerHTML = data.licenses.map(l => `<div class="p-3 bg-black/40 border border-purple-900 rounded-xl text-xs flex justify-between items-center"><span><b>${l.key}</b> - ${l.clientEmail} (${l.status})</span><button onclick="deleteLicense('${l.key}')" class="text-rose-400 underline p-1">Eliminar</button></div>`).join('');
-        } else {
-          fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas.</p>';
+        if (data.licenses && data.licenses.length > 0 && fList) {
+          fList.innerHTML = data.licenses.map(l => `<div class="p-3 bg-black/40 border border-purple-900 rounded-xl text-xs flex justify-between items-center"><span><b>${l.key}</b> - ${l.clientEmail} (${l.status})</span><button onclick="deleteLicense('${l.key}')" class="text-rose-400 hover:text-white underline p-1">Eliminar</button></div>`).join('');
+          lucide.createIcons();
+        } else if (fList) {
+          fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún.</p>';
         }
-        lucide.createIcons();
-      } catch(e) {}
+      } catch(e) {
+        if (fList) fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún.</p>';
+      }
     }
 
+    // FORMULARIO CREAR PROYECTO
     const cpForm = document.getElementById('createProjectForm');
     if (cpForm) {
       cpForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const res = await fetch('/api/founder/project-create', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ title: document.getElementById('pTitle').value, clientEmail: document.getElementById('pClientEmail').value, progress: document.getElementById('pProgress').value, downloadUrl: document.getElementById('pDownloadUrl').value }) });
         const d = await res.json();
-        if (d.success) { alert("¡Proyecto creado!"); cpForm.reset(); loadProjects(); setMainTab('projects'); }
+        if (d.success) { alert("¡Proyecto asignado con éxito!"); cpForm.reset(); loadProjects(); setMainTab('projects'); }
       });
     }
 
@@ -580,8 +609,9 @@
         if (data.projects && data.projects.length > 0) {
           container.innerHTML = data.projects.map(p => `<div class="p-4 bg-black/40 border border-purple-900 rounded-xl text-xs"><b>${p.title}</b> - ${p.progress}%</div>`).join('');
         } else {
-          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay proyectos activos.</p>';
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-4 col-span-2">No hay proyectos activos.</p>';
         }
+        lucide.createIcons();
       } catch (e) {}
     }
 
@@ -592,6 +622,7 @@
       loadLicenses();
     }
 
+    // FORMULARIO CREAR LICENCIA
     const cLicForm = document.getElementById('createLicenseForm');
     if (cLicForm) {
       cLicForm.addEventListener('submit', async (e) => {
@@ -607,7 +638,7 @@
       try {
         const res = await fetch('/api/founder/users', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        if (data.users && data.users.length > 0) {
+        if (data.users) {
           tbody.innerHTML = data.users.map(u => `<tr class="border-b border-purple-950"><td class="p-2">${u.username}</td><td class="p-2">${u.email}</td><td class="p-2">${u.role}</td><td class="p-2"><select onchange="changeRole('${u.email}', this.value)" class="bg-black text-xs text-white p-1 rounded"><option value="" disabled selected>Rol...</option><option value="VIP">VIP</option><option value="Client">Client</option><option value="Dev">Dev</option><option value="Founder">Founder</option></select></td></tr>`).join('');
         }
       } catch(e) {}
@@ -640,7 +671,6 @@
       const res = await fetch('/api/profile/change-password', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: document.getElementById('currentPass').value, newPassword: document.getElementById('newPass').value }) });
       const d = await res.json();
       alert(d.message || d.error);
-      if (d.success) document.getElementById('changePasswordForm').reset();
     });
 
     document.getElementById('reviewForm').addEventListener('submit', async (e) => {

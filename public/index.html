@@ -167,7 +167,7 @@
     document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
 
-    // RECONOCIMIENTO DIRECTO DE SESIÓN SIN LOGOUT AUTOMÁTICO
+    // RECONOCIMIENTO PERMANENTE DE SESIÓN EN PORTADA
     const token = localStorage.getItem('synthetix_token');
     const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
 
