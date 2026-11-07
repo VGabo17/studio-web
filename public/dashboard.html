@@ -16,7 +16,7 @@
 </head>
 <body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-20">
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR UNIFORME -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <a href="/" class="group flex items-center space-x-2.5 transition">
@@ -76,7 +76,7 @@
       </div>
     </div>
 
-    <!-- PESTAÑAS HORIZONTALES -->
+    <!-- PESTAÑAS HORIZONTALES LIMPIAS -->
     <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1 border-b border-purple-900/40">
       <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5 shadow-md shadow-purple-600/30">
         <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
@@ -88,7 +88,7 @@
       </button>
       <button onclick="setMainTab('licenses')" id="tabBtnLicenses" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-        <span>Mis Licencias (DRM)</span>
+        <span>Licencias (DRM)</span>
       </button>
       <button onclick="setMainTab('projects')" id="tabBtnProjects" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i>
@@ -96,7 +96,7 @@
       </button>
       <button onclick="setMainTab('profile')" id="tabBtnProfile" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
-        <span>Mi Perfil & Seguridad</span>
+        <span>Mi Perfil</span>
       </button>
       <button onclick="setMainTab('dev')" id="tabBtnDev" class="hidden whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-cyan-300 border border-cyan-500/40 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="upload" class="w-3.5 h-3.5"></i>
@@ -140,15 +140,8 @@
     <!-- VISTA 2: RESOURCE VAULT -->
     <div id="viewVault" class="hidden space-y-4">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-purple-950 pb-3">
-          <div>
-            <h2 class="text-base font-bold text-white">Synthetix Resource Vault</h2>
-            <p class="text-[11px] text-purple-300/60">Alojamiento masivo con tecnología Cloudflare R2</p>
-          </div>
-        </div>
-        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <p class="text-xs text-purple-400 py-6">Cargando catálogo...</p>
-        </div>
+        <h2 class="text-base font-bold text-white border-b border-purple-950 pb-3">Resource Vault (Cloudflare R2)</h2>
+        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><p class="text-xs text-purple-400">Cargando...</p></div>
       </div>
     </div>
 
@@ -559,13 +552,6 @@
       loadFounderUsers();
     }
 
-    function setFounderSubTab(sub) {
-      document.getElementById('fSecLicenses').classList.toggle('hidden', sub !== 'licenses');
-      document.getElementById('fSecAssign').classList.toggle('hidden', sub !== 'assignProject');
-      document.getElementById('fSecUsers').classList.toggle('hidden', sub !== 'users');
-      if (sub === 'users') loadFounderUsers();
-    }
-
     document.getElementById('mcNickForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const mcNick = document.getElementById('mcNickInput').value.trim();
@@ -586,6 +572,13 @@
       await fetch('/api/reviews/create', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ stars: document.getElementById('revStars').value, service: document.getElementById('revService').value, comment: document.getElementById('revComment').value }) });
       alert("¡Reseña publicada!"); closeReviewModal();
     });
+
+    function setFounderSubTab(sub) {
+      document.getElementById('fSecLicenses').classList.toggle('hidden', sub !== 'licenses');
+      document.getElementById('fSecAssign').classList.toggle('hidden', sub !== 'assignProject');
+      document.getElementById('fSecUsers').classList.toggle('hidden', sub !== 'users');
+      if (sub === 'users') loadFounderUsers();
+    }
 
     function openTicketModal() { document.getElementById('ticketModal').classList.remove('hidden'); }
     function closeTicketModal() { document.getElementById('ticketModal').classList.add('hidden'); }
