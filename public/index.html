@@ -3,14 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Synthetix Studio | Desarrollo, Redes & Plugins Minecraft</title>
-  
+  <title>Synthetix Studio | Desarrollo & Redes Minecraft</title>
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#06030d">
-
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
@@ -36,14 +32,13 @@
 
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="/" class="text-white font-bold">Inicio</a>
-        <a href="#calculator" class="hover:text-purple-300 transition">Calculadora ⚡</a>
         <a href="#pricing" class="hover:text-purple-300 transition">Tarifas</a>
-        <a href="#reviews" class="hover:text-purple-300 transition">Reseñas ⭐</a>
+        <a href="/services" class="hover:text-purple-300 transition">Servicios</a>
         <a href="/vault" class="hover:text-purple-300 transition">Vault</a>
       </div>
 
-      <div class="flex items-center space-x-3">
-        <a href="/dashboard" id="desktopPortalBtn" class="hidden sm:inline-block px-4 py-2 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white hover:border-purple-400 transition shadow-sm">
+      <div class="flex items-center space-x-2">
+        <a href="/dashboard" id="desktopPortalBtn" class="px-3.5 py-1.5 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white transition">
           Portal Clientes
         </a>
         <button id="openSidebarBtn" class="p-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white transition">
@@ -70,10 +65,9 @@
 
       <div class="py-6 space-y-2">
         <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs"><i data-lucide="home" class="w-4 h-4 text-purple-400"></i><span>Inicio</span></a>
-        <a href="#calculator" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="calculator" class="w-4 h-4 text-fuchsia-400"></i><span>Calculadora de Precios</span></a>
         <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas Oficiales</span></a>
-        <a href="#reviews" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="star" class="w-4 h-4 text-amber-400"></i><span>Reseñas de Clientes</span></a>
-        <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><div class="flex items-center space-x-3"><i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span></div><span class="text-[9px] font-mono bg-purple-950 text-fuchsia-300 border border-fuchsia-500/40 px-1.5 py-0.5 rounded">CATÁLOGO</span></a>
+        <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i><span>Servicios</span></a>
+        <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><div class="flex items-center space-x-3"><i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span></div></a>
         <a href="/terms" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i><span>Términos del Servicio</span></a>
       </div>
     </div>
@@ -86,124 +80,84 @@
   </aside>
 
   <!-- HERO -->
-  <header class="max-w-5xl mx-auto px-6 pt-20 pb-12 text-center">
-    <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
+  <header class="max-w-5xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 text-center">
+    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-      <span>PLATAFORMA PWA & CALCULADORA EN VIVO</span>
+      <span>DESARROLLO DE SOFTWARE & REDES</span>
     </div>
     
-    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6">
-      Infraestructuras de Élite <br>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Sin Caídas ni Lag</span>
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white mb-6 leading-tight">
+      Plugins, Bots & Redes <br>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Gestionados en la Web</span>
     </h1>
 
-    <p class="text-purple-200/70 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-      Calcula tu presupuesto al instante, abre tu sala de proyecto privada y descarga tus archivos directamente en tu cuenta.
+    <p class="text-purple-200/70 text-xs sm:text-base max-w-2xl mx-auto mb-8 font-light">
+      Elige tu plan, abre tu sala de proyecto privada en el portal, chatea con el desarrollador y descarga tus archivos directamente.
     </p>
 
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="#calculator" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-xl shadow-purple-700/40">
-        Usar Calculadora ⚡
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a href="#pricing" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-7 py-3 rounded-xl transition shadow-xl text-xs sm:text-sm">
+        Ver Tarifas ($5 - $35)
       </a>
-      <a href="/vault" class="border border-purple-800 hover:border-purple-600 bg-purple-950/20 text-purple-200 font-medium px-8 py-3.5 rounded-xl transition">
+      <a href="/vault" class="w-full sm:w-auto border border-purple-800 hover:border-purple-600 bg-purple-950/30 text-purple-200 font-medium px-7 py-3 rounded-xl transition text-xs sm:text-sm">
         Explorar Vault
       </a>
     </div>
   </header>
 
-  <!-- CALCULADORA INTERACTIVA DE PRECIOS (IDEA A) -->
-  <section id="calculator" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-    <div class="p-6 sm:p-10 rounded-3xl card-glass border border-fuchsia-500/40 shadow-2xl space-y-6">
-      <div class="text-center">
-        <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Cotizador Dinámico</span>
-        <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Calcula tu Proyecto al Instante</h2>
-        <p class="text-purple-300/70 text-xs sm:text-sm mt-1">Selecciona los componentes que requiere tu servidor.</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6 pt-4">
-        <!-- Opciones -->
-        <div class="space-y-4">
-          <div>
-            <label class="block text-xs font-mono uppercase text-purple-300 mb-1.5">Tipo de Servicio Base</label>
-            <select id="calcService" onchange="calculatePrice()" class="w-full bg-black/60 border border-purple-900 rounded-xl px-4 py-3 text-xs text-white">
-              <option value="5">Plugin Básico / Fix Java ($5 USD)</option>
-              <option value="10">Bot de Discord Completo ($10 USD)</option>
-              <option value="20" selected>Modalidad Completa MC ($20 USD)</option>
-              <option value="35">Network Velocity Setup ($35 USD)</option>
-            </select>
-          </div>
-
-          <div class="space-y-2.5 pt-2">
-            <label class="block text-xs font-mono uppercase text-purple-300">Complementos Opcionales</label>
-            <label class="flex items-center justify-between p-3 rounded-xl bg-purple-950/20 border border-purple-900/40 cursor-pointer">
-              <span class="text-xs text-white">Sincronización con Base de Datos MySQL/Redis</span>
-              <input type="checkbox" value="10" onchange="calculatePrice()" class="calc-addon w-4 h-4 accent-purple-500 rounded">
-            </label>
-            <label class="flex items-center justify-between p-3 rounded-xl bg-purple-950/20 border border-purple-900/40 cursor-pointer">
-              <span class="text-xs text-white">Entrega Urgentes en 24 Horas (+50%)</span>
-              <input type="checkbox" id="calcUrgent" onchange="calculatePrice()" class="w-4 h-4 accent-purple-500 rounded">
-            </label>
-          </div>
-        </div>
-
-        <!-- Resultado y Cupones (Idea C) -->
-        <div class="p-6 rounded-2xl bg-black/50 border border-purple-900 flex flex-col justify-between space-y-4">
-          <div>
-            <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Presupuesto Estimado</span>
-            <div class="flex items-baseline space-x-2 my-2">
-              <span id="calcTotal" class="text-4xl font-black text-fuchsia-400">$20.00</span>
-              <span class="text-xs text-purple-400 font-mono">USD</span>
-            </div>
-            <p id="calcDesc" class="text-[11px] text-purple-300/60">Incluye soporte técnico y código optimizado a 20 TPS.</p>
-          </div>
-
-          <!-- Aplicar Cupón -->
-          <div class="space-y-2 pt-2 border-t border-purple-950">
-            <div class="flex gap-2">
-              <input type="text" id="couponInput" placeholder="Código de Cupón" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs uppercase text-white placeholder-purple-400/40">
-              <button type="button" onclick="applyCoupon()" class="px-4 py-2 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-bold border border-purple-800">Aplicar</button>
-            </div>
-            <p id="couponStatus" class="text-[11px] font-medium hidden"></p>
-          </div>
-
-          <button onclick="orderFromCalculator()" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold py-3 rounded-xl text-xs shadow-lg shadow-purple-600/30 transition">
-            Iniciar Proyecto con este Presupuesto ⚡
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESЕÑAS -->
-  <section id="reviews" class="max-w-6xl mx-auto px-6 py-16">
+  <!-- TARIFAS -->
+  <section id="pricing" class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
     <div class="text-center mb-10">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400">Opiniones Reales</span>
-      <h2 class="text-3xl font-black text-white mt-1">Reseñas Verificadas</h2>
-      <p class="text-purple-300/60 text-xs sm:text-sm mt-2">Valoraciones públicas dejadas por clientes reales.</p>
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Precios Claros</span>
+      <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Tarifas del Estudio</h2>
     </div>
-    <div id="publicReviewsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 text-center py-10 col-span-3">
-        <p class="text-xs text-purple-400">Cargando valoraciones...</p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-5 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-white mb-1">Plugin Básico</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">Comandos o fixes simples</p>
+          <div class="text-2xl font-black text-white mb-4">$5 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+        </div>
+        <button onclick="orderPlan('Plugin Básico', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800">Ordenar ($5)</button>
+      </div>
+
+      <div class="p-5 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-white mb-1">Bot de Discord</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">Tickets y verificación</p>
+          <div class="text-2xl font-black text-white mb-4">$10 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+        </div>
+        <button onclick="orderPlan('Bot Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800">Ordenar ($10)</button>
+      </div>
+
+      <div class="p-5 rounded-3xl card-glass border-2 border-fuchsia-500/60 flex flex-col justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-white mb-1">Modalidad MC</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">BoxPvP, Survival, Skyblock</p>
+          <div class="text-2xl font-black text-fuchsia-400 mb-4">$20 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+        </div>
+        <button onclick="orderPlan('Modalidad MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold">Ordenar ($20)</button>
+      </div>
+
+      <div class="p-5 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-white mb-1">Network Setup</h3>
+          <p class="text-[11px] text-purple-300/60 mb-3">Velocity Proxy y balanceo</p>
+          <div class="text-2xl font-black text-white mb-4">$35 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+        </div>
+        <button onclick="orderPlan('Network Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800">Ordenar ($35)</button>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="border-t border-purple-950/60 py-8 text-center text-xs text-purple-300/40">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-6 gap-4">
-      <p>© Synthetix Studio. Todos los derechos reservados.</p>
-      <div class="flex space-x-6">
-        <a href="/services" class="hover:text-purple-300">Servicios</a>
-        <a href="/vault" class="hover:text-purple-300">Vault</a>
-        <a href="/terms" class="hover:text-purple-300">Términos</a>
-        <a href="/dashboard" class="hover:text-purple-300">Portal</a>
-      </div>
-    </div>
+  <footer class="border-t border-purple-950/60 py-6 text-center text-xs text-purple-300/40">
+    <p>© Synthetix Studio. Todos los derechos reservados.</p>
   </footer>
 
   <script>
     lucide.createIcons();
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
 
     const overlay = document.getElementById('drawerOverlay');
     const drawer = document.getElementById('sidebarDrawer');
@@ -213,123 +167,53 @@
     document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
 
-    let currentCalculatedPrice = 20;
-    let appliedDiscountPercent = 0;
-    let verifiedCouponCode = "";
+    // RECONOCIMIENTO DIRECTO DE SESIÓN SIN LOGOUT AUTOMÁTICO
+    const token = localStorage.getItem('synthetix_token');
+    const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
 
-    function calculatePrice() {
-      let base = parseFloat(document.getElementById('calcService').value) || 0;
-      let addons = 0;
-      document.querySelectorAll('.calc-addon:checked').forEach(cb => { addons += parseFloat(cb.value) || 0; });
-
-      let subtotal = base + addons;
-      if (document.getElementById('calcUrgent').checked) {
-        subtotal = subtotal * 1.5; // +50% urgencia
+    if (token && user.username) {
+      const desktopBtn = document.getElementById('desktopPortalBtn');
+      if (desktopBtn) {
+        desktopBtn.innerText = `${user.username} (${user.role || 'FOUNDER'})`;
+        desktopBtn.className = "px-3.5 py-1.5 rounded-xl bg-purple-900/80 border border-fuchsia-500/50 text-xs font-bold text-fuchsia-300";
       }
 
-      if (appliedDiscountPercent > 0) {
-        subtotal = subtotal * (1 - appliedDiscountPercent / 100);
-      }
-
-      currentCalculatedPrice = subtotal;
-      document.getElementById('calcTotal').innerText = `$${subtotal.toFixed(2)}`;
+      document.getElementById('sidebarUserSlot').innerHTML = `
+        <div class="p-3.5 rounded-2xl bg-black/60 border border-purple-900/60 flex items-center justify-between mb-2">
+          <div>
+            <p class="text-xs font-bold text-white">${user.username}</p>
+            <span class="text-[10px] font-mono text-fuchsia-400 uppercase font-bold">${user.role || 'FOUNDER'}</span>
+          </div>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        </div>
+        <a href="/dashboard" class="flex items-center justify-center space-x-2 w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Entrar al Dashboard</span>
+        </a>
+      `;
+      lucide.createIcons();
     }
 
-    async function applyCoupon() {
-      const code = document.getElementById('couponInput').value.trim();
-      const status = document.getElementById('couponStatus');
-      if (!code) return;
-
-      try {
-        const res = await fetch('/api/coupons/validate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code })
-        });
-        const data = await res.json();
-        if (data.valid) {
-          appliedDiscountPercent = data.discountPercent;
-          verifiedCouponCode = data.code;
-          status.innerText = `¡Cupón aplicado con éxito! (${data.discountPercent}% OFF)`;
-          status.className = "text-[11px] text-emerald-400 font-semibold block";
-          status.classList.remove('hidden');
-          calculatePrice();
-        } else {
-          status.innerText = data.error || "Cupón no válido";
-          status.className = "text-[11px] text-rose-400 font-semibold block";
-          status.classList.remove('hidden');
-        }
-      } catch (e) {
-        alert("Error al validar cupón");
-      }
-    }
-
-    async function orderFromCalculator() {
-      const token = localStorage.getItem('synthetix_token');
+    async function orderPlan(planTitle, price) {
       if (!token) {
-        alert("Inicia sesión o regístrate para abrir tu sala de proyecto.");
+        alert("Inicia sesión para ordenar.");
         window.location.href = '/login';
         return;
       }
+      const notes = prompt(`¿Qué necesitas para tu ${planTitle}?:`);
+      if (!notes) return;
 
-      const serviceSelect = document.getElementById('calcService');
-      const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
-      const priceStr = `$${currentCalculatedPrice.toFixed(2)} USD`;
-      const notes = prompt(`Añade notas o especificaciones para tu pedido (${serviceName}):`, "Quiero configurarlo para la versión 1.20.4");
-      if (notes === null) return;
-
-      try {
-        const res = await fetch('/api/orders/create', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ planTitle: serviceName, price: priceStr, details: notes, couponCode: verifiedCouponCode })
-        });
-        const d = await res.json();
-        if (d.success) {
-          alert(`¡Pedido creado con éxito! Te llevamos a tu panel de control.`);
-          window.location.href = '/dashboard';
-        } else {
-          alert(d.error);
-        }
-      } catch (e) {
-        alert("Error de conexión");
+      const res = await fetch('/api/orders/create', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planTitle, price, details: notes })
+      });
+      const d = await res.json();
+      if (d.success) {
+        alert("¡Pedido creado!");
+        window.location.href = '/dashboard';
       }
     }
-
-    // Cargar Reseñas
-    async function loadPublicReviews() {
-      const container = document.getElementById('publicReviewsContainer');
-      try {
-        const res = await fetch('/api/reviews');
-        const data = await res.json();
-        if (data.reviews && data.reviews.length > 0) {
-          container.innerHTML = data.reviews.map(r => `
-            <div class="p-5 sm:p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between space-y-3">
-              <div>
-                <div class="flex items-center justify-between mb-2.5">
-                  <div class="flex items-center space-x-2.5">
-                    <img src="https://mc-heads.net/avatar/${r.mcNick || 'steve'}/40" class="w-9 h-9 rounded-xl border border-purple-500/30 object-cover bg-black/50">
-                    <div>
-                      <p class="text-xs font-bold text-white">${r.author}</p>
-                      <span class="text-[9px] font-mono text-fuchsia-400">${r.role}</span>
-                    </div>
-                  </div>
-                  <div class="text-amber-400 text-xs tracking-widest">${'⭐'.repeat(r.stars)}</div>
-                </div>
-                <p class="text-xs text-purple-200/80 leading-relaxed italic">"${r.comment}"</p>
-              </div>
-              <div class="pt-2.5 border-t border-purple-950 flex items-center justify-between text-[10px] text-purple-400/50">
-                <span>${r.service}</span>
-                <span>${r.date}</span>
-              </div>
-            </div>
-          `).join('');
-        } else {
-          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-8 col-span-3">Sé el primero en dejar una reseña desde tu Dashboard.</p>';
-        }
-      } catch (e) {}
-    }
-    loadPublicReviews();
   </script>
 </body>
 </html>
