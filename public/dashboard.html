@@ -14,9 +14,9 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-20">
+<body class="bg-mesh-pattern antialiased min-h-screen text-purple-100 pb-16">
 
-  <!-- NAVBAR UNIFORME -->
+  <!-- NAVBAR -->
   <nav class="sticky top-0 z-50 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <a href="/" class="group flex items-center space-x-2.5 transition">
@@ -36,7 +36,7 @@
       <div class="flex items-center space-x-3">
         <div id="roleBadge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-950 border border-fuchsia-500/60 text-fuchsia-300">
           <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-          <span id="roleText">FOUNDER</span>
+          <span id="roleText">...</span>
         </div>
         <button onclick="logout()" class="p-2 rounded-xl bg-purple-950/50 hover:bg-rose-950/60 border border-purple-900/60 text-purple-300 hover:text-rose-300 transition" title="Cerrar Sesión">
           <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -58,9 +58,9 @@
             <span id="welcomeRole" class="text-fuchsia-400 font-bold uppercase">FOUNDER</span>
           </div>
           <h1 class="text-xl sm:text-3xl font-black text-white">
-            Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Admin</span> ⚡
+            Hola, <span id="usernameDisplay" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">...</span> ⚡
           </h1>
-          <p id="roleDescription" class="text-purple-300/60 text-xs mt-0.5">Control total del sistema, tickets y gestión de infraestructura.</p>
+          <p id="roleDescription" class="text-purple-300/60 text-xs mt-0.5">Cargando perfil...</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@
       </div>
     </div>
 
-    <!-- PESTAÑAS HORIZONTALES LIMPIAS -->
+    <!-- PESTAÑAS -->
     <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1 border-b border-purple-900/40">
       <button onclick="setMainTab('tickets')" id="tabBtnTickets" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5 shadow-md shadow-purple-600/30">
         <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
@@ -88,11 +88,15 @@
       </button>
       <button onclick="setMainTab('licenses')" id="tabBtnLicenses" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-        <span>Licencias (DRM)</span>
+        <span>Mis Licencias (DRM)</span>
       </button>
       <button onclick="setMainTab('projects')" id="tabBtnProjects" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i>
         <span>Mis Builds</span>
+      </button>
+      <button onclick="setMainTab('reviews')" id="tabBtnReviews" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
+        <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400"></i>
+        <span>Moderar Reseñas</span>
       </button>
       <button onclick="setMainTab('profile')" id="tabBtnProfile" class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5">
         <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
@@ -140,48 +144,107 @@
     <!-- VISTA 2: RESOURCE VAULT -->
     <div id="viewVault" class="hidden space-y-4">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <h2 class="text-base font-bold text-white border-b border-purple-950 pb-3">Resource Vault (Cloudflare R2)</h2>
-        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><p class="text-xs text-purple-400">Cargando...</p></div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-purple-950 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-white">Synthetix Resource Vault</h2>
+            <p class="text-[11px] text-purple-300/60">Alojamiento masivo con tecnología Cloudflare R2</p>
+          </div>
+          <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar text-[11px] font-mono">
+            <button onclick="filterVaultCat('all')" class="px-2.5 py-1 rounded-lg bg-purple-600 text-white font-bold">Todos</button>
+            <button onclick="filterVaultCat('Plugin')" class="px-2.5 py-1 rounded-lg bg-purple-950 text-purple-300 hover:text-white">Plugins</button>
+            <button onclick="filterVaultCat('Setup')" class="px-2.5 py-1 rounded-lg bg-purple-950 text-purple-300 hover:text-white">Setups</button>
+            <button onclick="filterVaultCat('Config')" class="px-2.5 py-1 rounded-lg bg-purple-950 text-purple-300 hover:text-white">Configs</button>
+            <button onclick="filterVaultCat('Mapa')" class="px-2.5 py-1 rounded-lg bg-purple-950 text-purple-300 hover:text-white">Mapas</button>
+          </div>
+        </div>
+        <div id="vaultContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <p class="text-xs text-purple-400 py-6">Cargando catálogo...</p>
+        </div>
       </div>
     </div>
 
-    <!-- VISTA 3: LICENCIAS -->
+    <!-- VISTA 3: MIS LICENCIAS (DRM) -->
     <div id="viewLicenses" class="hidden space-y-6">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-6">
-        <div class="flex items-center justify-between border-b border-purple-950 pb-4">
-          <h2 class="text-base font-bold text-white">Sistema de Licencias DRM</h2>
-          <button onclick="showJavaSnippetModal()" class="px-3.5 py-2 rounded-xl bg-purple-950 text-xs font-mono font-bold text-purple-300">Ver Código Java</button>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-purple-950 pb-4">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center space-x-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+              <span>Sistema de Licencias DRM</span>
+            </h2>
+            <p class="text-xs text-purple-300/60">Claves únicas para activar tus plugins compilados</p>
+          </div>
+          <button onclick="showJavaSnippetModal()" class="px-3.5 py-2 rounded-xl bg-purple-950 border border-purple-800 text-purple-300 hover:text-white text-xs font-mono font-bold flex items-center space-x-1.5">
+            <i data-lucide="code" class="w-4 h-4"></i>
+            <span>Ver Código Java</span>
+          </button>
         </div>
-        <div id="licensesContainer" class="space-y-3"><p class="text-xs text-purple-400">Cargando...</p></div>
+        <div id="licensesContainer" class="space-y-3">
+          <p class="text-xs text-purple-400 py-4">Cargando licencias...</p>
+        </div>
       </div>
     </div>
 
-    <!-- VISTA 4: PROYECTOS -->
+    <!-- VISTA 4: MIS BUILDS -->
     <div id="viewProjects" class="hidden space-y-4">
       <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <h2 class="text-base font-bold text-white border-b border-purple-950 pb-3">Mis Proyectos & Builds</h2>
-        <div id="projectsContainer" class="grid md:grid-cols-2 gap-4"><p class="text-xs text-purple-400">Cargando...</p></div>
+        <div class="border-b border-purple-950 pb-3">
+          <h2 class="text-base font-bold text-white">Mis Proyectos & Builds Activos</h2>
+          <p class="text-[11px] text-purple-300/60">Avance en vivo y descargas de tus pedidos</p>
+        </div>
+        <div id="projectsContainer" class="grid md:grid-cols-2 gap-4">
+          <p class="text-xs text-purple-400 py-6">Cargando proyectos...</p>
+        </div>
       </div>
     </div>
 
-    <!-- VISTA 5: PERFIL -->
+    <!-- VISTA 5: MODERAR RESEÑAS (STAFF / FOUNDER) -->
+    <div id="viewReviews" class="hidden space-y-4">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 space-y-4">
+        <div class="border-b border-purple-950 pb-3">
+          <h2 class="text-base font-bold text-white">Moderar Reseñas Públicas</h2>
+          <p class="text-[11px] text-purple-300/60">Elimina reseñas inapropiadas o spam de la portada</p>
+        </div>
+        <div id="moderationReviewsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <p class="text-xs text-purple-400 py-6">Cargando reseñas...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA 6: MI PERFIL -->
     <div id="viewProfile" class="hidden space-y-6">
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-3xl card-glass border border-purple-900/60 text-center flex flex-col items-center">
+        <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-4 text-center flex flex-col items-center">
           <img id="profilePreviewHead" src="https://mc-heads.net/avatar/steve/100" class="w-24 h-24 rounded-2xl border-2 border-fuchsia-500/50 shadow-xl bg-black/60 object-cover">
-          <h3 id="profileUsername" class="text-lg font-bold text-white mt-3">...</h3>
-          <p id="profileEmail" class="text-xs text-purple-400 font-mono">...</p>
+          <div>
+            <h3 id="profileUsername" class="text-lg font-bold text-white">...</h3>
+            <p id="profileEmail" class="text-xs text-purple-400/70 font-mono">...</p>
+          </div>
+          <div class="flex flex-wrap justify-center gap-1.5 pt-2">
+            <span id="badgeFounder" class="hidden px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gradient-to-r from-amber-500 to-yellow-500 text-black shadow-md">👑 Founder</span>
+            <span id="badgeVip" class="hidden px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-fuchsia-950 border border-fuchsia-500/60 text-fuchsia-300">💎 VIP Supporter</span>
+            <span id="badgeDev" class="hidden px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-950 border border-cyan-500/60 text-cyan-300">⚡ Verified Dev</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-purple-950 text-purple-300 border border-purple-800">Early Member</span>
+          </div>
         </div>
+
         <div class="md:col-span-2 space-y-6">
           <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
-            <h4 class="text-sm font-bold text-white">Vincular Cuenta de Minecraft</h4>
+            <h4 class="text-sm font-bold text-white flex items-center space-x-2">
+              <i data-lucide="gamepad-2" class="w-4 h-4 text-fuchsia-400"></i>
+              <span>Vincular Cuenta de Minecraft</span>
+            </h4>
             <form id="mcNickForm" class="flex gap-2">
               <input type="text" id="mcNickInput" placeholder="Ej: iShadowz" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-              <button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">Guardar Nick</button>
+              <button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs">Guardar Nick</button>
             </form>
           </div>
+
           <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
-            <h4 class="text-sm font-bold text-white">Seguridad: Cambiar Contraseña</h4>
+            <h4 class="text-sm font-bold text-white flex items-center space-x-2">
+              <i data-lucide="key" class="w-4 h-4 text-purple-400"></i>
+              <span>Seguridad: Cambiar Contraseña</span>
+            </h4>
             <form id="changePasswordForm" class="space-y-3">
               <input type="password" id="currentPass" required placeholder="Contraseña actual" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
               <input type="password" id="newPass" required placeholder="Nueva contraseña segura" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
@@ -192,106 +255,213 @@
       </div>
     </div>
 
-    <!-- VISTA 6: DEV STUDIO -->
+    <!-- VISTA 7: DEV STUDIO -->
     <div id="viewDev" class="hidden space-y-4">
       <div class="p-6 sm:p-8 rounded-3xl card-glass border border-cyan-500/40 max-w-xl mx-auto space-y-4">
-        <h3 class="font-bold text-white text-sm">Publicar en R2 Object Storage</h3>
+        <div class="flex items-center space-x-2 border-b border-purple-950 pb-3">
+          <i data-lucide="cloud-upload" class="text-cyan-400 w-5 h-5"></i>
+          <div>
+            <h3 class="font-bold text-white text-sm">Publicar en R2 Object Storage</h3>
+            <p class="text-[10px] text-purple-300/60">Soporta archivos pesados (.zip, .jar, .schem) sin límite</p>
+          </div>
+        </div>
         <form id="vaultUploadForm" class="space-y-3">
           <input type="text" id="vName" required placeholder="Título del Recurso" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <select id="vCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-            <option value="Plugin">Plugin (.jar)</option><option value="Setup">Setup (.zip)</option><option value="Mapa">Mapa (.schem)</option>
-          </select>
-          <input type="file" id="vFile" required class="text-xs text-purple-400">
-          <textarea id="vDesc" rows="2" placeholder="Notas..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-          <button type="submit" id="vUploadBtn" class="w-full bg-cyan-600 font-bold text-xs text-black py-2.5 rounded-xl">Publicar</button>
+          <div class="grid grid-cols-2 gap-3">
+            <select id="vCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+              <option value="Plugin">Plugin Spigot/Paper (.jar)</option>
+              <option value="Setup">Setup Completo Servidor (.zip)</option>
+              <option value="Config">Config / Pack (.zip, .yml)</option>
+              <option value="Mapa">Mapa / Schematic (.schem)</option>
+            </select>
+            <select id="vAccessTier" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+              <option value="free">Gratis para Todos (Free)</option>
+              <option value="vip">Exclusivo VIP / Clientes</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <input type="text" id="vVersion" placeholder="Versión (1.0.0)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+            <input type="text" id="vMC" placeholder="Versiones MC (1.16 - 1.21)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          </div>
+          <div class="p-4 rounded-xl border border-dashed border-cyan-500/40 bg-black/40 text-center">
+            <label class="block text-xs font-bold text-cyan-300 mb-1">Selecciona archivo binario</label>
+            <input type="file" id="vFile" required class="text-xs text-purple-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-cyan-600 file:text-black">
+          </div>
+          <textarea id="vDesc" rows="2" placeholder="Notas de instalación..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+          <button type="submit" id="vUploadBtn" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold text-xs text-black py-2.5 rounded-xl transition shadow-lg">Publicar Recurso en R2</button>
         </form>
       </div>
     </div>
 
-    <!-- VISTA 7: FOUNDER NEXUS -->
+    <!-- VISTA 8: FOUNDER NEXUS -->
     <div id="viewFounder" class="hidden space-y-6">
       <div class="grid grid-cols-3 gap-2.5 max-w-lg">
-        <button onclick="setFounderSubTab('licenses')" id="fTabLicenses" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs">Gestor DRM</button>
-        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs">Crear Proyecto</button>
-        <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs">Usuarios & Roles</button>
+        <button onclick="setFounderSubTab('licenses')" id="fTabLicenses" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="shield-alert" class="w-4 h-4"></i>
+          <span>Gestor DRM</span>
+        </button>
+        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="folder-plus" class="w-4 h-4"></i>
+          <span>Crear Proyecto</span>
+        </button>
+        <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          <span>Usuarios & Roles</span>
+        </button>
       </div>
 
       <div id="fSecLicenses" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-4">
-        <div class="flex items-center justify-between border-b border-purple-950 pb-3"><h3 class="font-bold text-white text-sm">Control de Licencias</h3><button onclick="openCreateLicenseModal()" class="px-3 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-xs">+ Crear</button></div>
-        <div id="founderLicensesList" class="space-y-2">Cargando...</div>
+        <div class="flex items-center justify-between border-b border-purple-950 pb-3">
+          <h3 class="font-bold text-white text-sm">Control Central de Licencias Anti-Leak</h3>
+          <button onclick="openCreateLicenseModal()" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold">+ Crear Licencia</button>
+        </div>
+        <div id="founderLicensesList" class="space-y-2">Cargando licencias...</div>
       </div>
 
+      <!-- FORMULARIO CREAR PROYECTO (AHORA CONECTADO) -->
       <div id="fSecAssign" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl space-y-3">
         <h3 class="font-bold text-white text-sm">Asignar Proyecto a Cliente</h3>
         <form id="createProjectForm" class="space-y-3">
-          <input type="text" id="pTitle" required placeholder="Nombre del proyecto" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <input type="text" id="pTitle" required placeholder="Nombre del proyecto (Ej: Setup BoxPvP)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="email" id="pClientEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="number" id="pProgress" min="0" max="100" value="25" placeholder="Progreso %" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga directo" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-2.5 rounded-xl">Guardar Proyecto</button>
+          <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga directo (opcional)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-2.5 rounded-xl transition shadow-md shadow-purple-600/30">Guardar Proyecto</button>
         </form>
       </div>
 
       <div id="fSecUsers" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
-        <h3 class="font-bold text-white text-sm">Usuarios & Roles</h3>
-        <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="usersTableBody" class="divide-y divide-purple-950"></tbody></table></div>
+        <h3 class="font-bold text-white text-sm">Usuarios & Gestión de Roles</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="text-purple-400 font-mono uppercase bg-black/40 border-b border-purple-950">
+              <tr>
+                <th class="p-2.5">Usuario</th>
+                <th class="p-2.5">Correo</th>
+                <th class="p-2.5">Rol</th>
+                <th class="p-2.5">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody" class="divide-y divide-purple-950"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
   </main>
 
-  <!-- MODALES -->
-  <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="max-w-md w-full card-glass rounded-3xl p-5 border border-purple-500/40 shadow-2xl">
-      <div class="flex items-center justify-between mb-3"><h3 class="text-base font-bold text-white">Nuevo Ticket</h3><button onclick="closeTicketModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-      <form id="ticketForm" class="space-y-3">
-        <input type="text" id="tTitle" required placeholder="Título" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"><option value="Plugins Paper/Spigot">Plugins</option><option value="Setup Servidor">Setup</option></select>
-        <textarea id="tMessage" rows="3" required placeholder="Describe qué necesitas..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl text-xs">Crear</button>
-      </form>
-    </div>
-  </div>
-
+  <!-- MODAL: DEJAR RESEÑA ⭐ -->
   <div id="reviewModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between"><h3 class="text-base font-bold text-white">Dejar Reseña</h3><button onclick="closeReviewModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white flex items-center space-x-1.5">
+          <i data-lucide="star" class="w-4 h-4 text-amber-400"></i>
+          <span>Dejar Reseña Verificada</span>
+        </h3>
+        <button onclick="closeReviewModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
       <form id="reviewForm" class="space-y-3">
-        <select id="revStars" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"><option value="5">⭐⭐⭐⭐⭐ 5 Estrellas</option></select>
-        <input type="text" id="revService" required placeholder="Servicio valorado" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <textarea id="revComment" rows="3" required placeholder="Tu experiencia..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl text-xs">Publicar</button>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Calificación en Estrellas</label>
+          <select id="revStars" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+            <option value="5">⭐⭐⭐⭐⭐ 5 Estrellas (Excelente)</option>
+            <option value="4">⭐⭐⭐⭐ 4 Estrellas (Muy Bueno)</option>
+            <option value="3">⭐⭐⭐ 3 Estrellas (Bueno)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Servicio / Plugin Valorador</label>
+          <input type="text" id="revService" required placeholder="Ej: Setup BoxPvP o Plugin Clanes" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Tu Experiencia</label>
+          <textarea id="revComment" rows="3" required placeholder="¿Cómo te funcionó el TPS, soporte y calidad?..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-xs">Publicar Reseña en la Web</button>
       </form>
     </div>
   </div>
 
+  <!-- MODAL: CREAR LICENCIA DRM (FOUNDER) -->
   <div id="createLicenseModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between"><h3 class="text-base font-bold text-white">Crear Licencia</h3><button onclick="closeCreateLicenseModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Generar Licencia Anti-Leak</h3>
+        <button onclick="closeCreateLicenseModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
       <form id="createLicenseForm" class="space-y-3">
         <input type="email" id="licEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <input type="text" id="licPlugin" required placeholder="Nombre del plugin" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs">Generar</button>
+        <input type="text" id="licPlugin" required placeholder="Nombre del Plugin (Ej: SynthetixCore)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs">Generar Clave Única</button>
       </form>
     </div>
   </div>
 
+  <!-- MODAL: CÓDIGO JAVA DRM SNIPPET -->
   <div id="javaSnippetModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between"><h3 class="text-sm font-bold text-white">Código Java</h3><button onclick="closeJavaSnippetModal()" class="text-purple-400"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-      <pre class="bg-black/80 p-4 rounded-xl text-[11px] text-purple-300 overflow-x-auto">public boolean verifyLicense(String key) { try { URL u = new URL("https://test.synthetixhost.lol/api/license/verify?key=" + key); HttpURLConnection c = (HttpURLConnection) u.openConnection(); return c.getResponseCode() == 200; } catch(Exception e) { return false; } }</pre>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-white flex items-center space-x-1.5">
+          <i data-lucide="code" class="w-4 h-4 text-cyan-400"></i>
+          <span>Código Java DRM para tu Plugin</span>
+        </h3>
+        <button onclick="closeJavaSnippetModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <p class="text-xs text-purple-300/70">Pega este método en el `onEnable()` de tu plugin Java para validar la clave contra Synthetix en tiempo real:</p>
+      <div class="bg-black/80 p-4 rounded-2xl border border-purple-950 font-mono text-[11px] text-purple-300 overflow-x-auto leading-relaxed">
+        <pre>public boolean verifyLicense(String key) {
+    try {
+        URL url = new URL("https://test.synthetixhost.lol/api/license/verify?key=" + key);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setConnectTimeout(4000);
+        return con.getResponseCode() == 200;
+    } catch (Exception e) {
+        return false;
+    }
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TICKET -->
+  <div id="ticketModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full card-glass rounded-3xl p-5 border border-purple-500/40 shadow-2xl">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-base font-bold text-white">Nuevo Ticket de Soporte</h3>
+        <button onclick="closeTicketModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <form id="ticketForm" class="space-y-3">
+        <input type="text" id="tTitle" required placeholder="Título del requerimiento" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        <select id="tCategory" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+          <option value="Plugins Paper/Spigot">Plugins Paper/Spigot</option>
+          <option value="Setup Servidor">Setup Completo Servidor</option>
+          <option value="Configuración">Configuración / Pack</option>
+          <option value="Bot de Discord">Bot de Discord</option>
+        </select>
+        <textarea id="tMessage" rows="3" required placeholder="Describe qué necesitas..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl text-xs">Crear Ticket</button>
+      </form>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
+
     const token = localStorage.getItem('synthetix_token');
     let currentUser = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
-    let allLoadedTickets = [], allVaultItems = [], currentFilter = 'all', activeTicketId = null, selectedChatFile = null;
+    let allLoadedTickets = [];
+    let allVaultItems = [];
+    let currentFilter = 'all';
+    let currentVaultCat = 'all';
+    let activeTicketId = null;
+    let selectedChatFile = null;
 
-    if (!token) { window.location.href = '/login'; }
-    else {
+    if (!token) {
+      window.location.href = '/login';
+    } else {
       renderUser(currentUser);
+      validateSession();
       loadTickets();
       loadVault();
       loadLicenses();
@@ -301,41 +471,291 @@
     function renderUser(user) {
       if (!user.username) return;
       document.getElementById('usernameDisplay').innerText = user.username;
-      document.getElementById('roleText').innerText = (user.role || 'USER').toUpperCase();
-      document.getElementById('welcomeRole').innerText = (user.role || 'USER').toUpperCase();
+      document.getElementById('roleText').innerText = user.role.toUpperCase();
+      document.getElementById('welcomeRole').innerText = user.role.toUpperCase();
+
       document.getElementById('profileUsername').innerText = user.username;
       document.getElementById('profileEmail').innerText = user.email;
-
       if (user.mcNick) {
         document.getElementById('mcNickInput').value = user.mcNick;
-        document.getElementById('userMcAvatar').src = `https://mc-heads.net/avatar/${user.mcNick}/100`;
-        document.getElementById('profilePreviewHead').src = `https://mc-heads.net/avatar/${user.mcNick}/100`;
+        const avatarUrl = `https://mc-heads.net/avatar/${user.mcNick}/100`;
+        document.getElementById('userMcAvatar').src = avatarUrl;
+        document.getElementById('profilePreviewHead').src = avatarUrl;
       }
 
+      if (user.role === 'Founder') document.getElementById('badgeFounder').classList.remove('hidden');
+      if (user.role === 'VIP' || user.role === 'Client') document.getElementById('badgeVip').classList.remove('hidden');
+      if (user.role === 'Dev') document.getElementById('badgeDev').classList.remove('hidden');
+
+      const desc = document.getElementById('roleDescription');
       if (user.role === 'Founder') {
+        desc.innerText = "Acceso Total • Control de DRM, R2 y Gestión de Rangos";
         document.getElementById('tabBtnFounder').classList.remove('hidden');
         document.getElementById('tabBtnDev').classList.remove('hidden');
+      } else if (user.role === 'Dev') {
+        desc.innerText = "Espacio Dev • Publicación de Recursos R2 y Builds";
+        document.getElementById('tabBtnDev').classList.remove('hidden');
+      } else if (user.role === 'VIP' || user.role === 'Client') {
+        desc.innerText = "Acceso VIP • Descarga libre de recursos exclusivos";
+      } else {
+        desc.innerText = "Panel de Usuario • Descargas del Vault y Pedidos";
       }
     }
 
+    async function validateSession() {
+      try {
+        const res = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (res.status === 401) { logout(); return; }
+        const data = await res.json();
+        if (data.success) {
+          currentUser = data.user;
+          localStorage.setItem('synthetix_user', JSON.stringify(currentUser));
+          renderUser(currentUser);
+        }
+      } catch (e) {}
+    }
+
     function setMainTab(tab) {
-      ['tickets', 'vault', 'licenses', 'projects', 'profile', 'dev', 'founder'].forEach(t => {
-        const v = document.getElementById(`view${t.charAt(0).toUpperCase() + t.slice(1)}`);
-        const b = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
-        if (v && b) {
+      const tabs = ['tickets', 'vault', 'licenses', 'projects', 'reviews', 'profile', 'dev', 'founder'];
+      tabs.forEach(t => {
+        const view = document.getElementById(`view${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        if (view && btn) {
           if (t === tab) {
-            v.classList.remove('hidden');
-            b.className = "whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5 shadow-md shadow-purple-600/30";
+            view.classList.remove('hidden');
+            btn.className = "whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition flex items-center space-x-1.5 shadow-md shadow-purple-600/30";
           } else {
-            v.classList.add('hidden');
-            b.className = "whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5";
+            view.classList.add('hidden');
+            btn.className = "whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-purple-950/40 text-purple-300 border border-purple-500/30 hover:text-white transition flex items-center space-x-1.5";
           }
         }
       });
       if (tab === 'licenses') loadLicenses();
-      if (tab === 'founder') loadFounderUsers();
+      if (tab === 'reviews') loadModerationReviews();
       lucide.createIcons();
     }
+
+    // --- MODERAR RESEÑAS ---
+    async function loadModerationReviews() {
+      const container = document.getElementById('moderationReviewsContainer');
+      try {
+        const res = await fetch('/api/reviews');
+        const data = await res.json();
+        if (data.reviews && data.reviews.length > 0) {
+          container.innerHTML = data.reviews.map(r => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-white">${r.author}</span>
+                  <span class="text-amber-400 text-[10px]">${'⭐'.repeat(r.stars)}</span>
+                </div>
+                <p class="text-xs text-purple-200/80 italic">"${r.comment}"</p>
+              </div>
+              <div class="pt-2 border-t border-purple-950 flex items-center justify-between text-[10px] text-purple-400">
+                <span>${r.service}</span>
+                <button onclick="deleteReview('${r.id}')" class="text-rose-400 hover:text-rose-300 font-bold underline">Eliminar</button>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-4 col-span-3">No hay reseñas para moderar.</p>';
+        }
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    async function deleteReview(reviewId) {
+      if (!confirm("¿Eliminar esta reseña permanentemente de la web?")) return;
+      const res = await fetch('/api/reviews/delete', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reviewId })
+      });
+      const d = await res.json();
+      if (d.success) loadModerationReviews();
+    }
+
+    // --- FORMULARIO CREAR PROYECTO (CONECTADO) ---
+    const cpForm = document.getElementById('createProjectForm');
+    if (cpForm) {
+      cpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = cpForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Guardando proyecto...";
+
+        try {
+          const res = await fetch('/api/founder/project-create', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: document.getElementById('pTitle').value,
+              clientEmail: document.getElementById('pClientEmail').value,
+              progress: document.getElementById('pProgress').value,
+              downloadUrl: document.getElementById('pDownloadUrl').value
+            })
+          });
+          const d = await res.json();
+          if (d.success) {
+            alert("¡Proyecto asignado al cliente con éxito!");
+            cpForm.reset();
+            loadProjects();
+            setMainTab('projects');
+          } else {
+            alert(d.error || "Error al crear proyecto");
+          }
+        } catch (err) {
+          alert("Error de conexión");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Guardar Proyecto";
+        }
+      });
+    }
+
+    // --- DRM LICENSES ---
+    async function loadLicenses() {
+      const container = document.getElementById('licensesContainer');
+      try {
+        const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.licenses && data.licenses.length > 0) {
+          container.innerHTML = data.licenses.map(l => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center space-x-2 mb-1">
+                  <span class="text-sm font-mono font-bold text-emerald-400 select-all">${l.key}</span>
+                  <span class="text-[9px] font-mono px-2 py-0.5 rounded ${l.status === 'Activa' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-rose-950 text-rose-300 border border-rose-800'}">${l.status}</span>
+                </div>
+                <p class="text-xs font-bold text-white">${l.resourceName}</p>
+                <p class="text-[10px] text-purple-400/60 mt-0.5">IPs activadas: ${l.ips.length ? l.ips.join(', ') : 'Ninguna todavía'}</p>
+              </div>
+              <button onclick="navigator.clipboard.writeText('${l.key}'); alert('¡Clave copiada!');" class="px-3 py-1.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-mono font-bold border border-purple-800">
+                Copiar Clave
+              </button>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6">No tienes licencias asignadas actualmente.</p>';
+        }
+        lucide.createIcons();
+      } catch (e) {}
+    }
+
+    function openCreateLicenseModal() { document.getElementById('createLicenseModal').classList.remove('hidden'); }
+    function closeCreateLicenseModal() { document.getElementById('createLicenseModal').classList.add('hidden'); }
+    function showJavaSnippetModal() { document.getElementById('javaSnippetModal').classList.remove('hidden'); }
+    function closeJavaSnippetModal() { document.getElementById('javaSnippetModal').classList.add('hidden'); }
+
+    document.getElementById('createLicenseForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/founder/licenses/create', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientEmail: document.getElementById('licEmail').value,
+          resourceName: document.getElementById('licPlugin').value
+        })
+      });
+      const d = await res.json();
+      if (d.success) {
+        alert("¡Licencia generada: " + d.license.key);
+        closeCreateLicenseModal();
+        document.getElementById('createLicenseForm').reset();
+        loadFounderLicenses();
+      }
+    });
+
+    async function loadFounderLicenses() {
+      const container = document.getElementById('founderLicensesList');
+      try {
+        const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.licenses && data.licenses.length > 0) {
+          container.innerHTML = data.licenses.map(l => `
+            <div class="p-3 rounded-2xl bg-black/50 border border-purple-900/60 flex items-center justify-between text-xs">
+              <div>
+                <span class="font-mono font-bold text-emerald-400">${l.key}</span>
+                <p class="text-[11px] text-white">${l.clientEmail} • ${l.resourceName}</p>
+                <span class="text-[9px] text-purple-400/50">IPs: ${l.ips.join(', ') || 'Sin uso'}</span>
+              </div>
+              <div class="flex items-center space-x-1.5">
+                <button onclick="toggleLicense('${l.key}')" class="px-2.5 py-1 rounded-lg ${l.status === 'Activa' ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'} text-[10px] font-bold">
+                  ${l.status === 'Activa' ? 'Revocar' : 'Reactivar'}
+                </button>
+                <button onclick="deleteLicense('${l.key}')" title="Eliminar definitivamente" class="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 text-rose-400 hover:text-white transition">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          `).join('');
+          lucide.createIcons();
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias activas.</p>';
+        }
+      } catch (e) {}
+    }
+
+    async function toggleLicense(key) {
+      await fetch('/api/founder/licenses/toggle', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key })
+      });
+      loadFounderLicenses();
+      loadLicenses();
+    }
+
+    async function deleteLicense(key) {
+      if (!confirm(`¿Eliminar definitivamente la licencia ${key}?`)) return;
+      try {
+        const res = await fetch('/api/founder/licenses/delete', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key })
+        });
+        const d = await res.json();
+        if (d.success) {
+          loadFounderLicenses();
+          loadLicenses();
+        } else {
+          alert(d.error || "Error al eliminar");
+        }
+      } catch (e) { alert("Error"); }
+    }
+
+    // --- PERFIL Y CONTRASEÑA ---
+    document.getElementById('mcNickForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const mcNick = document.getElementById('mcNickInput').value.trim();
+      const res = await fetch('/api/profile/update', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mcNick })
+      });
+      const d = await res.json();
+      if (d.success) {
+        alert("¡Nick vinculado!");
+        currentUser = d.user;
+        localStorage.setItem('synthetix_user', JSON.stringify(currentUser));
+        renderUser(currentUser);
+      }
+    });
+
+    document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/api/profile/change-password', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword: document.getElementById('currentPass').value,
+          newPassword: document.getElementById('newPass').value
+        })
+      });
+      const d = await res.json();
+      alert(d.message || d.error);
+      if (d.success) document.getElementById('changePasswordForm').reset();
+    });
 
     // --- TICKETS ---
     async function loadTickets() {
@@ -345,11 +765,16 @@
         const data = await res.json();
         allLoadedTickets = data.tickets || [];
         renderTicketsList();
-      } catch (e) { container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>'; }
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">Error al cargar tickets.</p>';
+      }
     }
 
     function setTicketFilter(filter) {
       currentFilter = filter;
+      document.getElementById('fltAll').className = filter === 'all' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      document.getElementById('fltOpen').className = filter === 'Abierto' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
+      document.getElementById('fltClosed').className = filter === 'Cerrado' ? "flex-1 py-1 rounded-lg bg-purple-600 text-white font-bold" : "flex-1 py-1 rounded-lg bg-purple-950/50 text-purple-300 hover:text-white";
       renderTicketsList();
     }
 
@@ -358,19 +783,20 @@
     function renderTicketsList() {
       const container = document.getElementById('ticketsContainer');
       const search = (document.getElementById('ticketSearchInput').value || "").toLowerCase();
+
       let filtered = allLoadedTickets;
       if (currentFilter !== 'all') filtered = filtered.filter(t => t.status === currentFilter);
       if (search) filtered = filtered.filter(t => t.id.toLowerCase().includes(search) || t.title.toLowerCase().includes(search));
 
       if (filtered.length > 0) {
-        const isFounder = (currentUser.role === 'Founder');
+        const isFounder = (currentUser.role === 'Founder' || currentUser.role === 'Admin');
         container.innerHTML = filtered.map(t => `
           <div onclick="selectTicket('${t.id}')" class="p-3 rounded-xl bg-black/40 border border-purple-900/40 hover:border-purple-500/60 cursor-pointer transition text-left relative group">
             <div class="flex items-center justify-between mb-1">
               <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
               <div class="flex items-center space-x-1.5">
                 <span class="text-[9px] px-2 py-0.5 rounded ${t.status === 'Abierto' ? 'bg-emerald-950 text-emerald-400' : 'bg-purple-950 text-purple-300'} font-bold">${t.status}</span>
-                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" class="text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                ${isFounder ? `<button onclick="event.stopPropagation(); deleteTicket('${t.id}')" title="Eliminar" class="text-rose-400 hover:text-rose-300 opacity-0 group-hover:opacity-100 transition p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
               </div>
             </div>
             <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
@@ -385,9 +811,10 @@
 
     async function selectTicket(id) {
       activeTicketId = id;
+      selectedChatFile = null;
       const detail = document.getElementById('ticketDetailContent');
       const replyArea = document.getElementById('replyArea');
-      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando...</p>';
+      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando conversación...</p>';
 
       try {
         const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -397,198 +824,431 @@
 
         detail.innerHTML = `
           <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
-            <div><span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span><h3 class="text-sm font-bold text-white">${t.title}</h3></div>
-            <div>${isStaff ? `<select onchange="changeTicketStatus('${t.id}', this.value)" class="bg-black border border-purple-800 text-xs text-white p-1 rounded"><option value="Abierto" ${t.status=='Abierto'?'selected':''}>Abierto</option><option value="Cerrado" ${t.status=='Cerrado'?'selected':''}>Cerrado</option></select>` : t.status}</div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${t.id}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">${t.category}</span>
+              </div>
+              <h3 class="text-sm font-bold text-white mt-1">${t.title}</h3>
+              <p class="text-[10px] text-purple-400/60">Por: ${t.author}</p>
+            </div>
+            <div>
+              ${isStaff ? `
+                <select onchange="changeTicketStatus('${t.id}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg text-xs text-purple-200 px-2 py-1">
+                  <option value="Abierto" ${t.status === 'Abierto' ? 'selected' : ''}>Abierto</option>
+                  <option value="En Proceso" ${t.status === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
+                  <option value="Cerrado" ${t.status === 'Cerrado' ? 'selected' : ''}>Cerrado</option>
+                </select>
+              ` : `<span class="text-xs px-2.5 py-0.5 rounded-full ${t.status === 'Cerrado' ? 'bg-purple-950 text-purple-400' : 'bg-emerald-950 text-emerald-400'} font-bold">${t.status}</span>`}
+            </div>
           </div>
-          <div class="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
+
+          <div class="space-y-3 max-h-[340px] overflow-y-auto pr-1">
             ${t.messages.map(m => `
-              <div class="p-3 rounded-2xl ${m.role==='Founder'?'bg-purple-950/40 border border-fuchsia-500/30 ml-4':'bg-black/50 border border-purple-950 mr-4'}">
-                <p class="text-[10px] font-bold text-white">${m.sender} <span class="text-[9px] text-purple-400">(${m.role})</span></p>
-                <p class="text-xs text-purple-100 mt-1">${m.text}</p>
-                ${m.attachmentUrl ? `<img src="${m.attachmentUrl}" class="rounded-xl max-h-48 mt-2 cursor-pointer" onclick="window.open('${m.attachmentUrl}', '_blank')">` : ''}
+              <div class="p-3.5 rounded-2xl ${m.role === 'Founder' || m.role === 'Dev' ? 'bg-purple-950/40 border border-fuchsia-500/30 ml-4' : 'bg-black/50 border border-purple-950 mr-4'}">
+                <div class="flex items-center justify-between text-[10px] mb-1">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="font-bold text-white">${m.sender}</span>
+                    <span class="text-[9px] font-mono px-1 rounded ${m.role === 'Founder' ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-purple-950 text-purple-300'}">${m.role}</span>
+                  </div>
+                  <span class="text-[9px] text-purple-400/50">${m.time}</span>
+                </div>
+                ${m.text ? `<p class="text-xs text-purple-100/90 leading-relaxed">${m.text}</p>` : ''}
+                ${m.attachmentUrl ? `
+                  <div class="mt-2.5">
+                    <img src="${m.attachmentUrl}" class="rounded-xl max-h-56 border border-purple-500/30 object-contain cursor-pointer hover:border-purple-400 transition" onclick="window.open('${m.attachmentUrl}', '_blank')" title="Toca para ampliar">
+                  </div>
+                ` : ''}
               </div>
             `).join('')}
           </div>
         `;
 
         if (t.status === 'Cerrado') {
-          replyArea.innerHTML = `<div class="p-3 bg-black/60 text-center text-xs text-purple-300">Ticket cerrado. ${isStaff ? `<button onclick="changeTicketStatus('${t.id}', 'Abierto')" class="text-fuchsia-400 underline ml-2">Reabrir</button>` : ''}</div>`;
+          replyArea.innerHTML = `
+            <div class="p-3 rounded-2xl bg-black/60 border border-purple-950 text-center text-xs text-purple-300 flex items-center justify-center space-x-2">
+              <i data-lucide="lock" class="w-4 h-4 text-rose-400"></i>
+              <span>Este ticket ha sido <b>cerrado</b>. La conversación está en modo lectura.</span>
+              ${isStaff ? `<button onclick="changeTicketStatus('${t.id}', 'Abierto')" class="text-fuchsia-400 underline font-bold ml-2">Reabrir</button>` : ''}
+            </div>
+          `;
         } else {
           replyArea.innerHTML = `
-            <form onsubmit="sendReply(event)" class="flex gap-2 items-center">
-              <input type="text" id="replyText" required placeholder="Escribe tu mensaje..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-              <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Enviar</button>
+            <form id="replyForm" onsubmit="sendReply(event)" class="space-y-2">
+              <div id="imagePreviewBox" class="hidden p-2 rounded-xl bg-black/50 border border-purple-900 flex items-center justify-between text-xs text-purple-300">
+                <span id="imagePreviewName" class="truncate max-w-[200px]">imagen.png</span>
+                <button type="button" onclick="cancelImageAttachment()" class="text-rose-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+              </div>
+
+              <div class="flex gap-2 items-center">
+                <label class="p-2 rounded-xl bg-purple-950/60 hover:bg-purple-900 border border-purple-800 text-purple-300 hover:text-white cursor-pointer transition" title="Adjuntar captura">
+                  <i data-lucide="image" class="w-4 h-4"></i>
+                  <input type="file" id="chatFileInput" accept="image/*" class="hidden" onchange="handleChatFileSelect(this)">
+                </label>
+                <input type="text" id="replyText" placeholder="Escribe tu mensaje o pega una captura con Ctrl+V..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-purple-400">
+                <button type="submit" id="btnSendReply" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-md shadow-purple-600/30">
+                  <span>Enviar</span>
+                  <i data-lucide="send" class="w-3 h-3"></i>
+                </button>
+              </div>
             </form>
           `;
+
+          const inputEl = document.getElementById('replyText');
+          if (inputEl) {
+            inputEl.addEventListener('paste', (e) => {
+              const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+              for (const item of items) {
+                if (item.type.indexOf('image') !== -1) {
+                  const blob = item.getAsFile();
+                  selectedChatFile = blob;
+                  showImagePreview(blob.name || "captura_portapapeles.png");
+                }
+              }
+            });
+          }
         }
         replyArea.classList.remove('hidden');
         lucide.createIcons();
       } catch (e) {}
     }
 
+    function handleChatFileSelect(input) {
+      if (input.files && input.files[0]) {
+        selectedChatFile = input.files[0];
+        showImagePreview(selectedChatFile.name);
+      }
+    }
+
+    function showImagePreview(name) {
+      const box = document.getElementById('imagePreviewBox');
+      const label = document.getElementById('imagePreviewName');
+      if (box && label) {
+        label.innerText = `📎 ${name}`;
+        box.classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function cancelImageAttachment() {
+      selectedChatFile = null;
+      const box = document.getElementById('imagePreviewBox');
+      const input = document.getElementById('chatFileInput');
+      if (box) box.classList.add('hidden');
+      if (input) input.value = '';
+    }
+
     async function sendReply(e) {
       e.preventDefault();
-      const text = document.getElementById('replyText').value.trim();
-      const fd = new FormData();
-      fd.append("ticketId", activeTicketId);
-      fd.append("text", text);
-      if (selectedChatFile) fd.append("image", selectedChatFile);
+      const input = document.getElementById('replyText');
+      const text = input.value.trim();
+      const sendBtn = document.getElementById('btnSendReply');
+      if (!text && !selectedChatFile) return;
 
-      await fetch('/api/tickets/reply', { method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: fd });
-      selectTicket(activeTicketId);
+      sendBtn.disabled = true;
+      sendBtn.innerText = "Subiendo...";
+
+      const formData = new FormData();
+      formData.append("ticketId", activeTicketId);
+      formData.append("text", text);
+      if (selectedChatFile) formData.append("image", selectedChatFile);
+
+      try {
+        const res = await fetch('/api/tickets/reply', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        });
+        const data = await res.json();
+        if (data.error) alert(data.error);
+        selectTicket(activeTicketId);
+      } catch (err) { alert("Error"); }
+      finally {
+        sendBtn.disabled = false;
+        sendBtn.innerText = "Enviar";
+      }
     }
 
     async function changeTicketStatus(ticketId, newStatus) {
-      await fetch('/api/tickets/status', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ ticketId, newStatus }) });
-      loadTickets(); selectTicket(ticketId);
+      await fetch('/api/tickets/status', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId, newStatus })
+      });
+      loadTickets();
+      selectTicket(ticketId);
     }
 
     async function deleteTicket(ticketId) {
-      if (!confirm("¿Eliminar ticket?")) return;
-      await fetch('/api/tickets/delete', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ ticketId }) });
+      if (!confirm(`¿Eliminar definitivamente el ticket ${ticketId}?`)) return;
+      await fetch('/api/tickets/delete', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticketId })
+      });
       loadTickets();
+      document.getElementById('ticketDetailContent').innerHTML = '<div class="text-center py-24 text-purple-400/60"><p class="text-xs font-semibold">Ticket eliminado</p></div>';
+      document.getElementById('replyArea').classList.add('hidden');
     }
 
     document.getElementById('ticketForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const res = await fetch('/api/tickets', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ title: document.getElementById('tTitle').value, category: document.getElementById('tCategory').value, message: document.getElementById('tMessage').value }) });
+      const res = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: document.getElementById('tTitle').value,
+          category: document.getElementById('tCategory').value,
+          message: document.getElementById('tMessage').value
+        })
+      });
       const d = await res.json();
-      if (d.success) { closeTicketModal(); loadTickets(); selectTicket(d.ticket.id); }
+      if (d.success) {
+        closeTicketModal();
+        document.getElementById('ticketForm').reset();
+        loadTickets();
+        selectTicket(d.ticket.id);
+      }
     });
 
-    // --- VAULT ---
+    // --- RESOURCE VAULT ---
     async function loadVault() {
       const container = document.getElementById('vaultContainer');
       try {
         const res = await fetch('/api/vault');
         const data = await res.json();
         allVaultItems = data.resources || [];
-        container.innerHTML = allVaultItems.length ? allVaultItems.map(r => `
-          <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col justify-between space-y-3">
-            <div><span class="text-xs font-bold text-white">${r.name}</span><p class="text-xs text-purple-300/70 mt-1">${r.description || ''}</p></div>
-            <a href="/api/vault/download?id=${r.id}&token=${token}" class="w-full py-2 rounded-xl bg-purple-600 text-white text-xs font-bold text-center">Descargar</a>
-          </div>
-        `).join('') : '<p class="text-xs text-purple-400 text-center py-6 col-span-3">No hay recursos.</p>';
-        lucide.createIcons();
+        renderVault();
       } catch (e) {}
+    }
+
+    function filterVaultCat(cat) { currentVaultCat = cat; renderVault(); }
+
+    function renderVault() {
+      const container = document.getElementById('vaultContainer');
+      const isStaff = (currentUser.role === 'Founder' || currentUser.role === 'Admin');
+      const isVip = (currentUser.role === 'VIP' || currentUser.role === 'Client' || isStaff);
+
+      let items = allVaultItems;
+      if (currentVaultCat !== 'all') items = items.filter(r => r.category === currentVaultCat);
+
+      if (items.length > 0) {
+        container.innerHTML = items.map(r => {
+          const isVipOnly = r.accessTier === 'vip';
+          const canDownload = !isVipOnly || isVip;
+          return `
+            <div class="p-4 rounded-2xl bg-black/40 border ${isVipOnly ? 'border-amber-500/40' : 'border-purple-900/60'} flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-white">${r.name}</span>
+                  <span class="text-[9px] font-mono px-2 py-0.5 rounded ${isVipOnly ? 'bg-amber-950 text-amber-300 border border-amber-800' : 'bg-purple-950 text-purple-300 border border-purple-800'}">${r.category || 'Recurso'}</span>
+                </div>
+                <div class="flex items-center justify-between text-[10px] text-fuchsia-400 font-mono mb-1.5">
+                  <span>MC: ${r.mcVersions}</span>
+                  <span class="text-purple-400">${r.fileSize || 'Descarga'}</span>
+                </div>
+                <p class="text-xs text-purple-300/70 leading-relaxed">${r.description || 'Sin descripción'}</p>
+              </div>
+              <div class="pt-2.5 border-t border-purple-950 flex items-center justify-between">
+                <span class="text-[9px] text-purple-400/50">Por ${r.author}</span>
+                <div class="flex items-center space-x-2">
+                  ${canDownload ? `
+                    <a href="/api/vault/download?id=${r.id}&token=${token}" class="px-3 py-1 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center space-x-1">
+                      <i data-lucide="download" class="w-3 h-3"></i><span>Descargar</span>
+                    </a>
+                  ` : `
+                    <span class="px-2.5 py-1 rounded-xl bg-amber-950/80 border border-amber-500/40 text-amber-300 text-[10px] font-bold flex items-center space-x-1">
+                      <i data-lucide="lock" class="w-3 h-3"></i><span>VIP Only</span>
+                    </span>
+                  `}
+                  ${isStaff ? `<button onclick="deleteResource('${r.id}')" title="Eliminar" class="p-1 text-rose-400 hover:text-rose-300"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-3">No hay recursos en esta categoría.</p>';
+      }
+      lucide.createIcons();
     }
 
     document.getElementById('vaultUploadForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const fd = new FormData();
-      fd.append("file", document.getElementById('vFile').files[0]);
-      fd.append("name", document.getElementById('vName').value);
-      fd.append("category", document.getElementById('vCategory').value);
-      fd.append("accessTier", "free");
-      fd.append("version", "1.0.0");
-      fd.append("mcVersions", "1.20");
-      fd.append("description", document.getElementById('vDesc').value);
+      const btn = document.getElementById('vUploadBtn');
+      const fileInput = document.getElementById('vFile');
+      if (!fileInput.files.length) return alert("Selecciona un archivo");
 
-      const res = await fetch('/api/vault/upload', { method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: fd });
-      const d = await res.json();
-      if (d.success) { alert("¡Subido!"); loadVault(); setMainTab('vault'); }
+      btn.disabled = true;
+      btn.innerText = "Subiendo archivo a R2...";
+
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+      formData.append("name", document.getElementById('vName').value);
+      formData.append("category", document.getElementById('vCategory').value);
+      formData.append("accessTier", document.getElementById('vAccessTier').value);
+      formData.append("version", document.getElementById('vVersion').value);
+      formData.append("mcVersions", document.getElementById('vMC').value);
+      formData.append("description", document.getElementById('vDesc').value);
+
+      try {
+        const res = await fetch('/api/vault/upload', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        });
+        const d = await res.json();
+        if (d.success) {
+          alert("¡Recurso subido a R2!");
+          document.getElementById('vaultUploadForm').reset();
+          loadVault();
+          setMainTab('vault');
+        } else {
+          alert(d.error);
+        }
+      } catch (err) { alert("Error"); }
+      finally {
+        btn.disabled = false;
+        btn.innerText = "Publicar Recurso en R2";
+      }
     });
 
-    // --- LICENCIAS Y PROYECTOS ---
-    async function loadLicenses() {
-      const c = document.getElementById('licensesContainer');
-      const fList = document.getElementById('founderLicensesList');
-      try {
-        const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-        if (data.licenses) {
-          c.innerHTML = data.licenses.map(l => `<div class="p-3 bg-black/40 border border-purple-900 rounded-xl text-xs flex justify-between"><span><b>${l.key}</b> (${l.resourceName})</span><span class="text-emerald-400">${l.status}</span></div>`).join('');
-          if (fList) fList.innerHTML = data.licenses.map(l => `<div class="p-3 bg-black/40 border border-purple-900 rounded-xl text-xs flex justify-between"><span><b>${l.key}</b> - ${l.clientEmail}</span><button onclick="deleteLicense('${l.key}')" class="text-rose-400 underline">Eliminar</button></div>`).join('');
-        }
-        lucide.createIcons();
-      } catch (e) {}
-    }
-
-    const cpForm = document.getElementById('createProjectForm');
-    if (cpForm) {
-      cpForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const res = await fetch('/api/founder/project-create', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ title: document.getElementById('pTitle').value, clientEmail: document.getElementById('pClientEmail').value, progress: document.getElementById('pProgress').value, downloadUrl: document.getElementById('pDownloadUrl').value }) });
-        const d = await res.json();
-        if (d.success) { alert("¡Proyecto creado!"); cpForm.reset(); loadProjects(); setMainTab('projects'); }
+    async function deleteResource(id) {
+      if (!confirm("¿Eliminar este recurso de R2?")) return;
+      await fetch('/api/vault/delete', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
       });
+      loadVault();
     }
 
+    // --- PROYECTOS & FOUNDER USERS ---
     async function loadProjects() {
       const container = document.getElementById('projectsContainer');
       try {
         const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        if (data.projects) container.innerHTML = data.projects.map(p => `<div class="p-4 bg-black/40 border border-purple-900 rounded-xl text-xs"><b>${p.title}</b> - ${p.progress}%</div>`).join('');
+        if (data.projects && data.projects.length > 0) {
+          container.innerHTML = data.projects.map(p => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/50 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
+                <span class="text-xs font-bold text-purple-300">${p.progress}%</span>
+              </div>
+              <h4 class="text-sm font-bold text-white">${p.title}</h4>
+              <div class="w-full bg-purple-950/60 rounded-full h-1.5 border border-purple-900">
+                <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-1.5 rounded-full" style="width: ${p.progress}%"></div>
+              </div>
+              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-1"><i data-lucide="download" class="w-3 h-3"></i><span>Descargar</span></a>` : ''}
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-6 col-span-2">No hay proyectos activos.</p>';
+        }
+        lucide.createIcons();
       } catch (e) {}
     }
 
-    async function deleteLicense(key) {
-      if (!confirm("¿Eliminar licencia?")) return;
-      await fetch('/api/founder/licenses/delete', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ key }) });
-      loadLicenses();
+    // FORMULARIO CREAR PROYECTO (CONECTADO)
+    const cpForm = document.getElementById('createProjectForm');
+    if (cpForm) {
+      cpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = cpForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Guardando proyecto...";
+
+        try {
+          const res = await fetch('/api/founder/project-create', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: document.getElementById('pTitle').value,
+              clientEmail: document.getElementById('pClientEmail').value,
+              progress: document.getElementById('pProgress').value,
+              downloadUrl: document.getElementById('pDownloadUrl').value
+            })
+          });
+          const d = await res.json();
+          if (d.success) {
+            alert("¡Proyecto asignado al cliente con éxito!");
+            cpForm.reset();
+            loadProjects();
+            setMainTab('projects');
+          } else {
+            alert(d.error || "Error al crear proyecto");
+          }
+        } catch (err) {
+          alert("Error de conexión");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Guardar Proyecto";
+        }
+      });
     }
 
-    document.getElementById('createLicenseForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await fetch('/api/founder/licenses/create', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ clientEmail: document.getElementById('licEmail').value, resourceName: document.getElementById('licPlugin').value }) });
-      closeCreateLicenseModal(); loadLicenses();
-    });
+    function setFounderSubTab(sub) {
+      ['Licenses', 'Assign', 'Users'].forEach(s => {
+        const sec = document.getElementById(`fSec${s}`);
+        const btn = document.getElementById(`fTab${s}`);
+        if (sec && btn) {
+          if (s.toLowerCase() === sub.toLowerCase()) {
+            sec.classList.remove('hidden');
+            btn.className = "p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1 shadow-md";
+          } else {
+            sec.classList.add('hidden');
+            btn.className = "p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
+          }
+        }
+      });
+      if (sub === 'licenses') loadFounderLicenses();
+      if (sub === 'users') loadFounderUsers();
+      lucide.createIcons();
+    }
 
     async function loadFounderUsers() {
       const tbody = document.getElementById('usersTableBody');
       try {
         const res = await fetch('/api/founder/users', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        if (data.users) {
-          tbody.innerHTML = data.users.map(u => `<tr class="border-b border-purple-950"><td class="p-2">${u.username}</td><td class="p-2">${u.email}</td><td class="p-2">${u.role}</td><td class="p-2"><select onchange="changeRole('${u.email}', this.value)" class="bg-black text-xs text-white p-1 rounded"><option value="" disabled selected>Rol...</option><option value="VIP">VIP</option><option value="Client">Client</option><option value="Dev">Dev</option><option value="Founder">Founder</option></select></td></tr>`).join('');
-        }
-      } catch(e) {}
+        tbody.innerHTML = data.users.map(u => `
+          <tr class="hover:bg-purple-950/20">
+            <td class="p-2.5 font-semibold text-white">${u.username}</td>
+            <td class="p-2.5 text-purple-300">${u.email}</td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-900 text-purple-200">${u.role}</span></td>
+            <td class="p-2.5">
+              <select onchange="changeRole('${u.email}', this.value)" class="bg-black/60 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
+                <option value="" disabled selected>Cambiar rol...</option>
+                <option value="VIP">VIP</option>
+                <option value="Client">Client</option>
+                <option value="Dev">Dev</option>
+                <option value="Admin">Admin</option>
+                <option value="Founder">Founder</option>
+              </select>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {}
     }
 
     async function changeRole(email, newRole) {
-      if(!confirm(`¿Cambiar rol de ${email} a ${newRole}?`)) return;
-      await fetch('/api/founder/set-role', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, newRole }) });
+      if (!confirm(`¿Cambiar el rol a ${newRole}?`)) return;
+      await fetch('/api/founder/set-role', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, newRole })
+      });
       loadFounderUsers();
     }
 
-    document.getElementById('mcNickForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const mcNick = document.getElementById('mcNickInput').value.trim();
-      const res = await fetch('/api/profile/update', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ mcNick }) });
-      const d = await res.json();
-      if (d.success) { alert("¡Nick guardado!"); location.reload(); }
-    });
-
-    document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const res = await fetch('/api/profile/change-password', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: document.getElementById('currentPass').value, newPassword: document.getElementById('newPass').value }) });
-      const d = await res.json();
-      alert(d.message || d.error);
-    });
-
-    document.getElementById('reviewForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await fetch('/api/reviews/create', { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ stars: document.getElementById('revStars').value, service: document.getElementById('revService').value, comment: document.getElementById('revComment').value }) });
-      alert("¡Reseña publicada!"); closeReviewModal();
-    });
-
-    function setFounderSubTab(sub) {
-      document.getElementById('fSecLicenses').classList.toggle('hidden', sub !== 'licenses');
-      document.getElementById('fSecAssign').classList.toggle('hidden', sub !== 'assignProject');
-      document.getElementById('fSecUsers').classList.toggle('hidden', sub !== 'users');
-      if (sub === 'users') loadFounderUsers();
-    }
-
     function openTicketModal() { document.getElementById('ticketModal').classList.remove('hidden'); }
-    function closeTicketModal() { document.getElementById('ticketModal').classList.add('hidden'); }
-    function openCreateLicenseModal() { document.getElementById('createLicenseModal').classList.remove('hidden'); }
-    function closeCreateLicenseModal() { document.getElementById('createLicenseModal').classList.add('hidden'); }
-    function showJavaSnippetModal() { document.getElementById('javaSnippetModal').classList.remove('hidden'); }
-    function closeJavaSnippetModal() { document.getElementById('javaSnippetModal').classList.add('hidden'); }
-    function openReviewModal() { document.getElementById('reviewModal').classList.remove('hidden'); }
-    function closeReviewModal() { document.getElementById('reviewModal').classList.add('hidden'); }
-    function logout() { localStorage.clear(); window.location.href = '/login'; }
+    function closeTicketModal() { document.getElementById('ticketModal'].classList.add('hidden'); }
+    function logout() {
+      localStorage.removeItem('synthetix_token');
+      localStorage.removeItem('synthetix_user');
+      window.location.href = '/login';
+    }
   </script>
 </body>
 </html>
