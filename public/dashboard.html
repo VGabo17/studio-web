@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | Synthetix Studio</title>
   <link rel="manifest" href="/manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -295,7 +295,7 @@
         </button>
       </div>
 
-      <!-- SECCIÓN DRM FOUNDER CON BOTÓN DE ELIMINAR -->
+      <!-- SECCIÓN DRM FOUNDER -->
       <div id="fSecLicenses" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-4">
         <div class="flex items-center justify-between border-b border-purple-950 pb-3">
           <h3 class="font-bold text-white text-sm">Control Central de Licencias Anti-Leak</h3>
@@ -304,16 +304,14 @@
         <div id="founderLicensesList" class="space-y-2">Cargando licencias activas...</div>
       </div>
 
-      <!-- SECCIÓN CREAR PROYECTO (CONECTADA AL FORMULARIO) -->
       <div id="fSecAssign" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl space-y-3">
         <h3 class="font-bold text-white text-sm">Asignar Proyecto a Cliente</h3>
-        <p class="text-[11px] text-purple-300/60">Introduce los datos para que el cliente lo vea en su pestaña "Mis Builds".</p>
         <form id="createProjectForm" class="space-y-3">
           <input type="text" id="pTitle" required placeholder="Nombre del proyecto (Ej: Setup BoxPvP)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="email" id="pClientEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="number" id="pProgress" min="0" max="100" value="25" placeholder="Progreso %" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga directo (opcional)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-2.5 rounded-xl transition shadow-md shadow-purple-600/30">Guardar Proyecto</button>
+          <button type="submit" class="w-full bg-purple-600 font-bold text-xs text-white py-2.5 rounded-xl">Guardar Proyecto</button>
         </form>
       </div>
 
@@ -588,19 +586,11 @@
                 <p class="text-[11px] text-white">${l.clientEmail} • ${l.resourceName}</p>
                 <span class="text-[9px] text-purple-400/50">IPs: ${l.ips.join(', ') || 'Sin uso'}</span>
               </div>
-              <div class="flex items-center space-x-1.5">
-                <button onclick="toggleLicense('${l.key}')" class="px-2.5 py-1 rounded-lg ${l.status === 'Activa' ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'} text-[10px] font-bold">
-                  ${l.status === 'Activa' ? 'Revocar' : 'Reactivar'}
-                </button>
-                <button onclick="deleteLicense('${l.key}')" title="Eliminar definitivamente" class="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 text-rose-400 hover:text-white transition">
-                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
+              <button onclick="toggleLicense('${l.key}')" class="px-2.5 py-1 rounded-lg ${l.status === 'Activa' ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'} text-[10px] font-bold">
+                ${l.status === 'Activa' ? 'Revocar' : 'Reactivar'}
+              </button>
             </div>
           `).join('');
-          lucide.createIcons();
-        } else {
-          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias activas.</p>';
         }
       } catch (e) {}
     }
@@ -613,65 +603,6 @@
       });
       loadFounderLicenses();
       loadLicenses();
-    }
-
-    // ELIMINAR LICENCIA DEFINITIVAMENTE (NUEVO)
-    async function deleteLicense(key) {
-      if (!confirm(`¿Eliminar definitivamente la licencia ${key}?`)) return;
-      try {
-        const res = await fetch('/api/founder/licenses/delete', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ key })
-        });
-        const d = await res.json();
-        if (d.success) {
-          loadFounderLicenses();
-          loadLicenses();
-        } else {
-          alert(d.error || "Error al eliminar");
-        }
-      } catch (e) {
-        alert("Error de conexión");
-      }
-    }
-
-    // --- FORMULARIO CREAR PROYECTO (CONECTADO Y FUNCIONAL) ---
-    const cpForm = document.getElementById('createProjectForm');
-    if (cpForm) {
-      cpForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = cpForm.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Guardando proyecto...";
-
-        try {
-          const res = await fetch('/api/founder/project-create', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              title: document.getElementById('pTitle').value,
-              clientEmail: document.getElementById('pClientEmail').value,
-              progress: document.getElementById('pProgress').value,
-              downloadUrl: document.getElementById('pDownloadUrl').value
-            })
-          });
-          const d = await res.json();
-          if (d.success) {
-            alert("¡Proyecto asignado al cliente con éxito!");
-            cpForm.reset();
-            loadProjects();
-            setMainTab('projects');
-          } else {
-            alert(d.error || "Error al crear proyecto");
-          }
-        } catch (err) {
-          alert("Error de conexión al guardar proyecto");
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerText = "Guardar Proyecto";
-        }
-      });
     }
 
     // --- RESEÑAS ⭐ ---
@@ -1113,7 +1044,6 @@
               <div class="w-full bg-purple-950/60 rounded-full h-1.5 border border-purple-900">
                 <div class="bg-gradient-to-r from-purple-500 to-fuchsia-500 h-1.5 rounded-full" style="width: ${p.progress}%"></div>
               </div>
-              ${p.downloadUrl ? `<a href="${p.downloadUrl}" target="_blank" class="inline-flex items-center space-x-1 text-xs text-fuchsia-400 hover:text-white font-bold mt-1"><i data-lucide="download" class="w-3 h-3"></i><span>Descargar Archivos</span></a>` : ''}
             </div>
           `).join('');
         } else {
