@@ -108,7 +108,7 @@
       </button>
     </div>
 
-    <!-- VISTA 1: TICKETS -->
+    <!-- VISTA 1: TICKETS CON FOTOS Y CHAT -->
     <div id="viewTickets" class="grid lg:grid-cols-3 gap-5">
       <div class="lg:col-span-1 p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
         <div class="flex items-center justify-between border-b border-purple-950 pb-2.5">
@@ -188,22 +188,27 @@
     <!-- VISTA 5: MI PERFIL Y SEGURIDAD -->
     <div id="viewProfile" class="hidden space-y-6">
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-3xl card-glass border border-purple-900/60 text-center flex flex-col items-center">
+        <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-4 text-center flex flex-col items-center">
           <img id="profilePreviewHead" src="https://mc-heads.net/avatar/steve/100" class="w-24 h-24 rounded-2xl border-2 border-fuchsia-500/50 shadow-xl bg-black/60 object-cover">
-          <h3 id="profileUsername" class="text-lg font-bold text-white mt-3">...</h3>
-          <p id="profileEmail" class="text-xs text-purple-400 font-mono">...</p>
+          <div>
+            <h3 id="profileUsername" class="text-lg font-bold text-white mt-3">...</h3>
+            <p id="profileEmail" class="text-xs text-purple-400 font-mono">...</p>
+          </div>
         </div>
+
         <div class="md:col-span-2 space-y-6">
           <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
             <h4 class="text-sm font-bold text-white flex items-center space-x-2">
               <i data-lucide="gamepad-2" class="w-4 h-4 text-fuchsia-400"></i>
               <span>Vincular Cuenta de Minecraft</span>
             </h4>
+            <p class="text-xs text-purple-300/60">Introduce tu nick de Minecraft para renderizar tu skin 3D.</p>
             <form id="mcNickForm" class="flex gap-2">
               <input type="text" id="mcNickInput" placeholder="Ej: iShadowz" class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
               <button type="submit" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs">Guardar Nick</button>
             </form>
           </div>
+
           <div class="p-6 rounded-3xl card-glass border border-purple-900/60 space-y-3">
             <h4 class="text-sm font-bold text-white flex items-center space-x-2">
               <i data-lucide="key" class="w-4 h-4 text-purple-400"></i>
@@ -248,40 +253,71 @@
       </div>
     </div>
 
-    <!-- VISTA 7: FOUNDER NEXUS -->
+    <!-- VISTA 7: FOUNDER NEXUS (ADMIN PANEL MEJORADO) -->
     <div id="viewFounder" class="hidden space-y-6">
-      <div class="grid grid-cols-3 gap-2.5 max-w-lg">
-        <button onclick="setFounderSubTab('licenses')" id="fTabLicenses" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs">Gestor DRM</button>
-        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs">Crear Proyecto</button>
-        <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs">Usuarios & Roles</button>
+      
+      <!-- TARJETAS KPI DE RESUMEN DEL ADMIN -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Licencias DRM</span>
+          <p id="kpiLicenses" class="text-xl sm:text-2xl font-black text-emerald-400 mt-1">0</p>
+        </div>
+        <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Proyectos</span>
+          <p id="kpiProjects" class="text-xl sm:text-2xl font-black text-fuchsia-400 mt-1">0</p>
+        </div>
+        <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block">Usuarios</span>
+          <p id="kpiUsers" class="text-xl sm:text-2xl font-black text-white mt-1">0</p>
+        </div>
       </div>
 
-      <!-- SECCIÓN DRM FOUNDER -->
+      <!-- BOTONES DE SUBPESTAÑAS -->
+      <div class="grid grid-cols-3 gap-2.5 max-w-lg">
+        <button onclick="setFounderSubTab('licenses')" id="fTabLicenses" class="p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1 shadow-md">
+          <i data-lucide="shield-alert" class="w-4 h-4"></i>
+          <span>Gestor DRM</span>
+        </button>
+        <button onclick="setFounderSubTab('assignProject')" id="fTabAssign" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="folder-plus" class="w-4 h-4"></i>
+          <span>Crear Proyecto</span>
+        </button>
+        <button onclick="setFounderSubTab('users')" id="fTabUsers" class="p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          <span>Usuarios & Roles</span>
+        </button>
+      </div>
+
+      <!-- SUBSECCIÓN 1: GESTOR DRM -->
       <div id="fSecLicenses" class="p-5 rounded-3xl card-glass border border-purple-900/40 space-y-4">
         <div class="flex items-center justify-between border-b border-purple-950 pb-3">
-          <h3 class="font-bold text-white text-sm">Control Central de Licencias Anti-Leak</h3>
-          <button onclick="openCreateLicenseModal()" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md">+ Crear Licencia</button>
+          <div>
+            <h3 class="font-bold text-white text-sm">Control Central de Licencias Anti-Leak</h3>
+            <p class="text-[11px] text-purple-300/60">Genera, revoca o elimina claves de activación</p>
+          </div>
+          <button onclick="openCreateLicenseModal()" class="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition">+ Crear Licencia</button>
         </div>
         <div id="founderLicensesList" class="space-y-2">
           <p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún.</p>
         </div>
       </div>
 
-      <!-- SECCIÓN CREAR PROYECTO -->
+      <!-- SUBSECCIÓN 2: ASIGNAR PROYECTO -->
       <div id="fSecAssign" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 max-w-xl space-y-3">
-        <h3 class="font-bold text-white text-sm">Asignar Proyecto a Cliente</h3>
+        <h3 class="font-bold text-white text-sm">Asignar Proyecto / Build a Cliente</h3>
+        <p class="text-[11px] text-purple-300/60">El cliente verá la barra de progreso en su pestaña "Mis Builds".</p>
         <form id="createProjectForm" class="space-y-3">
           <input type="text" id="pTitle" required placeholder="Nombre del proyecto (Ej: Setup BoxPvP)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="email" id="pClientEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="number" id="pProgress" min="0" max="100" value="25" placeholder="Progreso %" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
           <input type="url" id="pDownloadUrl" placeholder="Enlace de descarga directo (opcional)" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-2.5 rounded-xl transition shadow-md">Guardar Proyecto</button>
+          <button type="submit" id="btnSaveProject" class="w-full bg-purple-600 hover:bg-purple-500 font-bold text-xs text-white py-2.5 rounded-xl transition shadow-md shadow-purple-600/30">Guardar Proyecto</button>
         </form>
       </div>
 
-      <!-- SECCIÓN USUARIOS -->
+      <!-- SUBSECCIÓN 3: USUARIOS & ROLES -->
       <div id="fSecUsers" class="hidden p-5 rounded-3xl card-glass border border-purple-900/40 space-y-3">
-        <h3 class="font-bold text-white text-sm">Usuarios & Gestión de Roles</h3>
+        <h3 class="font-bold text-white text-sm">Gestión de Usuarios & Rangos</h3>
         <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="usersTableBody" class="divide-y divide-purple-950"></tbody></table></div>
       </div>
     </div>
@@ -296,19 +332,28 @@
         <button onclick="closeReviewModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <form id="reviewForm" class="space-y-3">
-        <select id="revStars" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-          <option value="5">⭐⭐⭐⭐⭐ 5 Estrellas</option>
-          <option value="4">⭐⭐⭐⭐ 4 Estrellas</option>
-          <option value="3">⭐⭐⭐ 3 Estrellas</option>
-        </select>
-        <input type="text" id="revService" required placeholder="Servicio valorado" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <textarea id="revComment" rows="3" required placeholder="Tu experiencia..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Calificación en Estrellas</label>
+          <select id="revStars" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+            <option value="5">⭐⭐⭐⭐⭐ 5 Estrellas (Excelente)</option>
+            <option value="4">⭐⭐⭐⭐ 4 Estrellas (Muy Bueno)</option>
+            <option value="3">⭐⭐⭐ 3 Estrellas (Bueno)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Servicio / Plugin Valorador</label>
+          <input type="text" id="revService" required placeholder="Ej: Setup BoxPvP o Plugin Clanes" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Tu Experiencia</label>
+          <textarea id="revComment" rows="3" required placeholder="¿Cómo te funcionó el TPS, soporte y calidad?..." class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+        </div>
         <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-xs">Publicar Reseña</button>
       </form>
     </div>
   </div>
 
-  <!-- MODAL: CREAR LICENCIA DRM (CONECTADO) -->
+  <!-- MODAL: CREAR LICENCIA DRM (CONECTADO CON FEEDBACK) -->
   <div id="createLicenseModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
       <div class="flex items-center justify-between">
@@ -316,8 +361,14 @@
         <button onclick="closeCreateLicenseModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <form id="createLicenseForm" class="space-y-3">
-        <input type="email" id="licEmail" required placeholder="Correo del cliente" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
-        <input type="text" id="licPlugin" required placeholder="Nombre del plugin" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Correo Electrónico del Cliente</label>
+          <input type="email" id="licEmail" required placeholder="cliente@correo.com" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+        <div>
+          <label class="block text-[10px] uppercase font-mono text-purple-300 mb-1">Nombre del Plugin</label>
+          <input type="text" id="licPlugin" required placeholder="Ej: iSRewards" class="w-full bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
         <button type="submit" id="btnSubmitLicense" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md">Generar Clave Única</button>
       </form>
     </div>
@@ -327,7 +378,10 @@
   <div id="javaSnippetModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full card-glass rounded-3xl p-6 border border-purple-500/40 shadow-2xl space-y-4">
       <div class="flex items-center justify-between">
-        <h3 class="text-sm font-bold text-white">Código Java DRM</h3>
+        <h3 class="text-sm font-bold text-white flex items-center space-x-1.5">
+          <i data-lucide="code" class="w-4 h-4 text-cyan-400"></i>
+          <span>Código Java DRM para tu Plugin</span>
+        </h3>
         <button onclick="closeJavaSnippetModal()" class="text-purple-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <p class="text-xs text-purple-300/70">Pega este método en el `onEnable()` de tu plugin Java:</p>
@@ -337,6 +391,7 @@
         URL u = new URL("https://test.synthetixhost.lol/api/license/verify?key=" + key);
         HttpURLConnection c = (HttpURLConnection) u.openConnection();
         c.setRequestMethod("GET");
+        c.setConnectTimeout(4000);
         return c.getResponseCode() == 200;
     } catch(Exception e) { return false; }
 }</pre>
@@ -478,7 +533,7 @@
       selectedChatFile = null;
       const detail = document.getElementById('ticketDetailContent');
       const replyArea = document.getElementById('replyArea');
-      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando...</p>';
+      detail.innerHTML = '<p class="text-xs text-purple-400 text-center py-10">Cargando conversación...</p>';
 
       try {
         const res = await fetch(`/api/tickets?id=${id}`, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -507,6 +562,7 @@
         } else {
           replyArea.innerHTML = `
             <form onsubmit="sendReply(event)" class="flex gap-2 items-center">
+              <label class="p-2 rounded-xl bg-purple-950 text-purple-300 cursor-pointer"><i data-lucide="image" class="w-4 h-4"></i><input type="file" id="chatFile" accept="image/*" class="hidden" onchange="selectedChatFile=this.files[0]; alert('Imagen lista para enviar');"></label>
               <input type="text" id="replyText" required placeholder="Escribe tu mensaje..." class="flex-1 bg-black/60 border border-purple-900 rounded-xl px-3 py-2 text-xs text-white">
               <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Enviar</button>
             </form>
@@ -580,14 +636,28 @@
       if (d.success) { alert("¡Subido con éxito!"); loadVault(); setMainTab('vault'); }
     });
 
-    // --- GESTIÓN DE LICENCIAS ---
+    // --- DRM LICENCIAS (CLIENTE Y FOUNDER) ---
     async function loadLicenses() {
       const c = document.getElementById('licensesContainer');
       try {
         const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         if (data.licenses && data.licenses.length > 0) {
-          c.innerHTML = data.licenses.map(l => `<div class="p-3 bg-black/40 border border-purple-900 rounded-xl text-xs flex justify-between"><span><b>${l.key}</b> (${l.resourceName})</span><span class="text-emerald-400">${l.status}</span></div>`).join('');
+          c.innerHTML = data.licenses.map(l => `
+            <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center space-x-2 mb-1">
+                  <span class="text-sm font-mono font-bold text-emerald-400 select-all">${l.key}</span>
+                  <span class="text-[9px] font-mono px-2 py-0.5 rounded ${l.status === 'Activa' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-rose-950 text-rose-300 border border-rose-800'}">${l.status}</span>
+                </div>
+                <p class="text-xs font-bold text-white">${l.resourceName}</p>
+                <p class="text-[10px] text-purple-400/60 mt-0.5">IPs activadas: ${l.ips && l.ips.length ? l.ips.join(', ') : 'Ninguna todavía'}</p>
+              </div>
+              <button onclick="navigator.clipboard.writeText('${l.key}'); alert('¡Clave copiada!');" class="px-3 py-1.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-200 text-xs font-mono font-bold border border-purple-800">
+                Copiar Clave
+              </button>
+            </div>
+          `).join('');
         } else {
           c.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No tienes licencias asignadas actualmente.</p>';
         }
@@ -602,16 +672,25 @@
       try {
         const res = await fetch('/api/licenses', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        if (data.licenses && data.licenses.length > 0 && fList) {
-          fList.innerHTML = data.licenses.map(l => `
-            <div class="p-3 bg-black/50 border border-purple-900/60 rounded-2xl flex items-center justify-between text-xs">
+        const lics = data.licenses || [];
+        
+        // Actualizar contador KPI
+        const kpi = document.getElementById('kpiLicenses');
+        if (kpi) kpi.innerText = lics.filter(l => l.status === 'Activa').length;
+
+        if (lics.length > 0 && fList) {
+          fList.innerHTML = lics.map(l => `
+            <div class="p-3.5 bg-black/50 border border-purple-900/60 rounded-2xl flex items-center justify-between text-xs">
               <div>
-                <span class="font-mono font-bold text-emerald-400">${l.key}</span>
-                <p class="text-[11px] text-white">${l.clientEmail} • ${l.resourceName}</p>
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono font-bold text-emerald-400">${l.key}</span>
+                  <span class="text-[9px] font-mono px-1.5 py-0.2 rounded ${l.status === 'Activa' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-rose-950 text-rose-300 border border-rose-800'}">${l.status}</span>
+                </div>
+                <p class="text-[11px] text-white mt-0.5">${l.clientEmail} • ${l.resourceName}</p>
                 <span class="text-[9px] text-purple-400/50">IPs: ${l.ips && l.ips.length ? l.ips.join(', ') : 'Sin activaciones'}</span>
               </div>
               <div class="flex items-center space-x-1.5">
-                <button onclick="toggleLicense('${l.key}')" class="px-2.5 py-1 rounded-lg ${l.status === 'Activa' ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'} text-[10px] font-bold">
+                <button onclick="toggleLicense('${l.key}')" class="px-2.5 py-1 rounded-lg ${l.status === 'Activa' ? 'bg-rose-950 text-rose-300 border border-rose-800 hover:bg-rose-900' : 'bg-emerald-950 text-emerald-300 border border-emerald-800 hover:bg-emerald-900'} text-[10px] font-bold transition">
                   ${l.status === 'Activa' ? 'Revocar' : 'Reactivar'}
                 </button>
                 <button onclick="deleteLicense('${l.key}')" title="Eliminar definitivamente" class="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 text-rose-400 hover:text-white transition">
@@ -620,23 +699,23 @@
               </div>
             </div>
           `).join('');
+          lucide.createIcons();
         } else if (fList) {
           fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún. Pulsa "+ Crear Licencia" para emitir una.</p>';
         }
-        lucide.createIcons();
       } catch(e) {
         if (fList) fList.innerHTML = '<p class="text-xs text-purple-400 text-center py-4">No hay licencias generadas aún.</p>';
       }
     }
 
-    // FORMULARIO CREAR LICENCIA DRM (CONECTADO Y CON RESPUESTA)
+    // FORMULARIO CREAR LICENCIA CON FEEDBACK REAL
     const cLicForm = document.getElementById('createLicenseForm');
     if (cLicForm) {
       cLicForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const submitBtn = document.getElementById('btnSubmitLicense');
         submitBtn.disabled = true;
-        submitBtn.innerText = "Generando...";
+        submitBtn.innerText = "Generando clave...";
 
         try {
           const res = await fetch('/api/founder/licenses/create', {
@@ -666,25 +745,45 @@
       });
     }
 
+    // TOGGLE REVOCAR / REACTIVAR CON RESPUESTA
     async function toggleLicense(key) {
-      await fetch('/api/founder/licenses/toggle', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key })
-      });
-      loadFounderLicenses();
-      loadLicenses();
+      try {
+        const res = await fetch('/api/founder/licenses/toggle', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key })
+        });
+        const d = await res.json();
+        if (d.success) {
+          loadFounderLicenses();
+          loadLicenses();
+        } else {
+          alert("Error: " + (d.error || "No se pudo cambiar el estado"));
+        }
+      } catch(e) {
+        alert("Error de conexión al cambiar estado");
+      }
     }
 
+    // BORRAR LICENCIA
     async function deleteLicense(key) {
       if (!confirm("¿Eliminar definitivamente la licencia " + key + "?")) return;
-      await fetch('/api/founder/licenses/delete', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key })
-      });
-      loadFounderLicenses();
-      loadLicenses();
+      try {
+        const res = await fetch('/api/founder/licenses/delete', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key })
+        });
+        const d = await res.json();
+        if (d.success) {
+          loadFounderLicenses();
+          loadLicenses();
+        } else {
+          alert("Error al eliminar");
+        }
+      } catch(e) {
+        alert("Error de conexión");
+      }
     }
 
     // --- PROYECTOS ---
@@ -692,24 +791,35 @@
     if (cpForm) {
       cpForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const res = await fetch('/api/founder/project-create', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: document.getElementById('pTitle').value,
-            clientEmail: document.getElementById('pClientEmail').value,
-            progress: document.getElementById('pProgress').value,
-            downloadUrl: document.getElementById('pDownloadUrl').value
-          })
-        });
-        const d = await res.json();
-        if (d.success) {
-          alert("¡Proyecto asignado con éxito!");
-          cpForm.reset();
-          loadProjects();
-          setMainTab('projects');
-        } else {
-          alert(d.error || "Error al crear proyecto");
+        const submitBtn = document.getElementById('btnSaveProject');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Guardando...";
+
+        try {
+          const res = await fetch('/api/founder/project-create', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: document.getElementById('pTitle').value,
+              clientEmail: document.getElementById('pClientEmail').value,
+              progress: document.getElementById('pProgress').value,
+              downloadUrl: document.getElementById('pDownloadUrl').value
+            })
+          });
+          const d = await res.json();
+          if (d.success) {
+            alert("¡Proyecto asignado con éxito!");
+            cpForm.reset();
+            loadProjects();
+            setMainTab('projects');
+          } else {
+            alert(d.error || "Error al crear proyecto");
+          }
+        } catch(e) {
+          alert("Error de conexión");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Guardar Proyecto";
         }
       });
     }
@@ -719,8 +829,13 @@
       try {
         const res = await fetch('/api/projects', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        if (data.projects && data.projects.length > 0) {
-          container.innerHTML = data.projects.map(p => `
+        const projs = data.projects || [];
+
+        const kpi = document.getElementById('kpiProjects');
+        if (kpi) kpi.innerText = projs.length;
+
+        if (projs.length > 0) {
+          container.innerHTML = projs.map(p => `
             <div class="p-4 rounded-2xl bg-black/40 border border-purple-900/50 space-y-2.5">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-mono text-fuchsia-400 font-bold">${p.id}</span>
@@ -739,21 +854,29 @@
       } catch (e) {}
     }
 
-    // --- USUARIOS Y ROLES ---
+    // --- USUARIOS & ROLES ---
     async function loadFounderUsers() {
       const tbody = document.getElementById('usersTableBody');
       try {
         const res = await fetch('/api/founder/users', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        if (data.users && data.users.length > 0) {
-          tbody.innerHTML = data.users.map(u => `
+        const users = data.users || [];
+
+        const kpi = document.getElementById('kpiUsers');
+        if (kpi) kpi.innerText = users.length;
+
+        if (users.length > 0) {
+          tbody.innerHTML = users.map(u => `
             <tr class="border-b border-purple-950">
-              <td class="p-2">${u.username}</td>
-              <td class="p-2">${u.email}</td>
-              <td class="p-2">${u.role}</td>
-              <td class="p-2">
-                <select onchange="changeRole('${u.email}', this.value)" class="bg-black text-xs text-white p-1 rounded">
-                  <option value="" disabled selected>Rol...</option>
+              <td class="p-2.5 font-semibold text-white flex items-center space-x-2">
+                <img src="https://mc-heads.net/avatar/${u.mcNick || 'steve'}/24" class="w-6 h-6 rounded-md border border-purple-900 bg-black/50">
+                <span>${u.username}</span>
+              </td>
+              <td class="p-2.5 text-purple-300 font-mono text-[11px]">${u.email}</td>
+              <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-900 text-purple-200 uppercase font-bold">${u.role}</span></td>
+              <td class="p-2.5">
+                <select onchange="changeRole('${u.email}', this.value)" class="bg-black/80 border border-purple-800 rounded-lg px-2 py-1 text-xs text-white">
+                  <option value="" disabled selected>Cambiar...</option>
                   <option value="VIP">VIP</option>
                   <option value="Client">Client</option>
                   <option value="Dev">Dev</option>
@@ -780,8 +903,18 @@
       document.getElementById('fSecLicenses').classList.toggle('hidden', sub !== 'licenses');
       document.getElementById('fSecAssign').classList.toggle('hidden', sub !== 'assignProject');
       document.getElementById('fSecUsers').classList.toggle('hidden', sub !== 'users');
+
+      ['Licenses', 'Assign', 'Users'].forEach(s => {
+        const btn = document.getElementById(`fTab${s}`);
+        const isActive = (s.toLowerCase() === sub.toLowerCase() || (s === 'Assign' && sub === 'assignProject'));
+        if (btn) btn.className = isActive
+          ? "p-3 rounded-2xl bg-purple-600 text-white font-bold text-xs flex flex-col items-center space-y-1 shadow-md shadow-purple-600/30"
+          : "p-3 rounded-2xl bg-black/40 border border-purple-900 text-purple-300 font-bold text-xs flex flex-col items-center space-y-1";
+      });
+
       if (sub === 'users') loadFounderUsers();
       if (sub === 'licenses') loadFounderLicenses();
+      lucide.createIcons();
     }
 
     // --- PERFIL Y CONTRASEÑA ---
