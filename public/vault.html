@@ -108,7 +108,7 @@
     lucide.createIcons();
     const token = localStorage.getItem('synthetix_token');
     const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
-    const isVip = user && (user.role === 'VIP' || user.role === 'Client' || user.role === 'Dev' || user.role === 'Founder' || user.role === 'Admin');
+    const role = (user.role || '').toLowerCase(); const isVip = ['vip', 'client', 'dev', 'founder', 'admin', 'staff'].includes(role);
 
     const overlay = document.getElementById('drawerOverlay');
     const drawer = document.getElementById('sidebarDrawer');
