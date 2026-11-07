@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Synthetix Studio | Desarrollo & Redes Minecraft</title>
+  <title>Synthetix Studio | Desarrollo, Redes & Plugins Minecraft</title>
+  
   <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#06030d">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/animations.css">
 </head>
@@ -16,6 +20,7 @@
   <nav class="sticky top-0 z-40 backdrop-blur-2xl bg-[#06030d]/90 border-b border-purple-500/20 px-4 sm:px-8 py-3.5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       
+      <!-- LOGO CON PASTILLA -->
       <a href="/" class="flex items-center space-x-2.5 transition">
         <div class="relative w-9 h-9 rounded-xl bg-[#0b0517] border border-purple-400/40 flex items-center justify-center shadow-inner">
           <svg class="w-4 h-4 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -30,14 +35,17 @@
         </div>
       </a>
 
+      <!-- ENLACES ESCRITORIO -->
       <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-purple-200/70">
         <a href="/" class="text-white font-bold">Inicio</a>
+        <a href="#services" class="hover:text-purple-300 transition">Especialidades</a>
         <a href="#pricing" class="hover:text-purple-300 transition">Tarifas</a>
-        <a href="/services" class="hover:text-purple-300 transition">Servicios</a>
+        <a href="#reviews" class="hover:text-purple-300 transition">Reseñas ⭐</a>
         <a href="/vault" class="hover:text-purple-300 transition">Vault</a>
       </div>
 
-      <div class="flex items-center space-x-2">
+      <!-- BOTONES -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
         <a href="/dashboard" id="desktopPortalBtn" class="px-3.5 py-1.5 rounded-xl bg-purple-950/80 border border-purple-500/40 text-xs font-bold text-white transition">
           Portal Clientes
         </a>
@@ -65,8 +73,9 @@
 
       <div class="py-6 space-y-2">
         <a href="/" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-purple-950/50 border border-purple-500/30 text-white font-bold text-xs"><i data-lucide="home" class="w-4 h-4 text-purple-400"></i><span>Inicio</span></a>
-        <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas Oficiales</span></a>
-        <a href="/services" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i><span>Servicios</span></a>
+        <a href="#services" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition"><i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i><span>Especialidades</span></a>
+        <a href="#pricing" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition"><i data-lucide="tag" class="w-4 h-4 text-purple-400"></i><span>Tarifas Oficiales</span></a>
+        <a href="#reviews" onclick="closeSidebar()" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium transition"><i data-lucide="star" class="w-4 h-4 text-amber-400"></i><span>Reseñas de Clientes</span></a>
         <a href="/vault" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><div class="flex items-center space-x-3"><i data-lucide="package" class="w-4 h-4 text-fuchsia-400"></i><span>Resource Vault</span></div></a>
         <a href="/terms" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-purple-300 hover:text-white hover:bg-purple-950/40 text-xs font-medium"><i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i><span>Términos del Servicio</span></a>
       </div>
@@ -80,84 +89,225 @@
   </aside>
 
   <!-- HERO -->
-  <header class="max-w-5xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 text-center">
+  <header class="max-w-5xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-8 text-center">
     <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-300 text-xs font-mono mb-6">
       <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-      <span>DESARROLLO DE SOFTWARE & REDES</span>
+      <span>ESTUDIO PROFESIONAL • MINECRAFT & DISCORD</span>
     </div>
     
-    <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white mb-6 leading-tight">
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white mb-5 leading-tight">
       Plugins, Bots & Redes <br>
       <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-white">Gestionados en la Web</span>
     </h1>
 
-    <p class="text-purple-200/70 text-xs sm:text-base max-w-2xl mx-auto mb-8 font-light">
-      Elige tu plan, abre tu sala de proyecto privada en el portal, chatea con el desarrollador y descarga tus archivos directamente.
+    <p class="text-purple-200/70 text-xs sm:text-base max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+      Sin intermediarios ni mensajes perdidos. Elige tu plan, abre tu sala de proyecto privada, chatea directamente con el desarrollador y descarga tus compilaciones.
     </p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-      <a href="#pricing" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-7 py-3 rounded-xl transition shadow-xl text-xs sm:text-sm">
+      <a href="#pricing" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white font-bold px-7 py-3 rounded-xl transition shadow-xl text-xs sm:text-sm text-center">
         Ver Tarifas ($5 - $35)
       </a>
-      <a href="/vault" class="w-full sm:w-auto border border-purple-800 hover:border-purple-600 bg-purple-950/30 text-purple-200 font-medium px-7 py-3 rounded-xl transition text-xs sm:text-sm">
+      <a href="/vault" class="w-full sm:w-auto border border-purple-800 hover:border-purple-600 bg-purple-950/30 text-purple-200 font-medium px-7 py-3 rounded-xl transition text-xs sm:text-sm text-center">
         Explorar Vault
       </a>
     </div>
   </header>
 
-  <!-- TARIFAS -->
-  <section id="pricing" class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+  <!-- BENCHMARKS / TELEMETRÍA (4 TARJETAS EN 2X2 MÓVIL) -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
+        <p class="text-xl sm:text-3xl font-black text-emerald-400">20.0 TPS</p>
+        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Garantizado</span>
+      </div>
+      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
+        <p class="text-xl sm:text-3xl font-black text-white">Java 21</p>
+        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Folia / Purpur</span>
+      </div>
+      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
+        <p class="text-xl sm:text-3xl font-black text-fuchsia-400">DRM Ready</p>
+        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Anti-Leak</span>
+      </div>
+      <div class="p-4 rounded-2xl card-glass border border-purple-900/60 text-center">
+        <p class="text-xl sm:text-3xl font-black text-white">Cloudflare R2</p>
+        <span class="text-[10px] sm:text-xs text-purple-300/60 uppercase font-mono tracking-wider">Descargas Rápidas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESPECIALIDADES / SERVICIOS DESTACADOS -->
+  <section id="services" class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
     <div class="text-center mb-10">
-      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Precios Claros</span>
-      <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Tarifas del Estudio</h2>
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Stack de Ingeniería</span>
+      <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Especialidades del Estudio</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Soluciones técnicas optimizadas para alto tráfico de jugadores.</p>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="p-5 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 hover:border-purple-500/50 transition flex flex-col justify-between">
         <div>
+          <div class="w-10 h-10 rounded-xl bg-purple-950 border border-purple-500/40 flex items-center justify-center text-purple-300 mb-4">
+            <i data-lucide="cpu" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1.5">Plugins Paper & Spigot</h3>
+          <p class="text-xs text-purple-300/70 leading-relaxed mb-4">
+            Código en Java nativo con hilos asíncronos para evitar congelamientos del servidor. Sistemas de economía, clanes, menús y eventos custom.
+          </p>
+        </div>
+        <span class="text-[10px] font-mono text-fuchsia-400">0% Memory Leaks • NMS Ready</span>
+      </div>
+
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 hover:border-purple-500/50 transition flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-purple-950 border border-purple-500/40 flex items-center justify-center text-purple-300 mb-4">
+            <i data-lucide="network" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1.5">Networks & Velocity Proxies</h3>
+          <p class="text-xs text-purple-300/70 leading-relaxed mb-4">
+            Arquitectura moderna de proxies con Velocity. Sincronización global con RedisBungee, balanceo de carga multi-lobby y mitigación anti-bot.
+          </p>
+        </div>
+        <span class="text-[10px] font-mono text-fuchsia-400">Multi-Server Sync • Anti-Bot</span>
+      </div>
+
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 hover:border-purple-500/50 transition flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-purple-950 border border-purple-500/40 flex items-center justify-center text-purple-300 mb-4">
+            <i data-lucide="bot" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1.5">Bots de Discord Avanzados</h3>
+          <p class="text-xs text-purple-300/70 leading-relaxed mb-4">
+            Bots en Node.js con vinculación a servidores de Minecraft, sistemas de tickets con transcripciones HTML y bases de datos MySQL/SQLite.
+          </p>
+        </div>
+        <span class="text-[10px] font-mono text-fuchsia-400">99.9% Uptime • Discord.js</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TARIFAS CON DETALLES COMPLETOS (NO VACÍAS) -->
+  <section id="pricing" class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+    <div class="text-center mb-10">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Precios Transparentes</span>
+      <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Tarifas del Estudio</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Planes claros y accesibles sin costos ocultos.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      
+      <!-- PLAN $5 -->
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
+        <div>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-1.5">Desarrollo Java</span>
           <h3 class="text-lg font-bold text-white mb-1">Plugin Básico</h3>
-          <p class="text-[11px] text-purple-300/60 mb-3">Comandos o fixes simples</p>
-          <div class="text-2xl font-black text-white mb-4">$5 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+          <p class="text-[11px] text-purple-300/60 mb-3">Comandos, eventos o fixes simples</p>
+          <div class="text-2xl sm:text-3xl font-black text-white mb-4">$5 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+          
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Java 17/21 optimizado</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Spigot / Paper / Purpur</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Entrega directa en la web</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Licencia DRM incluida</li>
+          </ul>
         </div>
-        <button onclick="orderPlan('Plugin Básico', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800">Ordenar ($5)</button>
+        <button onclick="orderPlan('Plugin Básico', '$5 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($5)</button>
       </div>
 
-      <div class="p-5 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between">
+      <!-- PLAN $10 -->
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-1.5">Discord.js</span>
           <h3 class="text-lg font-bold text-white mb-1">Bot de Discord</h3>
-          <p class="text-[11px] text-purple-300/60 mb-3">Tickets y verificación</p>
-          <div class="text-2xl font-black text-white mb-4">$10 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+          <p class="text-[11px] text-purple-300/60 mb-3">Tickets, verificación y embeds</p>
+          <div class="text-2xl sm:text-3xl font-black text-white mb-4">$10 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Sistema de tickets con logs</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Vinculación MC-Discord</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Base de datos SQLite/MySQL</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Panel de botones interactivo</li>
+          </ul>
         </div>
-        <button onclick="orderPlan('Bot Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800">Ordenar ($10)</button>
+        <button onclick="orderPlan('Bot Discord', '$10 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($10)</button>
       </div>
 
-      <div class="p-5 rounded-3xl card-glass border-2 border-fuchsia-500/60 flex flex-col justify-between">
+      <!-- PLAN $20 (DESTACADO) -->
+      <div class="p-6 rounded-3xl card-glass border-2 border-fuchsia-500/60 flex flex-col justify-between relative shadow-xl shadow-purple-900/40">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-[9px] font-bold uppercase tracking-wider text-white px-3 py-0.5 rounded-full">Más Vendido</span>
         <div>
+          <span class="text-[10px] font-mono text-fuchsia-400 uppercase tracking-wider block mb-1.5">Setup Completo</span>
           <h3 class="text-lg font-bold text-white mb-1">Modalidad MC</h3>
           <p class="text-[11px] text-purple-300/60 mb-3">BoxPvP, Survival, Skyblock</p>
-          <div class="text-2xl font-black text-fuchsia-400 mb-4">$20 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+          <div class="text-2xl sm:text-3xl font-black text-fuchsia-400 mb-4">$20 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2 shrink-0"></i> Economía y rangos equilibrados</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2 shrink-0"></i> Menús DeluxeMenus custom</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2 shrink-0"></i> Optimización extrema a 20 TPS</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-fuchsia-400 mr-2 shrink-0"></i> Permisos LuckPerms listos</li>
+          </ul>
         </div>
-        <button onclick="orderPlan('Modalidad MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold">Ordenar ($20)</button>
+        <button onclick="orderPlan('Modalidad MC', '$20 USD')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 text-white text-xs font-bold transition shadow-md">Ordenar ($20)</button>
       </div>
 
-      <div class="p-5 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between">
+      <!-- PLAN $35 -->
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between hover:border-purple-500/60 transition">
         <div>
+          <span class="text-[10px] font-mono text-purple-400 uppercase tracking-wider block mb-1.5">Redes Masivas</span>
           <h3 class="text-lg font-bold text-white mb-1">Network Setup</h3>
           <p class="text-[11px] text-purple-300/60 mb-3">Velocity Proxy y balanceo</p>
-          <div class="text-2xl font-black text-white mb-4">$35 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+          <div class="text-2xl sm:text-3xl font-black text-white mb-4">$35 <span class="text-xs text-purple-400 font-normal">USD</span></div>
+
+          <ul class="text-xs text-purple-300/80 space-y-2 mb-6 font-light">
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Proxy Velocity + Balanceo</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Sincronización RedisBungee</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Mitigación Anti-Bot probada</li>
+            <li class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 mr-2 shrink-0"></i> Soporte técnico prioritario</li>
+          </ul>
         </div>
-        <button onclick="orderPlan('Network Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800">Ordenar ($35)</button>
+        <button onclick="orderPlan('Network Setup', '$35 USD')" class="w-full py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-white text-xs font-bold border border-purple-800 transition">Ordenar ($35)</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RESEÑAS VERIFICADAS ⭐⭐⭐⭐⭐ (RECUPERADAS AL 100%) -->
+  <section id="reviews" class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+    <div class="text-center mb-10">
+      <span class="text-xs font-mono uppercase tracking-widest text-fuchsia-400 font-bold">Opiniones Reales</span>
+      <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Reseñas Verificadas</h2>
+      <p class="text-purple-300/60 text-xs sm:text-sm mt-1">Valoraciones públicas dejadas por clientes y dueños de servidores.</p>
+    </div>
+
+    <div id="publicReviewsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div class="p-6 rounded-3xl card-glass border border-purple-900/40 text-center py-10 col-span-3">
+        <p class="text-xs text-purple-400">Cargando valoraciones de clientes...</p>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="border-t border-purple-950/60 py-6 text-center text-xs text-purple-300/40">
-    <p>© Synthetix Studio. Todos los derechos reservados.</p>
+  <footer class="border-t border-purple-950/60 py-8 text-center text-xs text-purple-300/40">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 gap-4">
+      <p>© Synthetix Studio. Todos los derechos reservados.</p>
+      <div class="flex space-x-6">
+        <a href="/services" class="hover:text-purple-300">Servicios</a>
+        <a href="/vault" class="hover:text-purple-300">Vault</a>
+        <a href="/terms" class="hover:text-purple-300">Términos</a>
+        <a href="/dashboard" class="hover:text-purple-300">Portal</a>
+      </div>
+    </div>
   </footer>
 
   <script>
     lucide.createIcons();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
 
     const overlay = document.getElementById('drawerOverlay');
     const drawer = document.getElementById('sidebarDrawer');
@@ -167,7 +317,7 @@
     document.getElementById('closeSidebarBtn').addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
 
-    // RECONOCIMIENTO PERMANENTE DE SESIÓN EN PORTADA
+    // RECONOCIMIENTO DIRECTO DE SESIÓN
     const token = localStorage.getItem('synthetix_token');
     const user = JSON.parse(localStorage.getItem('synthetix_user') || '{}');
 
@@ -194,24 +344,68 @@
       lucide.createIcons();
     }
 
+    // CARGAR RESEÑAS EN VIVO CON CABEZAS 3D DE MINECRAFT
+    async function loadPublicReviews() {
+      const container = document.getElementById('publicReviewsContainer');
+      try {
+        const res = await fetch('/api/reviews');
+        const data = await res.json();
+        if (data.reviews && data.reviews.length > 0) {
+          container.innerHTML = data.reviews.map(r => `
+            <div class="p-5 sm:p-6 rounded-3xl card-glass border border-purple-900/60 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-2.5">
+                  <div class="flex items-center space-x-2.5">
+                    <img src="https://mc-heads.net/avatar/${r.mcNick || 'steve'}/40" class="w-9 h-9 rounded-xl border border-purple-500/30 object-cover bg-black/50">
+                    <div>
+                      <p class="text-xs font-bold text-white">${r.author}</p>
+                      <span class="text-[9px] font-mono text-fuchsia-400">${r.role}</span>
+                    </div>
+                  </div>
+                  <div class="text-amber-400 text-xs tracking-widest">${'⭐'.repeat(r.stars)}</div>
+                </div>
+                <p class="text-xs text-purple-200/80 leading-relaxed italic">"${r.comment}"</p>
+              </div>
+              <div class="pt-2.5 border-t border-purple-950 flex items-center justify-between text-[10px] text-purple-400/50">
+                <span>${r.service}</span>
+                <span>${r.date}</span>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = '<p class="text-xs text-purple-400 text-center py-8 col-span-3">Sé el primero en dejar una reseña desde tu Dashboard.</p>';
+        }
+      } catch (e) {
+        container.innerHTML = '<p class="text-xs text-purple-400 text-center py-8 col-span-3">Sé el primero en dejar una reseña desde tu Dashboard.</p>';
+      }
+      lucide.createIcons();
+    }
+    loadPublicReviews();
+
     async function orderPlan(planTitle, price) {
       if (!token) {
-        alert("Inicia sesión para ordenar.");
+        alert("Inicia sesión o crea tu cuenta en 10 segundos para hacer un pedido.");
         window.location.href = '/login';
         return;
       }
       const notes = prompt(`¿Qué necesitas para tu ${planTitle}?:`);
       if (!notes) return;
 
-      const res = await fetch('/api/orders/create', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planTitle, price, details: notes })
-      });
-      const d = await res.json();
-      if (d.success) {
-        alert("¡Pedido creado!");
-        window.location.href = '/dashboard';
+      try {
+        const res = await fetch('/api/orders/create', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ planTitle, price, details: notes })
+        });
+        const d = await res.json();
+        if (d.success) {
+          alert(`¡Pedido creado con éxito!`);
+          window.location.href = '/dashboard';
+        } else {
+          alert(d.error);
+        }
+      } catch (e) {
+        alert("Error de conexión");
       }
     }
   </script>
